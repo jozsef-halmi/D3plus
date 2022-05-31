@@ -1,4 +1,5 @@
-﻿using Carting.Application.Common.Interfaces;
+﻿using Carting.Application.Common.Configuration;
+using Carting.Application.Common.Interfaces;
 using Carting.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -21,7 +22,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
-
+            var persistenceConfiguration = new PersistenceOptions();
+            integrationConfig.GetSection(nameof(PersistenceOptions)).Bind(persistenceConfiguration);
             configurationBuilder.AddConfiguration(integrationConfig);
         });
 
@@ -37,6 +39,10 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 .AddDbContext<ApplicationDbContext>((sp, options) =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                         builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+
+            services.AddScoped<ICartingDbContext, CartingDbContext>();
+            services.Configure<PersistenceOptions>(builder.Configuration.GetSection("PersistenceConfiguration"));
         });
     }
 }

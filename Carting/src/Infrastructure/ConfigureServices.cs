@@ -33,6 +33,8 @@ public static class ConfigureServices
 
         services.AddScoped<ApplicationDbContextInitialiser>();
 
+        services.AddScoped<ICartingDbContext, CartingDbContext>();
+
         services
             .AddDefaultIdentity<ApplicationUser>()
             .AddRoles<IdentityRole>()
