@@ -18,6 +18,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
             Id = 1,
             Name = "ExampleProduct",
             Price = 5,
+            CurrencyCode = "EUR",
             Quantity = 1,
             WebImage = null
         };
@@ -39,6 +40,24 @@ public class AddItemToCartCommandTests : BaseTestFixture
     }
 
     [Test]
+    public async Task InvalidPriceShouldThrowError()
+    {
+        var command = new AddItemToCartCommand
+        {
+            CartId = $"external-id-{Guid.NewGuid()}",
+            Id = 1,
+            Name = "ExampleProduct",
+            Price = -1,
+            CurrencyCode = "EUR",
+            Quantity = 1,
+            WebImage = null
+        };
+
+        Func<Task> act = async () => await SendAsync(command);
+        await act.Should().ThrowAsync<ValidationException>();
+    }
+
+    [Test]
     public async Task ShouldAddItemToExistingCart()
     {
         var cartId = $"external-id-{Guid.NewGuid()}";
@@ -48,6 +67,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
             Id = 1,
             Name = "ExampleProduct",
             Price = 5,
+            CurrencyCode = "EUR",
             Quantity = 1,
             WebImage = null
         };
@@ -58,6 +78,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
             Id = 2,
             Name = "ExampleProduct2",
             Price = 6,
+            CurrencyCode = "EUR",
             Quantity = 2,
             WebImage = null
         };
@@ -82,6 +103,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
             Id = 2,
             Name = "ExampleProduct",
             Price = 5,
+            CurrencyCode = "EUR",
             Quantity = 1,
             WebImage = null
         };
@@ -92,6 +114,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
             Id = 2,
             Name = "ExampleProduct2",
             Price = 6,
+            CurrencyCode = "EUR",
             Quantity = 2,
             WebImage = null
         };
@@ -111,6 +134,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
             Id = 1,
             Name = string.Join("",Enumerable.Repeat("c", 201)),
             Price = 5,
+            CurrencyCode = "EUR",
             Quantity = 1,
             WebImage = null
         };
