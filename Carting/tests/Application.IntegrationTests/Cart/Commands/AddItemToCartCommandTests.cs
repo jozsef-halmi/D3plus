@@ -101,4 +101,21 @@ public class AddItemToCartCommandTests : BaseTestFixture
         Func<Task> addItemToCartAgain = async () => await SendAsync(command2);
         await addItemToCartAgain.Should().ThrowAsync<ItemAlreadyAddedToCartException>();
     }
+
+    [Test]
+    public async Task TooLongNameShouldThrowError()
+    {
+        var command = new AddItemToCartCommand
+        {
+            CartId = $"external-id-{Guid.NewGuid()}",
+            Id = 1,
+            Name = string.Join("",Enumerable.Repeat("c", 201)),
+            Price = 5,
+            Quantity = 1,
+            WebImage = null
+        };
+
+        Func<Task> act = async () => await SendAsync(command);
+        await act.Should().ThrowAsync<ValidationException>();
+    }
 }

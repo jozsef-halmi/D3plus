@@ -1,7 +1,6 @@
 ﻿using Carting.Application.Common.Exceptions;
 using Carting.Application.Common.Interfaces;
 using Carting.Domain.Entities;
-using Carting.Domain.Events;
 using MediatR;
 
 namespace Carting.Application.Carts.Commands.AddItemToCart;
