@@ -2,6 +2,7 @@
 using Carting.Application.Carts.Queries.GetCart;
 using NUnit.Framework;
 using FluentAssertions;
+using Carting.Application.Common.Exceptions;
 
 namespace Carting.Application.IntegrationTests.Cart.Queries;
 
@@ -33,7 +34,26 @@ public class GetCartQueryTests : BaseTestFixture
         var result = await SendAsync(query);
 
         result.Should().NotBeNull();
-
     }
 
+    [Test]
+    public async Task NonExistentCartShouldReturnNotFound()
+    {
+        var id = $"external-id-{Guid.NewGuid()}";
+
+        var query = new GetCartQuery() { CartId = id };
+
+        Func<Task> act = async () => await SendAsync(query);
+        await act.Should().ThrowAsync<NotFoundException>();
+    }
+
+    [Test]
+    public async Task EmptyCartIdShouldReturnValidationError()
+    {
+
+        var query = new GetCartQuery() { CartId = string.Empty };
+
+        Func<Task> act = async () => await SendAsync(query);
+        await act.Should().ThrowAsync<ValidationException>();
+    }
 }
