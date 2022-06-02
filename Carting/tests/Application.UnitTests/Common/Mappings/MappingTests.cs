@@ -1,8 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using AutoMapper;
+using Carting.Application.Carts.Queries.GetCart;
 using Carting.Application.Common.Mappings;
-using Carting.Application.Common.Models;
-using Carting.Application.TodoLists.Queries.GetTodos;
 using Carting.Domain.Entities;
 using NUnit.Framework;
 
@@ -28,10 +27,8 @@ public class MappingTests
     }
 
     [Test]
-    [TestCase(typeof(TodoList), typeof(TodoListDto))]
-    [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
-    [TestCase(typeof(TodoList), typeof(LookupDto))]
-    [TestCase(typeof(TodoItem), typeof(LookupDto))]
+    [TestCase(typeof(Cart), typeof(CartDto))]
+    [TestCase(typeof(CartItem), typeof(CartItemDto))]
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         var instance = GetInstanceOf(source);

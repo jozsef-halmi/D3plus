@@ -9,13 +9,21 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Common\**" />
+      <Compile Remove="Persistence\Configurations\**" />
+      <Compile Remove="Persistence\Interceptors\**" />
+      <EmbeddedResource Remove="Common\**" />
+      <EmbeddedResource Remove="Persistence\Configurations\**" />
+      <EmbeddedResource Remove="Persistence\Interceptors\**" />
+      <None Remove="Common\**" />
+      <None Remove="Persistence\Configurations\**" />
+      <None Remove="Persistence\Interceptors\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="CsvHelper" Version="15.0.10" />
         <PackageReference Include="LiteDB" Version="5.0.11" />
-        <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="6.0.5" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.5" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     </ItemGroup>
 
     <ItemGroup>

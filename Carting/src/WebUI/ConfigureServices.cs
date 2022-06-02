@@ -1,7 +1,6 @@
 ﻿using Carting.Application.Common.Interfaces;
 using Carting.Infrastructure.Persistence;
 using Carting.WebUI.Filters;
-using Carting.WebUI.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
@@ -13,14 +12,9 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddWebUIServices(this IServiceCollection services)
     {
-        services.AddDatabaseDeveloperPageExceptionFilter();
-
-        services.AddSingleton<ICurrentUserService, CurrentUserService>();
-
         services.AddHttpContextAccessor();
 
-        services.AddHealthChecks()
-            .AddDbContextCheck<ApplicationDbContext>();
+        services.AddHealthChecks();
 
         services.AddControllersWithViews(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>())
