@@ -8,7 +8,7 @@ namespace Carting.Infrastructure.Persistence;
 public class CartingDbContext : ICartingDbContext
 {
     private readonly IOptions<PersistenceOptions> _persistenceConfiguration;
-    
+
     public CartingDbContext(IOptions<PersistenceOptions> persistenceConfiguration)
     {
         _persistenceConfiguration = persistenceConfiguration;

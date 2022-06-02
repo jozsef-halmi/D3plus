@@ -1,5 +1,4 @@
-﻿using Carting.Application.Common.Interfaces;
-using MediatR.Pipeline;
+﻿using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
 namespace Carting.Application.Common.Behaviours;
