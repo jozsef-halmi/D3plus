@@ -1,8 +1,9 @@
-﻿using Carting.Application.Carts.Commands.AddItemToCart;
-using Carting.Application.Carts.Queries.GetCart;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using FluentAssertions;
-using Carting.Application.Common.Exceptions;
+using Carting.WebApi.Application.Common.Exceptions;
+using Carting.WebApi.Application.Carts.Commands.AddItemToCart;
+using Carting.WebApi.Domain.Entities;
+using Carting.WebApi.Application.Carts.Queries.GetCart;
 
 namespace Carting.Application.IntegrationTests.Cart.Queries;
 
@@ -22,7 +23,7 @@ public class GetCartQueryTests : BaseTestFixture
             Price = 5,
             CurrencyCode = "EUR",
             Quantity = 1,
-            WebImage = new Domain.Entities.WebImage() { 
+            WebImage = new WebImage() { 
                 AltText="ExampleAltText", 
                 Uri = new Uri("http://localhost/example-image.jpg") 
             }

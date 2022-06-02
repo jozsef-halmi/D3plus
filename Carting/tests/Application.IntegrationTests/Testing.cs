@@ -1,4 +1,4 @@
-﻿using Carting.Application.Common.Interfaces;
+﻿using Carting.WebApi.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;

@@ -1,4 +1,4 @@
-﻿using Carting.Application.Common.Exceptions;
+﻿using Carting.WebApi.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

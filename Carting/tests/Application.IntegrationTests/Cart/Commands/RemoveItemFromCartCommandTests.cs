@@ -1,7 +1,7 @@
-﻿using Carting.Application.Carts.Commands.AddItemToCart;
-using Carting.Application.Carts.Queries.GetCart;
-using Carting.Application.Common.Exceptions;
-using Carting.Application.Common.Interfaces;
+﻿using Carting.WebApi.Application.Carts.Commands.AddItemToCart;
+using Carting.WebApi.Application.Carts.Commands.RemoveItemFromCartCommand;
+using Carting.WebApi.Application.Carts.Queries.GetCart;
+using Carting.WebApi.Application.Common.Exceptions;
 using FluentAssertions;
 using NUnit.Framework;
 
