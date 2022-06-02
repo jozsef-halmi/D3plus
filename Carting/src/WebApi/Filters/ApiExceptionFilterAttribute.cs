@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Carting.WebUI.Filters;
+namespace Carting.WebApi.Filters;
 
 public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {

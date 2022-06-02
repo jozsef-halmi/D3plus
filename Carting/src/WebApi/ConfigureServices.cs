@@ -1,4 +1,4 @@
-﻿using Carting.WebUI.Filters;
+﻿using Carting.WebApi.Filters;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 

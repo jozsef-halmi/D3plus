@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>Carting.WebUI</RootNamespace>
-        <AssemblyName>Carting.WebUI</AssemblyName>
+        <RootNamespace>Carting.WebApi</RootNamespace>
+        <AssemblyName>Carting.WebApi</AssemblyName>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
         <SpaRoot>ClientApp\</SpaRoot>

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Carting.WebUI.Controllers;
+namespace Carting.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
