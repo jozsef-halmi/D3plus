@@ -1,5 +1,5 @@
-﻿using Carting.Domain.Exceptions;
-using Carting.Domain.ValueObjects;
+﻿using Carting.WebApi.Domain.Exceptions;
+using Carting.WebApi.Domain.ValueObjects;
 using FluentAssertions;
 using NUnit.Framework;
 

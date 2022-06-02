@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using FluentAssertions;
-using Carting.Application.Common.Exceptions;
-using Carting.Application.Carts.Commands.AddItemToCart;
+using Carting.WebApi.Application.Common.Exceptions;
+using Carting.WebApi.Application.Carts.Commands.AddItemToCart;
 
 namespace Carting.Application.IntegrationTests.Cart.Commands;
 
@@ -25,7 +25,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
 
         var id = await SendAsync(command);
 
-        var cart = Find<Carting.Domain.Entities.Cart>(id);
+        var cart = Find<WebApi.Domain.Entities.Cart>(id);
 
         cart.Should().NotBeNull();
         cart.Id.Should().Be(command.CartId);
@@ -88,7 +88,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
 
         id1.Should().Be(id2);
 
-        var cart = Find<Carting.Domain.Entities.Cart>(id1);
+        var cart = Find<WebApi.Domain.Entities.Cart>(id1);
         cart.Items.Should().HaveCount(2);
 
     }

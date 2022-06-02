@@ -1,6 +1,6 @@
-﻿using Carting.Application.Common.Configuration;
-using Carting.Application.Common.Interfaces;
-using Carting.Infrastructure.Persistence;
+﻿using Carting.WebApi.Application.Common.Configuration;
+using Carting.WebApi.Application.Common.Interfaces;
+using Carting.WebApi.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;

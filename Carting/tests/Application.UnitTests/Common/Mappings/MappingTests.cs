@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
 using AutoMapper;
-using Carting.Application.Carts.Queries.GetCart;
-using Carting.Application.Common.Mappings;
-using Carting.Domain.Entities;
+using Carting.WebApi.Application.Carts.Queries.GetCart;
+using Carting.WebApi.Application.Common.Mappings;
+using Carting.WebApi.Domain.Entities;
 using NUnit.Framework;
 
 namespace Carting.Application.UnitTests.Common.Mappings;

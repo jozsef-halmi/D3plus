@@ -1,4 +1,4 @@
-﻿using Carting.Application.Common.Exceptions;
+﻿using Carting.WebApi.Application.Common.Exceptions;
 using FluentAssertions;
 using FluentValidation.Results;
 using NUnit.Framework;
