@@ -132,7 +132,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
         {
             CartId = $"external-id-{Guid.NewGuid()}",
             Id = 1,
-            Name = string.Join("",Enumerable.Repeat("c", 201)),
+            Name = string.Join("",Enumerable.Repeat("c", 51)),
             Price = 5,
             CurrencyCode = "EUR",
             Quantity = 1,

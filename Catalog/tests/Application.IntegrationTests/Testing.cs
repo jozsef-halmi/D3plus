@@ -109,7 +109,7 @@ public partial class Testing
         return await context.FindAsync<TEntity>(keyValues);
     }
 
-    public static async Task AddAsync<TEntity>(TEntity entity)
+    public static async Task<TEntity> AddAsync<TEntity>(TEntity entity)
         where TEntity : class
     {
         using var scope = _scopeFactory.CreateScope();
@@ -119,6 +119,8 @@ public partial class Testing
         context.Add(entity);
 
         await context.SaveChangesAsync();
+
+        return entity;
     }
 
     public static async Task<int> CountAsync<TEntity>() where TEntity : class

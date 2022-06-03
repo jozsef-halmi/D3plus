@@ -12,7 +12,7 @@ public class AddItemToCartCommandValidator : AbstractValidator<AddItemToCartComm
 
         RuleFor(v => v.Name)
          .NotEmpty()
-         .MaximumLength(200);
+         .MaximumLength(50);
 
         RuleFor(v => v.Price)
          .GreaterThanOrEqualTo(0);

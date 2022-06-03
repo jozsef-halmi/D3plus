@@ -7,6 +7,8 @@ public interface IApplicationDbContext
 {
     DbSet<Category> Categories { get; }
 
+    DbSet<Product> Products { get; }
+
     DbSet<TodoList> TodoLists { get; }
 
     DbSet<TodoItem> TodoItems { get; }

@@ -32,6 +32,8 @@ public class DeleteCategoryTests : BaseTestFixture
 
         category.Should().BeNull();
         categoryId.Should().Be(deletedCategoryId);
+
+        (await FindAsync<Category>(deletedCategoryId)).Should().BeNull();
     }
 
     [Test]
