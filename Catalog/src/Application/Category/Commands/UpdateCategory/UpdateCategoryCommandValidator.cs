@@ -2,13 +2,13 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Catalog.Application.Categorys.Commands.CreateCategory;
+namespace Catalog.Application.Categorys.Commands.UpdateCategory;
 
-public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
+public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
 {
     private readonly IApplicationDbContext _context;
 
-    public CreateCategoryCommandValidator(IApplicationDbContext context)
+    public UpdateCategoryCommandValidator(IApplicationDbContext context)
     {
         _context = context;
 

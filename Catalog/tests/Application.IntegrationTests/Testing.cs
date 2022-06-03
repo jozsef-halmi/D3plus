@@ -1,4 +1,5 @@
-﻿using Catalog.Infrastructure.Identity;
+﻿using Catalog.Domain.Entities;
+using Catalog.Infrastructure.Identity;
 using Catalog.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -127,6 +128,15 @@ public partial class Testing
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         return await context.Set<TEntity>().CountAsync();
+    }
+
+    public static IList<Category> GetAllCategories()
+    {
+        using var scope = _scopeFactory.CreateScope();
+
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        return context.Categories.ToList();
     }
 
     [OneTimeTearDown]
