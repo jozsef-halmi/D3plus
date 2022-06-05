@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>Catalog.WebUI</RootNamespace>
-        <AssemblyName>Catalog.WebUI</AssemblyName>
+        <RootNamespace>Catalog.WebApi</RootNamespace>
+        <AssemblyName>Catalog.WebApi</AssemblyName>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>

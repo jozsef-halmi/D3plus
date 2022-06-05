@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Catalog.WebUI.Controllers;
+namespace Catalog.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

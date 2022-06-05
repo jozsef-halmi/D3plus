@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Catalog.WebUI.Filters;
+namespace Catalog.WebApi.Filters;
 
 public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {
