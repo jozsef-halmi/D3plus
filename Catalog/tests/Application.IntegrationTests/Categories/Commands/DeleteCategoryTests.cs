@@ -14,24 +14,19 @@ public class DeleteCategoryTests : BaseTestFixture
     [Test]
     public async Task ShouldDeleteCategory()
     {
-        var createCommand = new CreateCategoryCommand
-        {
-            Name = "New category"
-        };
-
-        var categoryId = await SendAsync(createCommand);
+        var category = await AddAsync(new Category() { Name = "New category" });
 
         var deleteCommand = new DeleteCategoryCommand
         {
-            CategoryId = categoryId
+            CategoryId = category.Id
         };
 
         var deletedCategoryId = await SendAsync(deleteCommand);
 
-        var category = await FindAsync<Category>(categoryId);
+        var deletedCategory = await FindAsync<Category>(category.Id);
 
-        category.Should().BeNull();
-        categoryId.Should().Be(deletedCategoryId);
+        deletedCategory.Should().BeNull();
+        category.Id.Should().Be(deletedCategoryId);
 
         (await FindAsync<Category>(deletedCategoryId)).Should().BeNull();
     }
@@ -46,5 +41,33 @@ public class DeleteCategoryTests : BaseTestFixture
 
         Func<Task> act = async () => await SendAsync(command);
         await act.Should().ThrowAsync<NotFoundException>();
+    }
+
+    [Test]
+    public async Task ShouldDeleteProducts()
+    {
+        var category = await AddAsync(new Category() { Name = "New category" });
+
+        var product = await AddAsync(new Product()
+        {
+            Name = "New product",
+            Price = 5.99M,
+            Amount = 2,
+            CategoryId = category.Id
+        });
+
+        var deleteCommand = new DeleteCategoryCommand
+        {
+            CategoryId = category.Id
+        };
+
+        var deletedCategoryId = await SendAsync(deleteCommand);
+        var deletedCategory = await FindAsync<Category>(category.Id);
+        var products = GetAll<Product>();
+
+        deletedCategory.Should().BeNull();
+        category.Id.Should().Be(deletedCategoryId);
+        products.Should().NotContain(p => p.Id == product.Id);
+        (await FindAsync<Category>(deletedCategoryId)).Should().BeNull();
     }
 }

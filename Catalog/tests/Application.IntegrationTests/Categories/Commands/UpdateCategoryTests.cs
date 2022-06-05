@@ -24,14 +24,9 @@ public class UpdateCategoryTests : BaseTestFixture
     public async Task ShouldUpdateCategory()
     {
         var userId = await RunAsDefaultUserAsync();
-
-        var createCommand = new CreateCategoryCommand
-        {
-            Name = "New category",
-            ImageUrl = new Uri("http://localhost/example.jpg"),
-        };
-
-        var categoryId = await SendAsync(createCommand);
+       
+        var newCategory = await AddAsync(new Category() { Name = "New category", ImageUrl = new Uri("http://localhost/example.jpg") });
+        var categoryId = newCategory.Id;
 
         var category = await FindAsync<Category>(categoryId);
 
