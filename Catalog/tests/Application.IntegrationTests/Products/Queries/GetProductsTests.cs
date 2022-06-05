@@ -13,8 +13,6 @@ public class GetProductsTests : BaseTestFixture
     [Test]
     public async Task ShouldReturnAllProducts()
     {
-        await RunAsDefaultUserAsync();
-        
         var category = await AddAsync(new Category
         {
             Name = "Example Category",

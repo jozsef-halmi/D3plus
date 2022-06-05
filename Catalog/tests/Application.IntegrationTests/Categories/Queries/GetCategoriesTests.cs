@@ -13,8 +13,6 @@ public class GetCategoriesTests : BaseTestFixture
     [Test]
     public async Task ShouldReturnAllCategories()
     {
-        await RunAsDefaultUserAsync();
-
         await AddAsync(new Category
         {
             Name = "Example Category1",
@@ -35,8 +33,6 @@ public class GetCategoriesTests : BaseTestFixture
     [Test]
     public async Task ShouldReturnParentCategories()
     {
-        await RunAsDefaultUserAsync();
-
         // Set up parent
         var parentCategoryName = "Example Category1";
         await AddAsync(new Category

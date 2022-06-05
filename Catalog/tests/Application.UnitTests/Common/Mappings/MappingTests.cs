@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
 using AutoMapper;
+using Catalog.Application.Categorys.Queries.GetCategories;
 using Catalog.Application.Common.Mappings;
-using Catalog.Application.Common.Models;
-using Catalog.Application.TodoLists.Queries.GetTodos;
+using Catalog.Application.Products.Queries.GetProducts;
 using Catalog.Domain.Entities;
 using NUnit.Framework;
 
@@ -28,10 +28,8 @@ public class MappingTests
     }
 
     [Test]
-    [TestCase(typeof(TodoList), typeof(TodoListDto))]
-    [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
-    [TestCase(typeof(TodoList), typeof(LookupDto))]
-    [TestCase(typeof(TodoItem), typeof(LookupDto))]
+    [TestCase(typeof(Category), typeof(CategoryDto))]
+    [TestCase(typeof(Product), typeof(ProductDto))]
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         var instance = GetInstanceOf(source);

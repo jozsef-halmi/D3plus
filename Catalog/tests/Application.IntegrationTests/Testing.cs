@@ -1,8 +1,5 @@
-﻿using Catalog.Domain.Entities;
-using Catalog.Infrastructure.Identity;
-using Catalog.Infrastructure.Persistence;
+﻿using Catalog.Infrastructure.Persistence;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +16,6 @@ public partial class Testing
     private static IConfiguration _configuration = null!;
     private static IServiceScopeFactory _scopeFactory = null!;
     private static Checkpoint _checkpoint = null!;
-    private static string? _currentUserId;
 
     [OneTimeSetUp]
     public void RunBeforeAnyTests()
@@ -43,60 +39,9 @@ public partial class Testing
         return await mediator.Send(request);
     }
 
-    public static string? GetCurrentUserId()
-    {
-        return _currentUserId;
-    }
-
-    public static async Task<string> RunAsDefaultUserAsync()
-    {
-        return await RunAsUserAsync("test@local", "Testing1234!", Array.Empty<string>());
-    }
-
-    public static async Task<string> RunAsAdministratorAsync()
-    {
-        return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { "Administrator" });
-    }
-
-    public static async Task<string> RunAsUserAsync(string userName, string password, string[] roles)
-    {
-        using var scope = _scopeFactory.CreateScope();
-
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-        var user = new ApplicationUser { UserName = userName, Email = userName };
-
-        var result = await userManager.CreateAsync(user, password);
-
-        if (roles.Any())
-        {
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            foreach (var role in roles)
-            {
-                await roleManager.CreateAsync(new IdentityRole(role));
-            }
-
-            await userManager.AddToRolesAsync(user, roles);
-        }
-
-        if (result.Succeeded)
-        {
-            _currentUserId = user.Id;
-
-            return _currentUserId;
-        }
-
-        var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
-
-        throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
-    }
-
     public static async Task ResetState()
     {
         await _checkpoint.Reset(_configuration.GetConnectionString("DefaultConnection"));
-
-        _currentUserId = null;
     }
 
     public static async Task<TEntity?> FindAsync<TEntity>(params object[] keyValues)

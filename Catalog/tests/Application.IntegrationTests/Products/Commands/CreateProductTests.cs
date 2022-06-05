@@ -24,8 +24,6 @@ public class CreateProductTests : BaseTestFixture
     [Test]
     public async Task ShouldCreateProduct()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var category = await CreateCategory();
         var command = new CreateProductCommand
         {
@@ -45,17 +43,13 @@ public class CreateProductTests : BaseTestFixture
         product.Amount.Should().Be(command.Amount);
         product.CategoryId.Should().Be(command.CategoryId);
 
-        product.CreatedBy.Should().Be(userId);
         product.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
-        product.LastModifiedBy.Should().Be(userId);
         product.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }
 
     [Test]
     public async Task InvalidCategoryShouldThrowError()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var command = new CreateProductCommand
         {
             Name = "New product",
@@ -71,8 +65,6 @@ public class CreateProductTests : BaseTestFixture
     [Test]
     public async Task InvalidAmountShouldThrowError()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var category = await CreateCategory();
 
         var command = new CreateProductCommand
@@ -90,8 +82,6 @@ public class CreateProductTests : BaseTestFixture
     [Test]
     public async Task InvalidPriceShouldThrowError()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var category = await CreateCategory();
 
         var command = new CreateProductCommand
@@ -109,8 +99,6 @@ public class CreateProductTests : BaseTestFixture
     [Test]
     public async Task NameTooLongShouldThrowError()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var category = await CreateCategory();
 
         var command = new CreateProductCommand
@@ -128,8 +116,6 @@ public class CreateProductTests : BaseTestFixture
     [Test]
     public async Task DescriptionAllowsHtml()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var category = await CreateCategory();
 
         var command = new CreateProductCommand
@@ -146,9 +132,7 @@ public class CreateProductTests : BaseTestFixture
 
         product.Should().NotBeNull();
         product.Description.Should().Be(command.Description);
-        product.CreatedBy.Should().Be(userId);
         product.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
-        product.LastModifiedBy.Should().Be(userId);
         product.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }
 

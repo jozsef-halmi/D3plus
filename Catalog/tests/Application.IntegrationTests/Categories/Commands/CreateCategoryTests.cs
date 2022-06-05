@@ -22,8 +22,6 @@ public class CreateCategoryTests : BaseTestFixture
     [Test]
     public async Task ShouldCreateCategory()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var command = new CreateCategoryCommand
         {
             Name = "New category"
@@ -35,17 +33,13 @@ public class CreateCategoryTests : BaseTestFixture
 
         category.Should().NotBeNull();
         category.Name.Should().Be(command.Name);
-        category.CreatedBy.Should().Be(userId);
         category.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
-        category.LastModifiedBy.Should().Be(userId);
         category.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }
 
     [Test]
     public async Task ShouldCreateCategoryWithParent()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var createParentCategoryCommand = new CreateCategoryCommand
         {
             Name = "Parent category",
@@ -69,9 +63,7 @@ public class CreateCategoryTests : BaseTestFixture
         category.Name.Should().Be(createCategoryCommand.Name);
         category.ImageUrl.Should().Be(createCategoryCommand.ImageUrl);
         category.ParentCategoryId.Should().Be(createCategoryCommand.ParentCategoryId);
-        category.CreatedBy.Should().Be(userId);
         category.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
-        category.LastModifiedBy.Should().Be(userId);
         category.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }
 }

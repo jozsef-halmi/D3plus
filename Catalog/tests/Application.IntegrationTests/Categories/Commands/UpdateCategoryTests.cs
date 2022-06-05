@@ -23,8 +23,6 @@ public class UpdateCategoryTests : BaseTestFixture
     [Test]
     public async Task ShouldUpdateCategory()
     {
-        var userId = await RunAsDefaultUserAsync();
-       
         var newCategory = await AddAsync(new Category() { Name = "New category", ImageUrl = new Uri("http://localhost/example.jpg") });
         var categoryId = newCategory.Id;
 
@@ -52,7 +50,6 @@ public class UpdateCategoryTests : BaseTestFixture
         updatedCategory.CreatedBy.Should().Be(category.CreatedBy);
         updatedCategory.Created.Should().Be(category.Created);
 
-        updatedCategory.LastModifiedBy.Should().Be(userId);
         updatedCategory.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }
 
@@ -71,8 +68,6 @@ public class UpdateCategoryTests : BaseTestFixture
     [Test]
     public async Task ShouldUpdateParentCategory()
     {
-        var userId = await RunAsDefaultUserAsync();
-
         var createCommand1 = new CreateCategoryCommand
         {
             Name = "New category1",
@@ -104,7 +99,6 @@ public class UpdateCategoryTests : BaseTestFixture
 
         updatedCategory.Should().NotBeNull();
         updatedCategory.ParentCategoryId.Should().Be(category2Id);
-        updatedCategory.LastModifiedBy.Should().Be(userId);
         updatedCategory.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }
 }
