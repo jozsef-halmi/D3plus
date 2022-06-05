@@ -17,18 +17,23 @@ public class RemoveItemFromCartCommandTests : BaseTestFixture
         // Arrange
         var cartId = $"external-id-{Guid.NewGuid()}";
         var cartItemId = 11;
-        var addItemToCartCommand = new AddItemToCartCommand
+    
+        Add(new Carting.WebApi.Domain.Entities.Cart()
         {
-            CartId = cartId,
-            Id = cartItemId,
-            Name = "ExampleProduct",
-            Price = 5,
-            CurrencyCode = "EUR",
-            Quantity = 1,
-            WebImage = null,
-        };
-
-        await SendAsync(addItemToCartCommand);
+            Id = cartId,
+            Items = new List<Carting.WebApi.Domain.Entities.CartItem>()
+            {
+                new Carting.WebApi.Domain.Entities.CartItem()
+                {
+                    Name = "ExampleProduct",
+                    Price = 5,
+                    Currency = WebApi.Domain.ValueObjects.Currency.EUR,
+                    Quantity = 1,
+                    WebImage = null,
+                    Id = cartItemId
+                }
+            }
+        });
 
         var removeItemFromCartCommand = new RemoveItemFromCartCommand()
         {
@@ -70,18 +75,22 @@ public class RemoveItemFromCartCommandTests : BaseTestFixture
         // Arrange
         var cartId = $"external-id-{Guid.NewGuid()}";
         var cartItemId = 11;
-        var addItemToCartCommand = new AddItemToCartCommand
-        {
-            CartId = cartId,
-            Id = cartItemId,
-            Name = "ExampleProduct",
-            Price = 5,
-            CurrencyCode = "EUR",
-            Quantity = 1,
-            WebImage = null,
-        };
 
-        await SendAsync(addItemToCartCommand);
+        Add(new Carting.WebApi.Domain.Entities.Cart()
+        {
+            Id = cartId,
+            Items = new List<Carting.WebApi.Domain.Entities.CartItem>()
+            {
+                new Carting.WebApi.Domain.Entities.CartItem()
+                {
+                    Name = "ExampleProduct",
+                    Price = 5,
+                    Currency = WebApi.Domain.ValueObjects.Currency.EUR,
+                    Quantity = 1,
+                    WebImage = null,
+                }
+            }
+        });
 
         var removeItemFromCartCommand = new RemoveItemFromCartCommand()
         {

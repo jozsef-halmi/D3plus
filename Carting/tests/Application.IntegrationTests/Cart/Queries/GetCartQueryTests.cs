@@ -15,26 +15,40 @@ public class GetCartQueryTests : BaseTestFixture
     [Test]
     public async Task ShouldReturnCart()
     {
-        var command = new AddItemToCartCommand
+        var cartToInsert = new Carting.WebApi.Domain.Entities.Cart()
         {
-            CartId = $"external-id-{Guid.NewGuid()}",
-            Id = 1,
-            Name = "ExampleProduct",
-            Price = 5,
-            CurrencyCode = "EUR",
-            Quantity = 1,
-            WebImage = new WebImage() { 
-                AltText="ExampleAltText", 
-                Uri = new Uri("http://localhost/example-image.jpg") 
+            Id = $"external-id-{Guid.NewGuid()}",
+            Items = new List<Carting.WebApi.Domain.Entities.CartItem>()
+            {
+                new Carting.WebApi.Domain.Entities.CartItem()
+                {
+                    Id = 1,
+                    Name = "ExampleProduct",
+                    Price = 5,
+                    Currency = WebApi.Domain.ValueObjects.Currency.EUR,
+                    Quantity = 1,
+                    WebImage = new WebImage() {
+                        AltText="ExampleAltText",
+                        Uri = new Uri("http://localhost/example-image.jpg")
+                    },
+                }
             }
         };
+        Add(cartToInsert);
 
-        var id = await SendAsync(command);
-
-        var query = new GetCartQuery() { CartId = id };
+        var query = new GetCartQuery() { CartId = cartToInsert.Id };
         var result = await SendAsync(query);
 
         result.Should().NotBeNull();
+        result.Items.Should().NotBeNull();
+        result.Items.Should().HaveCount(cartToInsert.Items.Count);
+        var cartItem = result.Items.First();
+        cartItem.Name.Should().Be(cartToInsert.Items.First().Name);
+        cartItem.Price.Should().Be(cartToInsert.Items.First().Price);
+        cartItem.CurrencyCode.Should().Be(cartToInsert.Items.First().Currency.Code);
+        cartItem.Quantity.Should().Be(cartToInsert.Items.First().Quantity);
+        cartItem.ImageAltText.Should().Be(cartToInsert.Items.First().WebImage.AltText);
+        cartItem.ImageUri.Should().Be(cartToInsert.Items.First().WebImage.Uri.ToString());
     }
 
     [Test]
@@ -51,7 +65,6 @@ public class GetCartQueryTests : BaseTestFixture
     [Test]
     public async Task EmptyCartIdShouldReturnValidationError()
     {
-
         var query = new GetCartQuery() { CartId = string.Empty };
 
         Func<Task> act = async () => await SendAsync(query);

@@ -47,6 +47,19 @@ public partial class Testing
         return context.Get<TEntity>(key);
     }
 
+    public static TEntity Add<TEntity>(TEntity entity)
+       where TEntity : class
+    {
+        using var scope = _scopeFactory.CreateScope();
+
+        var context = scope.ServiceProvider.GetRequiredService<ICartingDbContext>();
+
+        context.Insert(entity);
+
+        return entity;
+    }
+
+
     [OneTimeTearDown]
     public void RunAfterAnyTests()
     {
