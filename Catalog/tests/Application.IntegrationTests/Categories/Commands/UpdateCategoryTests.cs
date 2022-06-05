@@ -5,7 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using Catalog.Application.Categorys.Commands.CreateCategory;
 
-namespace Catalog.Application.IntegrationTests.Categorys.Commands;
+namespace Catalog.Application.IntegrationTests.Categories.Commands;
 
 using static Testing;
 

@@ -35,6 +35,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         entity.ImageUrl = request.ImageUrl;
         entity.Price = request.Price;
         entity.Amount = request.Amount;
+        entity.CategoryId = request.CategoryId;
 
         _context.Products.Update(entity);
 

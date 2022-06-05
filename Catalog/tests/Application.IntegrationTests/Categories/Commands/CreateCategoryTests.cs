@@ -4,7 +4,7 @@ using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Catalog.Application.IntegrationTests.Categorys.Commands;
+namespace Catalog.Application.IntegrationTests.Categories.Commands;
 
 using static Testing;
 

@@ -132,14 +132,14 @@ public partial class Testing
         return await context.Set<TEntity>().CountAsync();
     }
 
-    public static IList<Category> GetAllCategories()
+    public static IList<TEntity> GetAll<TEntity>() where TEntity : class
     {
         using var scope = _scopeFactory.CreateScope();
 
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-        return context.Categories.ToList();
+        return context.Set<TEntity>().ToList();
     }
+
 
     [OneTimeTearDown]
     public void RunAfterAnyTests()

@@ -44,7 +44,7 @@ public class GetCategoriesTests : BaseTestFixture
             Name = parentCategoryName,
         });
 
-        var categories = GetAllCategories();
+        var categories = GetAll<Category>();
         var parentCategoryId = categories.First().Id;
 
 
