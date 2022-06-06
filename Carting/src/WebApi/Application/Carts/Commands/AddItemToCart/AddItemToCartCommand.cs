@@ -27,7 +27,7 @@ public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand,
     }
 
 
-    Task<string> IRequestHandler<AddItemToCartCommand, string>.Handle(AddItemToCartCommand request, CancellationToken cancellationToken)
+    public Task<string> Handle(AddItemToCartCommand request, CancellationToken cancellationToken)
     {
         if (_context.Get<Cart>(request.CartId) == null)
         {

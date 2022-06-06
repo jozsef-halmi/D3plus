@@ -21,7 +21,7 @@ public class RemoveItemFromCartCommandHandler : IRequestHandler<RemoveItemFromCa
     }
 
 
-    Task<string> IRequestHandler<RemoveItemFromCartCommand, string>.Handle(RemoveItemFromCartCommand request, CancellationToken cancellationToken)
+    public Task<string> Handle(RemoveItemFromCartCommand request, CancellationToken cancellationToken)
     {
         var cart = _context.Get<Cart>(request.CartId);
         if (cart == null)
