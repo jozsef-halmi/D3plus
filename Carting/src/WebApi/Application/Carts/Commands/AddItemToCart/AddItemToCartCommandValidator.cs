@@ -1,6 +1,5 @@
-﻿using Carting.WebApi.Domain.ValueObjects;
-using FluentValidation;
-
+﻿using FluentValidation;
+using Carting.WebApi.Domain.Extensions;
 namespace Carting.WebApi.Application.Carts.Commands.AddItemToCart;
 
 public class AddItemToCartCommandValidator : AbstractValidator<AddItemToCartCommand>
@@ -19,6 +18,6 @@ public class AddItemToCartCommandValidator : AbstractValidator<AddItemToCartComm
 
         RuleFor(v => v.CurrencyCode)
          .NotEmpty()
-         .Must(v => Currency.From(v) != null);
+         .Must(v => v.ToCurrency() != null);
     }
 }

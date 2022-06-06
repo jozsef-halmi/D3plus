@@ -1,7 +1,7 @@
 ﻿using Carting.WebApi.Application.Common.Exceptions;
 using Carting.WebApi.Application.Common.Interfaces;
 using Carting.WebApi.Domain.Entities;
-using Carting.WebApi.Domain.ValueObjects;
+using Carting.WebApi.Domain.Extensions;
 using MediatR;
 
 namespace Carting.WebApi.Application.Carts.Commands.AddItemToCart;
@@ -13,7 +13,7 @@ public record AddItemToCartCommand : IRequest<string>
     public string Name { get; init; }
     public WebImage? WebImage { get; init; }
     public string CurrencyCode { get; init; }
-    public int Price { get; init; }
+    public decimal Price { get; init; }
     public int Quantity { get; init; }
 }
 
@@ -46,7 +46,7 @@ public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand,
         {
             Id = request.Id,
             Name = request.Name,
-            Currency = Currency.From(request.CurrencyCode),
+            Currency = request.CurrencyCode.ToCurrency(),
             Price = request.Price,
             Quantity = request.Quantity,
             WebImage = request.WebImage,

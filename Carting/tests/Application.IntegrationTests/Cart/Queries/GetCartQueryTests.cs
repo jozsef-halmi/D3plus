@@ -25,7 +25,7 @@ public class GetCartQueryTests : BaseTestFixture
                     Id = 1,
                     Name = "ExampleProduct",
                     Price = 5,
-                    Currency = WebApi.Domain.ValueObjects.Currency.EUR,
+                    Currency = WebApi.Domain.Enums.Currency.EUR,
                     Quantity = 1,
                     WebImage = new WebImage() {
                         AltText="ExampleAltText",
@@ -45,7 +45,7 @@ public class GetCartQueryTests : BaseTestFixture
         var cartItem = result.Items.First();
         cartItem.Name.Should().Be(cartToInsert.Items.First().Name);
         cartItem.Price.Should().Be(cartToInsert.Items.First().Price);
-        cartItem.CurrencyCode.Should().Be(cartToInsert.Items.First().Currency.Code);
+        cartItem.CurrencyCode.Should().Be(cartToInsert.Items.First().Currency.ToString());
         cartItem.Quantity.Should().Be(cartToInsert.Items.First().Quantity);
         cartItem.ImageAltText.Should().Be(cartToInsert.Items.First().WebImage.AltText);
         cartItem.ImageUri.Should().Be(cartToInsert.Items.First().WebImage.Uri.ToString());

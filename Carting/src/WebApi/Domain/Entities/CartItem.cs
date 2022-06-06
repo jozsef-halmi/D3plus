@@ -1,4 +1,4 @@
-﻿using Carting.WebApi.Domain.ValueObjects;
+﻿using Carting.WebApi.Domain.Enums;
 
 namespace Carting.WebApi.Domain.Entities;
 
@@ -9,6 +9,6 @@ public class CartItem
     public string Name { get; set; }
     public WebImage? WebImage { get; set; }
     public Currency Currency { get; set; }
-    public float Price { get; set; }
+    public decimal Price { get; set; }
     public int Quantity { get; set; }
 }

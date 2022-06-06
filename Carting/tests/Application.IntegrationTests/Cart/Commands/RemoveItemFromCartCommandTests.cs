@@ -2,6 +2,7 @@
 using Carting.WebApi.Application.Carts.Commands.RemoveItemFromCartCommand;
 using Carting.WebApi.Application.Carts.Queries.GetCart;
 using Carting.WebApi.Application.Common.Exceptions;
+using Carting.WebApi.Domain.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -27,7 +28,7 @@ public class RemoveItemFromCartCommandTests : BaseTestFixture
                 {
                     Name = "ExampleProduct",
                     Price = 5,
-                    Currency = WebApi.Domain.ValueObjects.Currency.EUR,
+                    Currency = WebApi.Domain.Enums.Currency.EUR,
                     Quantity = 1,
                     WebImage = null,
                     Id = cartItemId
@@ -85,7 +86,7 @@ public class RemoveItemFromCartCommandTests : BaseTestFixture
                 {
                     Name = "ExampleProduct",
                     Price = 5,
-                    Currency = WebApi.Domain.ValueObjects.Currency.EUR,
+                    Currency = Currency.EUR,
                     Quantity = 1,
                     WebImage = null,
                 }
