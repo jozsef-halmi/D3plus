@@ -45,10 +45,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
         var exception = (ValidationException)context.Exception;
 
-        var details = new ValidationProblemDetails(exception.Errors)
-        {
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
-        };
+        var details = new ValidationProblemDetails(exception.Errors);
 
         context.Result = new BadRequestObjectResult(details);
 
@@ -57,10 +54,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 
     private void HandleInvalidModelStateException(ExceptionContext context)
     {
-        var details = new ValidationProblemDetails(context.ModelState)
-        {
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
-        };
+        var details = new ValidationProblemDetails(context.ModelState);
 
         context.Result = new BadRequestObjectResult(details);
 
@@ -73,7 +67,6 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 
         var details = new ProblemDetails()
         {
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
             Title = "The specified resource was not found.",
             Detail = exception.Message
         };
