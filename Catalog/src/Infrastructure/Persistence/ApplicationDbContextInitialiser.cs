@@ -1,6 +1,4 @@
-﻿using Catalog.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Catalog.Infrastructure.Persistence;
@@ -47,6 +45,7 @@ public class ApplicationDbContextInitialiser
 
     public async Task TrySeedAsync()
     {
-        //await _context.SaveChangesAsync();
+        // Place seed logic here, in case it's needed.
+        // await _context.SaveChangesAsync();
     }
 }
