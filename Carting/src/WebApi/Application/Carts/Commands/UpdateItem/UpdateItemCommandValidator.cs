@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using Carting.WebApi.Domain.Extensions;
-namespace Carting.WebApi.Application.Carts.Commands.AddItemToCart;
+namespace Carting.WebApi.Application.Carts.Commands.Update;
 
-public class AddItemToCartCommandValidator : AbstractValidator<AddItemToCartCommand>
+public class UpdateCommandValidator : AbstractValidator<UpdateCommand>
 {
-    public AddItemToCartCommandValidator()
+    public UpdateCommandValidator()
     {
         RuleFor(v => v.CartId)
             .NotEmpty();

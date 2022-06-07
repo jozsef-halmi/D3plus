@@ -39,6 +39,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
         cartItem.Quantity.Should().Be(command.Quantity);
     }
 
+
     [Test]
     public async Task InvalidPriceShouldThrowError()
     {
@@ -83,14 +84,13 @@ public class AddItemToCartCommandTests : BaseTestFixture
             WebImage = null
         };
 
-        var id1 = await SendAsync(command1);
-        var id2 = await SendAsync(command2);
+        var cartId1 = await SendAsync(command1);
+        var cartId2 = await SendAsync(command2);
 
-        id1.Should().Be(id2);
+        cartId1.Should().Be(cartId2);
 
-        var cart = Find<WebApi.Domain.Entities.Cart>(id1);
+        var cart = Find<WebApi.Domain.Entities.Cart>(cartId1);
         cart.Items.Should().HaveCount(2);
-
     }
 
     [Test]
