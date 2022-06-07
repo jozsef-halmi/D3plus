@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>Carting.Infrastructure</RootNamespace>
+        <AssemblyName>Carting.Infrastructure</AssemblyName>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Common\**" />
+      <Compile Remove="Persistence\Configurations\**" />
+      <Compile Remove="Persistence\Interceptors\**" />
+      <EmbeddedResource Remove="Common\**" />
+      <EmbeddedResource Remove="Persistence\Configurations\**" />
+      <EmbeddedResource Remove="Persistence\Interceptors\**" />
+      <None Remove="Common\**" />
+      <None Remove="Persistence\Configurations\**" />
+      <None Remove="Persistence\Interceptors\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="LiteDB" Version="5.0.11" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Application\Application.csproj" />
+    </ItemGroup>
+
+</Project>
