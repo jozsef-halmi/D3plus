@@ -30,7 +30,7 @@ public static class ConfigureServices
 
         services.AddScoped<ApplicationDbContextInitialiser>();
 
-        services.AddTransient<IDateTime, DateTimeService>();
+        services.AddSingleton<IDateTime, DateTimeService>();
 
         return services;
     }
