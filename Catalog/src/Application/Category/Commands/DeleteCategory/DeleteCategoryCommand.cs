@@ -6,7 +6,7 @@ namespace Catalog.Application.Categorys.Commands.DeleteCategory;
 
 public record DeleteCategoryCommand : IRequest<int>
 {
-    public int CategoryId { get; init; }
+    public int Id { get; init; }
 }
 
 public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, int>
@@ -20,7 +20,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
 
     public async Task<int> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-        var entity = _context.Categories.FirstOrDefault(c => c.Id == request.CategoryId);
+        var entity = _context.Categories.FirstOrDefault(c => c.Id == request.Id);
         if (entity == null)
             throw new NotFoundException();
 

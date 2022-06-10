@@ -6,7 +6,7 @@ namespace Catalog.Application.Categorys.Commands.UpdateCategory;
 
 public record UpdateCategoryCommand : IRequest<int>
 {
-    public int CategoryId { get; init; }
+    public int Id { get; init; }
     public string Name { get; init; }
     public Uri? ImageUrl { get; init; }
     public int? ParentCategoryId { get; init; }
@@ -23,7 +23,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
     public async Task<int> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var entity = _context.Categories.FirstOrDefault(c => c.Id == request.CategoryId);
+        var entity = _context.Categories.FirstOrDefault(c => c.Id == request.Id);
         if (entity == null)
             throw new NotFoundException();
 

@@ -29,7 +29,7 @@ public class MappingTests
 
     [Test]
     [TestCase(typeof(Category), typeof(CategoryDto))]
-    [TestCase(typeof(Product), typeof(ProductDto))]
+    [TestCase(typeof(Domain.Entities.Product), typeof(ProductDto))]
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         var instance = GetInstanceOf(source);

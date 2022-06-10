@@ -6,7 +6,7 @@ namespace Catalog.Application.Products.Commands.DeleteProduct;
 
 public record DeleteProductCommand : IRequest<int>
 {
-    public int ProductId { get; init; }
+    public int Id { get; init; }
 }
 
 public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, int>
@@ -20,7 +20,7 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
 
     public async Task<int> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = _context.Products.FirstOrDefault(c => c.Id == request.ProductId);
+        var entity = _context.Products.FirstOrDefault(c => c.Id == request.Id);
         if (entity == null)
             throw new NotFoundException();
 

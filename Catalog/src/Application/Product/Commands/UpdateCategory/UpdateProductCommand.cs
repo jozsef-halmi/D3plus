@@ -6,7 +6,7 @@ namespace Catalog.Application.Products.Commands.UpdateProduct;
 
 public record UpdateProductCommand : IRequest<int>
 {
-    public int ProductId { get; init; }
+    public int Id { get; init; }
     public string Name { get; init; }
     public string Description { get; init; }
     public Uri? ImageUrl { get; init; }
@@ -26,7 +26,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 
     public async Task<int> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = _context.Products.FirstOrDefault(c => c.Id == request.ProductId);
+        var entity = _context.Products.FirstOrDefault(c => c.Id == request.Id);
         if (entity == null)
             throw new NotFoundException();
 

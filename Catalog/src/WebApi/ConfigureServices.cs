@@ -16,16 +16,15 @@ public static class ConfigureServices
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
 
-        services.AddControllersWithViews(options =>
-            options.Filters.Add<ApiExceptionFilterAttribute>())
-                .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
-
-        services.AddRazorPages();
+        services.AddControllers(options =>
+          options.Filters.Add<ApiExceptionFilterAttribute>())
+              .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
+        services.AddSwaggerGen();
         return services;
     }
 }

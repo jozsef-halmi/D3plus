@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Catalog.Application.Common.Mappings;
 
-namespace Catalog.Application.Products.Queries.GetProducts;
+namespace Catalog.Application.Product.Queries.GetProductsWithPagination;
 
 public class ProductDto : IMapFrom<Domain.Entities.Product>
 {

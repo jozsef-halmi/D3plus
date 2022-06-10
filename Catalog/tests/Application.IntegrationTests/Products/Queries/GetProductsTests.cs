@@ -18,7 +18,7 @@ public class GetProductsTests : BaseTestFixture
             Name = "Example Category",
         });
 
-        var productToInsert1 = new Product
+        var productToInsert1 = new Domain.Entities.Product
         {
             Name = "Example Product1",
             CategoryId = category.Id,
@@ -27,7 +27,7 @@ public class GetProductsTests : BaseTestFixture
         };
         await AddAsync(productToInsert1);
 
-        var productToInsert2 = new Product
+        var productToInsert2 = new Domain.Entities.Product
         {
             Name = "Example Product2",
             CategoryId = category.Id,
@@ -35,7 +35,7 @@ public class GetProductsTests : BaseTestFixture
             Amount = 1
         };
         await AddAsync(productToInsert2);
-        var products = GetAll<Product>();
+        var products = GetAll<Domain.Entities.Product>();
 
         var query = new GetProductsQuery();
 

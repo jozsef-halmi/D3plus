@@ -35,7 +35,7 @@ public class CreateProductTests : BaseTestFixture
 
         var productId = await SendAsync(command);
 
-        var product = await FindAsync<Product>(productId);
+        var product = await FindAsync<Domain.Entities.Product>(productId);
 
         product.Should().NotBeNull();
         product.Name.Should().Be(command.Name);
@@ -128,7 +128,7 @@ public class CreateProductTests : BaseTestFixture
         };
 
         var productId = await SendAsync(command);
-        var product = await FindAsync<Product>(productId);
+        var product = await FindAsync<Domain.Entities.Product>(productId);
 
         product.Should().NotBeNull();
         product.Description.Should().Be(command.Description);

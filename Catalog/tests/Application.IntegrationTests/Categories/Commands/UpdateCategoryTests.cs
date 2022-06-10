@@ -30,7 +30,7 @@ public class UpdateCategoryTests : BaseTestFixture
 
         var updateCommand = new UpdateCategoryCommand()
         {
-            CategoryId = categoryId,
+            Id = categoryId,
             Name = "New category modified",
             ImageUrl = new Uri("http://localhost/example-modified.jpg"),
         };
@@ -58,7 +58,7 @@ public class UpdateCategoryTests : BaseTestFixture
     {
         var updateParentCategoryCommand = new UpdateCategoryCommand
         {
-            CategoryId = 9999
+            Id = 9999
         };
 
         Func<Task> act = async () => await SendAsync(updateParentCategoryCommand);
@@ -87,7 +87,7 @@ public class UpdateCategoryTests : BaseTestFixture
 
         var updateCommand = new UpdateCategoryCommand()
         {
-            CategoryId = category1Id,
+            Id = category1Id,
             ParentCategoryId = category2Id,
             Name = "New category modified",
             ImageUrl = new Uri("http://localhost/example-modified.jpg"),
