@@ -3,17 +3,27 @@ using Catalog.Application.Product.Queries.GetProductsWithPagination;
 using Catalog.Application.Products.Commands.CreateProduct;
 using Catalog.Application.Products.Commands.DeleteProduct;
 using Catalog.Application.Products.Commands.UpdateProduct;
+using Catalog.Application.TodoLists.Queries.GetProducts;
 using Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
+using Catalog.WebApi.Helpers;
+using Catalog.WebApi.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebApi.Controllers;
 
 public class ProductsController : ApiControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<PaginatedList<ProductDto>>> GetProductsWithPagination([FromQuery] GetProductsWithPaginationQuery query)
+    private readonly LinkGenerator _linkGenerator;
+
+    public ProductsController(LinkGenerator linkGenerator)
     {
-        return await Mediator.Send(query);
+        _linkGenerator = linkGenerator;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<HateoasResponse<ProductsWithPaginationVm>>> GetProductsWithPagination([FromQuery] GetProductsWithPaginationQuery query)
+    {
+        return HateoasHelper.CreateLinksForProducts(HttpContext, _linkGenerator, await Mediator.Send(query), query.CategoryId);
     }
 
     [HttpPost]

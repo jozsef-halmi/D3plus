@@ -5,6 +5,9 @@ public class GetProductsWithPaginationQueryValidator : AbstractValidator<GetProd
 {
     public GetProductsWithPaginationQueryValidator()
     {
+        RuleFor(x => x.CategoryId)
+            .NotEmpty().WithMessage("CategoryId is required.");
+
         RuleFor(x => x.PageNumber)
             .GreaterThanOrEqualTo(1).WithMessage("PageNumber at least greater than or equal to 1.");
 

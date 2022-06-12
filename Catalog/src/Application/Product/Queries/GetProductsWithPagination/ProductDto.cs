@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Text.Json.Serialization;
+using AutoMapper;
 using Catalog.Application.Common.Mappings;
+using Catalog.Application.Common.Models;
 
 namespace Catalog.Application.Product.Queries.GetProductsWithPagination;
 
@@ -21,9 +23,13 @@ public class ProductDto : IMapFrom<Domain.Entities.Product>
 
     public int Amount { get; set; }
 
+    [JsonPropertyName("_links")]
+    public IDictionary<string,LinkDto> Links { get; set; } = new Dictionary<string,LinkDto>();
+
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Domain.Entities.Product, ProductDto>()
-            .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name));
+            .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name))
+            .ForMember(d => d.Links, opt => opt.Ignore());
     }
 }

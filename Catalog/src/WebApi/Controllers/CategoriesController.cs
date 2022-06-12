@@ -2,16 +2,25 @@
 using Catalog.Application.Categorys.Commands.DeleteCategory;
 using Catalog.Application.Categorys.Commands.UpdateCategory;
 using Catalog.Application.TodoLists.Queries.GetCategories;
+using Catalog.WebApi.Helpers;
+using Catalog.WebApi.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebApi.Controllers;
 
 public class CategoriesController : ApiControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<CategoriesVm>> GetCategories()
+    private readonly LinkGenerator _linkGenerator;
+
+    public CategoriesController(LinkGenerator linkGenerator)
     {
-        return await Mediator.Send(new GetCategoriesQuery());
+        _linkGenerator = linkGenerator;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<HateoasResponse<CategoriesVm>>> GetCategories()
+    {
+        return HateoasHelper.CreateLinksForCategories(HttpContext, _linkGenerator, await Mediator.Send(new GetCategoriesQuery()));
     }
 
     [HttpPost]
@@ -20,7 +29,7 @@ public class CategoriesController : ApiControllerBase
         return await Mediator.Send(command);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id}"), ActionName(nameof(Update))]
     public async Task<ActionResult> Update(int id, UpdateCategoryCommand command)
     {
         if (id != command.Id)

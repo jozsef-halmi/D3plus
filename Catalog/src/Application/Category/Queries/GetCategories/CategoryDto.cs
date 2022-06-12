@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Text.Json.Serialization;
+using AutoMapper;
 using Catalog.Application.Common.Mappings;
+using Catalog.Application.Common.Models;
 using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Categorys.Queries.GetCategories;
@@ -16,9 +18,13 @@ public class CategoryDto : IMapFrom<Category>
 
     public string? ParentCategoryName { get; set; }
 
+    [JsonPropertyName("_links")]
+    public IDictionary<string, LinkDto> Links { get; set; } = new Dictionary<string, LinkDto>();
+
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Category, CategoryDto>()
-            .ForMember(d => d.ParentCategoryName, opt => opt.MapFrom(s => s.ParentCategory != null ? s.ParentCategory.Name : null));
+            .ForMember(d => d.ParentCategoryName, opt => opt.MapFrom(s => s.ParentCategory != null ? s.ParentCategory.Name : null))
+            .ForMember(d => d.Links, opt => opt.Ignore());
     }
 }
