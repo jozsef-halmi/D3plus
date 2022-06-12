@@ -9,7 +9,7 @@ namespace Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
 
 public record GetProductsWithPaginationQuery : IRequest<PaginatedList<ProductDto>>
 {
-    public int? CategoryId { get; init; }
+    public int CategoryId { get; init; }
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
 }
@@ -28,7 +28,7 @@ public class GetProductsWithPaginationQueryHandler : IRequestHandler<GetProducts
     public async Task<PaginatedList<ProductDto>> Handle(GetProductsWithPaginationQuery request, CancellationToken cancellationToken)
     {
         return await _context.Products
-             .Where(x => !request.CategoryId.HasValue || x.CategoryId == request.CategoryId)
+             .Where(x => x.CategoryId == request.CategoryId)
              .OrderBy(x => x.Name)
              .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
              .PaginatedListAsync(request.PageNumber, request.PageSize);
