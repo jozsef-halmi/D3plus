@@ -2,13 +2,11 @@
 using AutoMapper.QueryableExtensions;
 using Catalog.Application.Products.Queries.GetProducts;
 using Catalog.Application.Common.Interfaces;
-using Catalog.Application.Common.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Application.TodoLists.Queries.GetProducts;
 
-[Authorize]
 public record GetProductsQuery : IRequest<ProductsVm>;
 
 public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, ProductsVm>

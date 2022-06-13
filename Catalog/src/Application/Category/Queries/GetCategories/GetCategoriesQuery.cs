@@ -2,13 +2,11 @@
 using AutoMapper.QueryableExtensions;
 using Catalog.Application.Categorys.Queries.GetCategories;
 using Catalog.Application.Common.Interfaces;
-using Catalog.Application.Common.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Application.TodoLists.Queries.GetCategories;
 
-[Authorize]
 public record GetCategoriesQuery : IRequest<CategoriesVm>;
 
 public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, CategoriesVm>
