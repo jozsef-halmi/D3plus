@@ -1,6 +1,9 @@
+using Carting.WebApi.Application.Common.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddConfig(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebApiServices();
@@ -22,10 +25,12 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseSwaggerUi3(settings =>
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+    options.SwaggerEndpoint("/swagger/v2/swagger.json", "API v2");
+    options.RoutePrefix = string.Empty;
 });
 
 app.UseRouting();
@@ -34,6 +39,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();
 
