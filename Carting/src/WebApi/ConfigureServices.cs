@@ -3,6 +3,7 @@ using Carting.WebApi.Application.Common.Behaviours;
 using Carting.WebApi.Application.Common.Configuration;
 using Carting.WebApi.Application.Common.Interfaces;
 using Carting.WebApi.Filters;
+using Carting.WebApi.Helpers;
 using Carting.WebApi.Infrastructure.Persistence;
 using Carting.WebApi.Infrastructure.Services;
 using Carting.WebApi.Swagger;
@@ -35,7 +36,13 @@ public static class ConfigureServices
         {
             options.Conventions.Add(new GroupingByNamespaceConvention());
         });
-        services.AddApiVersioning();
+
+        services.AddApiVersioning(config => {
+            config.DefaultApiVersion = new ApiVersion(1, 0);
+            config.ReportApiVersions = true;
+            config.AssumeDefaultVersionWhenUnspecified = true;
+        });
+
         services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo
@@ -55,6 +62,8 @@ public static class ConfigureServices
             // using System.Reflection;
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            options.OperationFilter<SwaggerParameterFilters>();
+            options.DocumentFilter<SwaggerVersionMapping>();
         });
 
 

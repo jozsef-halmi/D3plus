@@ -15,6 +15,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             {
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
+                { typeof(ItemAlreadyAddedToCartException), HandleItemAlreadyAddedToCartException },
             };
     }
 
@@ -39,6 +40,21 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             HandleInvalidModelStateException(context);
             return;
         }
+    }
+
+    private void HandleItemAlreadyAddedToCartException(ExceptionContext context)
+    {
+        var exception = (ItemAlreadyAddedToCartException)context.Exception;
+
+        var details = new ProblemDetails()
+        {
+            Title = "The specified resource has already been added.",
+            Detail = exception.Message
+        };
+
+        context.Result = new UnprocessableEntityObjectResult(details);
+
+        context.ExceptionHandled = true;
     }
 
     private void HandleValidationException(ExceptionContext context)

@@ -1,4 +1,7 @@
-﻿using Carting.WebApi.Application.Carts.Queries.GetCart;
+﻿using Carting.WebApi.Application.Carts.Commands.AddItemToCart;
+using Carting.WebApi.Application.Carts.Commands.RemoveItemFromCartCommand;
+using Carting.WebApi.Application.Carts.Queries.GetCart;
+using Carting.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carting.WebApi.Controllers.V2;
@@ -22,39 +25,104 @@ public class CartsController : ApiControllerBase
     /// </remarks>
     /// <response code="200">Returns the cart</response>
     /// <response code="404">If the cart does not exist</response>
-    //[ProducesResponseType(StatusCodes.Status200OK)]
-    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    /// <response code="500">Server error</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [HttpGet]
-    public async Task<ActionResult<CartDto>> GetCart([FromQuery] GetCartQuery query)
+    public async Task<ActionResult<IList<CartItemDto>>> GetCart([FromQuery] GetCartQuery query)
     {
-        return NoContent();
-        return await Mediator.Send(query);
+        var cart = await Mediator.Send(query);
+        return Ok(cart.Items);
     }
 
-    //[HttpPost]
-    //public async Task<ActionResult<int>> Create(CreateProductCommand command)
-    //{
-    //    return await Mediator.Send(command);
-    //}
+    /// <summary>
+    /// Adds an item to a specific cart. If there was no cart for the specifiec key, it creates the cart as well.
+    /// </summary>
+    /// <param name="cartId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /some-id/Items
+    ///     {
+    ///        "Id": 1,
+    ///        "Name": "Some item name",
+    ///        "CurrencyCode": "EUR",
+    ///        "Price":5.99,
+    ///        "Quantity":2,
+    ///        "WebImage": {
+    ///           "Uri": "http://localhost/some-image-url.png",
+    ///           "AltText": "Missing image"
+    ///         }
+    ///     }
+    ///
+    /// </remarks>
+    /// <response code="201">Item created</response>
+    /// <response code="422">Request couldn't be processed - item is already added</response>
+    /// <response code="500">Server error</response>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Route("{cartId}/Items")]
+    [HttpPost]
+    public async Task<ActionResult> AddItemToCart(string cartId, AddItemToCartCommandDto command)
+    {
+        var addItemToCartCommand = new AddItemToCartCommand()
+        {
+            CartId = cartId,
+            Id = command.Id,
+            CurrencyCode = command.CurrencyCode,
+            Name = command.Name,
+            Price = command.Price,
+            Quantity = command.Quantity,
+            WebImage = command.WebImage
+        };
 
-    //[HttpPut("{id}")]
-    //public async Task<ActionResult> Update(int id, UpdateProductCommand command)
-    //{
-    //    if (id != command.Id)
-    //    {
-    //        return BadRequest();
-    //    }
+        await Mediator.Send(addItemToCartCommand);
 
-    //    await Mediator.Send(command);
+        return StatusCode(StatusCodes.Status201Created);
+    }
 
-    //    return NoContent();
-    //}
+    /// <summary>
+    /// Adds an item to a specific cart. If there was no cart for the specifiec key, it creates the cart as well.
+    /// </summary>
+    /// <param name="cartId"></param>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /some-id/Items/1
+    ///     {
+    ///        "Name": "Some item name",
+    ///        "CurrencyCode": "EUR",
+    ///        "Price":5.99,
+    ///        "Quantity":2,
+    ///        "WebImage": {
+    ///           "Uri": "http://localhost/some-image-url.png",
+    ///           "AltText": "Missing image"
+    ///         }
+    ///     }
+    ///
+    /// </remarks>
+    /// <response code="200">Item deleted</response>
+    /// <response code="404">Item is not found</response>
+    /// <response code="500">Server error</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Route("{cartId}/Items/{itemId}")]
+    [HttpDelete]
+    public async Task<ActionResult> RemoveItemFromCart(string cartId, int itemId)
+    {
+        await Mediator.Send(new RemoveItemFromCartCommand()
+        {
+            Id = itemId,
+            CartId = cartId
+        });
 
-    //[HttpDelete("{id}")]
-    //public async Task<ActionResult> Delete(int id)
-    //{
-    //    await Mediator.Send(new DeleteProductCommand() { Id = id });
-
-    //    return NoContent();
-    //}
+        return Ok();
+    }
 }
