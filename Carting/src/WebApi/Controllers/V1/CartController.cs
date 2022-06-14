@@ -36,9 +36,9 @@ public class CartsController : ApiControllerBase
     }
 
     /// <summary>
-    /// Adds an item to a specific cart. If there was no cart for the specifiec key, it creates the cart as well.
+    /// Adds an item to a specific cart. If there was no cart for the specifiedkey, it creates the cart as well.
     /// </summary>
-    /// <param name="cartId"></param>
+    /// <param name="cartId">External id of the cart</param>
     /// <param name="command"></param>
     /// <returns></returns>
     /// <remarks>
@@ -85,10 +85,10 @@ public class CartsController : ApiControllerBase
     }
 
     /// <summary>
-    /// Adds an item to a specific cart. If there was no cart for the specifiec key, it creates the cart as well.
+    /// Adds an item to a specific cart. If there was no cart for the specifiedkey, it creates the cart as well.
     /// </summary>
-    /// <param name="cartId"></param>
-    /// <param name="itemId"></param>
+    /// <param name="cartId">External id of the cart</param>
+    /// <param name="itemId">External id of the item</param>
     /// <returns></returns>
     /// <remarks>
     /// Sample request:

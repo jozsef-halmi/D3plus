@@ -8,6 +8,9 @@ namespace Carting.WebApi.Application.Carts.Queries.GetCart;
 
 public record GetCartQuery : IRequest<CartDto>
 {
+    /// <summary>
+    /// External id of the cart
+    /// </summary>
     public string CartId { get; init; }
 }
 
