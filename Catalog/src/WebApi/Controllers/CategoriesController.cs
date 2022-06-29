@@ -29,7 +29,7 @@ public class CategoriesController : ApiControllerBase
         return await Mediator.Send(command);
     }
 
-    [HttpPut("{id}"), ActionName(nameof(Update))]
+    [HttpPut("{id}")]
     public async Task<ActionResult> Update(int id, UpdateCategoryCommand command)
     {
         if (id != command.Id)

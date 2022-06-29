@@ -60,113 +60,18 @@ public class ApplicationDbContextInitialiser
 
             await _context.SaveChangesAsync();
 
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product1",
-                Description = "Test description1",
-                Price = 5.99M,
-                Amount = 2
-            });
 
-            _context.Add(new Product()
+            for (int i = 0; i < 12; i++)
             {
-                CategoryId = category.Entity.Id,
-                Name = "Test product3",
-                Description = "Test description3",
-                Price = 3.99M,
-                Amount = 3
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product4",
-                Description = "Test description4",
-                Price = 5.99M,
-                Amount = 2
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product5",
-                Description = "Test description5",
-                Price = 3.99M,
-                Amount = 3
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product6",
-                Description = "Test description6",
-                Price = 5.99M,
-                Amount = 2
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product7",
-                Description = "Test description7",
-                Price = 3.99M,
-                Amount = 3
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product8",
-                Description = "Test description8",
-                Price = 5.99M,
-                Amount = 2
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product9",
-                Description = "Test description9",
-                Price = 3.99M,
-                Amount = 3
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product10",
-                Description = "Test description10",
-                Price = 5.99M,
-                Amount = 2
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product11",
-                Description = "Test description11",
-                Price = 3.99M,
-                Amount = 3
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product12",
-                Description = "Test description12",
-                Price = 5.99M,
-                Amount = 2
-            });
-
-            _context.Add(new Product()
-            {
-                CategoryId = category.Entity.Id,
-                Name = "Test product13",
-                Description = "Test description13",
-                Price = 3.99M,
-                Amount = 3
-            });
+                _context.Add(new Product()
+                {
+                    CategoryId = category.Entity.Id,
+                    Name = $"Test product{i}",
+                    Description = $"Test description{i}",
+                    Price =  i*2M,
+                    Amount = i
+                });
+            }
         }
 
         await _context.SaveChangesAsync();
