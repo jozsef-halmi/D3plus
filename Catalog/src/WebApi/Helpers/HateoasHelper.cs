@@ -17,23 +17,23 @@ public static class HateoasHelper
 
             // Create
             category.Links.Add(HttpMethod.Post.ToString().ToLower(),
-                new Application.Common.Models.LinkDto(linkGenerator.GetUriByAction(context, nameof(CategoriesController.Create)),
+                new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(CategoriesController.Create)),
                     HttpMethod.Post.ToString()));
 
             // Update
             category.Links.Add(HttpMethod.Put.ToString().ToLower(),
-                new Application.Common.Models.LinkDto(linkGenerator.GetUriByAction(context, nameof(CategoriesController.Update), values: new { id }),
+                new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(CategoriesController.Update), values: new { id }),
                     HttpMethod.Put.ToString()));
 
             // Delete
             category.Links.Add(HttpMethod.Delete.ToString().ToLower(),
-                new Application.Common.Models.LinkDto(linkGenerator.GetUriByAction(context, nameof(CategoriesController.Delete), values: new { id }),
+                new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(CategoriesController.Delete), values: new { id }),
                    
                     HttpMethod.Delete.ToString()));
 
             // Products
             category.Links.Add("products",
-                new Application.Common.Models.LinkDto(linkGenerator.GetUriByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = id }),
+                new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = id }),
                     HttpMethod.Get.ToString()));
         }
 
@@ -41,7 +41,7 @@ public static class HateoasHelper
 
         // Self
         links.Add("self",
-            new Application.Common.Models.LinkDto(linkGenerator.GetUriByAction(context, nameof(CategoriesController.GetCategories)),
+            new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(CategoriesController.GetCategories)),
                     HttpMethod.Get.ToString()));
 
         return new HateoasResponse<CategoriesVm>()
@@ -59,34 +59,34 @@ public static class HateoasHelper
 
             // Create
             product.Links.Add(HttpMethod.Post.ToString().ToLower(),
-                new Application.Common.Models.LinkDto(linkGenerator.GetUriByAction(context, nameof(ProductsController.Create)),
+                new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.Create)),
                     HttpMethod.Post.ToString()));
 
             // Update
             product.Links.Add(HttpMethod.Put.ToString().ToLower(),
-                new Application.Common.Models.LinkDto(linkGenerator.GetUriByAction(context, nameof(ProductsController.Update), values: new { id }),
+                new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.Update), values: new { id }),
                     HttpMethod.Put.ToString()));
 
             // Delete
             product.Links.Add(HttpMethod.Delete.ToString().ToLower(),
-                new Application.Common.Models.LinkDto(linkGenerator.GetUriByAction(context, nameof(ProductsController.Delete), values: new { id }),
+                new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.Delete), values: new { id }),
                     HttpMethod.Delete.ToString()));
         }
 
         var links = new Dictionary<string, LinkDto>();
-        links.Add("self", new LinkDto(linkGenerator.GetUriByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber, PageSize = vm.Products.PageSize }),
+        links.Add("self", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber, PageSize = vm.Products.PageSize }),
                     HttpMethod.Get.ToString()));
 
         if (vm.Products.HasNextPage)
-            links.Add("next", new LinkDto(linkGenerator.GetUriByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber+1, PageSize = vm.Products.PageSize }),
+            links.Add("next", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber+1, PageSize = vm.Products.PageSize }),
                     HttpMethod.Get.ToString()));
         
         if (vm.Products.HasPreviousPage)
-            links.Add("previous", new LinkDto(linkGenerator.GetUriByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber - 1, PageSize = vm.Products.PageSize }),
+            links.Add("previous", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber - 1, PageSize = vm.Products.PageSize }),
                     HttpMethod.Get.ToString()));
 
         if (vm.Products.TotalPages != vm.Products.PageNumber)
-            links.Add("last", new LinkDto(linkGenerator.GetUriByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.TotalPages, PageSize = vm.Products.PageSize }),
+            links.Add("last", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.TotalPages, PageSize = vm.Products.PageSize }),
                     HttpMethod.Get.ToString()));
 
         return new HateoasResponse<ProductsWithPaginationVm>()
