@@ -64,7 +64,7 @@ public class CartsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [Route("{cartId}/Items")]
     [HttpPost]
-    public async Task<ActionResult> AddItemToCart(string cartId, AddItemToCartCommandDto command)
+    public async Task<ActionResult> AddItemToCart(string cartId, AddItemToCartDto command)
     {
         var addItemToCartCommand = new AddItemToCartCommand()
         {

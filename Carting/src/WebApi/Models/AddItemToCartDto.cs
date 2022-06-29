@@ -2,7 +2,7 @@
 
 namespace Carting.WebApi.Models;
 
-public class AddItemToCartCommandDto
+public class AddItemToCartDto
 {
     /// <summary>
     /// Item id. Points to an Id in an external system
