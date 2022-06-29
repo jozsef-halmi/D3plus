@@ -6,7 +6,7 @@ using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Categorys.Queries.GetCategories;
 
-public class CategoryDto : IMapFrom<Category>
+public class CategoryDto : HateoasDto, IMapFrom<Category>
 {
     public int Id { get; set; }
 
@@ -17,9 +17,6 @@ public class CategoryDto : IMapFrom<Category>
     public int? ParentCategoryId { get; set; }
 
     public string? ParentCategoryName { get; set; }
-
-    [JsonPropertyName("_links")]
-    public IDictionary<string, LinkDto> Links { get; set; } = new Dictionary<string, LinkDto>();
 
     public void Mapping(Profile profile)
     {

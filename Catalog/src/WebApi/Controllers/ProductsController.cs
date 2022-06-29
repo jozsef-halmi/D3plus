@@ -7,6 +7,7 @@ using Catalog.Application.TodoLists.Queries.GetProducts;
 using Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
 using Catalog.WebApi.Helpers;
 using Catalog.WebApi.Model;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebApi.Controllers;
@@ -15,7 +16,7 @@ public class ProductsController : ApiControllerBase
 {
     private readonly LinkGenerator _linkGenerator;
 
-    public ProductsController(LinkGenerator linkGenerator)
+    public ProductsController(LinkGenerator linkGenerator, ISender mediator) : base(mediator)
     {
         _linkGenerator = linkGenerator;
     }
@@ -23,13 +24,13 @@ public class ProductsController : ApiControllerBase
     [HttpGet]
     public async Task<ActionResult<HateoasResponse<ProductsWithPaginationVm>>> GetProductsWithPagination([FromQuery] GetProductsWithPaginationQuery query)
     {
-        return HateoasHelper.CreateLinksForProducts(HttpContext, _linkGenerator, await Mediator.Send(query), query.CategoryId);
+        return HateoasHelper.CreateLinksForProducts(HttpContext, _linkGenerator, await _mediator.Send(query), query.CategoryId);
     }
 
     [HttpPost]
     public async Task<ActionResult<int>> Create(CreateProductCommand command)
     {
-        return await Mediator.Send(command);
+        return await _mediator.Send(command);
     }
 
     [HttpPut("{id}")]
@@ -40,7 +41,7 @@ public class ProductsController : ApiControllerBase
             return BadRequest();
         }
 
-        await Mediator.Send(command);
+        await _mediator.Send(command);
 
         return NoContent();
     }
@@ -48,7 +49,7 @@ public class ProductsController : ApiControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-        await Mediator.Send(new DeleteProductCommand() {  Id = id });
+        await _mediator.Send(new DeleteProductCommand() {  Id = id });
 
         return NoContent();
     }
