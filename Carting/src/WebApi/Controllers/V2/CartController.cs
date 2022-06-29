@@ -17,10 +17,7 @@ public class CartsController : ApiControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     GET /
-    ///     {
-    ///        "CartId": 1
-    ///     }
+    ///     GET /Carts?CartId=1
     ///
     /// </remarks>
     /// <response code="200">Returns the cart</response>
@@ -45,7 +42,7 @@ public class CartsController : ApiControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     POST /some-id/Items
+    ///     POST /Carts/some-id/Items
     ///     {
     ///        "Id": 1,
     ///        "Name": "Some item name",
@@ -94,7 +91,7 @@ public class CartsController : ApiControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     POST /some-id/Items/1
+    ///     POST /Carts/some-id/Items/1
     ///     {
     ///        "Name": "Some item name",
     ///        "CurrencyCode": "EUR",
