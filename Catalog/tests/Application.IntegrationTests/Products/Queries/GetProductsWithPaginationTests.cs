@@ -1,5 +1,6 @@
 ﻿using Catalog.Application.Common.Exceptions;
 using Catalog.Application.TodoLists.Queries.GetProducts;
+using Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
 using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
@@ -8,7 +9,7 @@ namespace Catalog.Application.IntegrationTests.TodoLists.Queries;
 
 using static Testing;
 
-public class GetProductsTests : BaseTestFixture
+public class GetProductsWithPaginationTests : BaseTestFixture
 {
     [Test]
     public async Task ShouldReturnAllProducts()
@@ -37,13 +38,13 @@ public class GetProductsTests : BaseTestFixture
         await AddAsync(productToInsert2);
         var products = GetAll<Domain.Entities.Product>();
 
-        var query = new GetProductsQuery();
+        var query = new GetProductsWithPaginationQuery() { CategoryId = category.Id };
 
-        var result = await SendAsync(query);
+        var result = (await SendAsync(query)).Products.Items;
 
-        result.Products.Should().HaveCount(products.Count);
+        result.Should().HaveCount(products.Count);
 
-        var product1 = result.Products.FirstOrDefault(p => p.Name == productToInsert1.Name);
+        var product1 = result.FirstOrDefault(p => p.Name == productToInsert1.Name);
         product1.Should().NotBeNull();
         product1.Name.Should().Be(productToInsert1.Name);
         product1.Description.Should().Be(productToInsert1.Description);
@@ -53,7 +54,7 @@ public class GetProductsTests : BaseTestFixture
         product1.CategoryId.Should().Be(productToInsert1.CategoryId);
         product1.CategoryName.Should().Be(category.Name);
 
-        var product2 = result.Products.FirstOrDefault(p => p.Name == productToInsert2.Name);
+        var product2 = result.FirstOrDefault(p => p.Name == productToInsert2.Name);
         product2.Should().NotBeNull();
         product2.Name.Should().Be(productToInsert2.Name);
         product2.Description.Should().Be(productToInsert2.Description);
@@ -62,5 +63,38 @@ public class GetProductsTests : BaseTestFixture
         product2.Price.Should().Be(productToInsert2.Price);
         product2.CategoryId.Should().Be(productToInsert2.CategoryId);
         product2.CategoryName.Should().Be(category.Name);
+    }
+
+    [Test]
+    public async Task WithoutCategoryIdShouldThrowValidationError()
+    {
+        var category = await AddAsync(new Category
+        {
+            Name = "Example Category",
+        });
+
+        var productToInsert1 = new Domain.Entities.Product
+        {
+            Name = "Example Product1",
+            CategoryId = category.Id,
+            Price = 1,
+            Amount = 1
+        };
+        await AddAsync(productToInsert1);
+
+        var productToInsert2 = new Domain.Entities.Product
+        {
+            Name = "Example Product2",
+            CategoryId = category.Id,
+            Price = 1,
+            Amount = 1
+        };
+        await AddAsync(productToInsert2);
+        var products = GetAll<Domain.Entities.Product>();
+
+        var query = new GetProductsWithPaginationQuery() { /*CategoryId = category.Id*/ };
+
+        Func<Task> act = async () => await SendAsync(query);
+        await act.Should().ThrowAsync<ValidationException>();
     }
 }

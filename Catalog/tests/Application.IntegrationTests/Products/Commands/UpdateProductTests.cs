@@ -34,7 +34,7 @@ public class UpdateProductTests : BaseTestFixture
         });
 
 
-        var product = await AddAsync(new Product()
+        var product = await AddAsync(new Domain.Entities.Product()
         {
             Name = "New product",
             Price = 5.99M,
@@ -44,7 +44,7 @@ public class UpdateProductTests : BaseTestFixture
 
         var updateCommand = new UpdateProductCommand()
         {
-            ProductId = product.Id,
+            Id = product.Id,
             Name = "New Product modified",
             ImageUrl = new Uri("http://localhost/example-modified.jpg"),
             CategoryId = category2.Id,
@@ -54,7 +54,7 @@ public class UpdateProductTests : BaseTestFixture
         };
 
         var updatedProductId = await SendAsync(updateCommand);
-        var updatedProduct = await FindAsync<Product>(updatedProductId);
+        var updatedProduct = await FindAsync<Domain.Entities.Product>(updatedProductId);
 
 
         product.Should().NotBeNull();
@@ -80,7 +80,7 @@ public class UpdateProductTests : BaseTestFixture
     {
         var updateProductCommand = new UpdateProductCommand
         {
-            ProductId = 9999
+            Id = 9999
         };
 
         Func<Task> act = async () => await SendAsync(updateProductCommand);

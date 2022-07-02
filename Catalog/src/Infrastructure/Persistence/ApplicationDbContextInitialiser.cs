@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Catalog.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Catalog.Infrastructure.Persistence;
@@ -45,7 +46,34 @@ public class ApplicationDbContextInitialiser
 
     public async Task TrySeedAsync()
     {
-        // Place seed logic here, in case it's needed.
-        // await _context.SaveChangesAsync();
+        if (!_context.Categories.Any())
+        {
+            var category = _context.Add(new Category()
+            {
+                Name = "Test category1",
+            });
+
+            _context.Add(new Category()
+            {
+                Name = "Test category2",
+            });
+
+            await _context.SaveChangesAsync();
+
+
+            for (int i = 0; i < 12; i++)
+            {
+                _context.Add(new Product()
+                {
+                    CategoryId = category.Entity.Id,
+                    Name = $"Test product{i}",
+                    Description = $"Test description{i}",
+                    Price =  i*2M,
+                    Amount = i
+                });
+            }
+        }
+
+        await _context.SaveChangesAsync();
     }
 }

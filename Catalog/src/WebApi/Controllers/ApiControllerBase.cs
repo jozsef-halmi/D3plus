@@ -8,7 +8,10 @@ namespace Catalog.WebApi.Controllers;
 [Route("api/[controller]")]
 public abstract class ApiControllerBase : ControllerBase
 {
-    private ISender _mediator = null!;
+    protected ISender _mediator;
 
-    protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
+    public ApiControllerBase(ISender mediator)
+    {
+        _mediator = mediator;
+    }
 }

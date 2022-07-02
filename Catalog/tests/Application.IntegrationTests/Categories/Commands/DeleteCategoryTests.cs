@@ -18,7 +18,7 @@ public class DeleteCategoryTests : BaseTestFixture
 
         var deleteCommand = new DeleteCategoryCommand
         {
-            CategoryId = category.Id
+            Id = category.Id
         };
 
         var deletedCategoryId = await SendAsync(deleteCommand);
@@ -36,7 +36,7 @@ public class DeleteCategoryTests : BaseTestFixture
     {
         var command = new DeleteCategoryCommand
         {
-            CategoryId = 9999
+            Id = 9999
         };
 
         Func<Task> act = async () => await SendAsync(command);
@@ -48,7 +48,7 @@ public class DeleteCategoryTests : BaseTestFixture
     {
         var category = await AddAsync(new Category() { Name = "New category" });
 
-        var product = await AddAsync(new Product()
+        var product = await AddAsync(new Domain.Entities.Product()
         {
             Name = "New product",
             Price = 5.99M,
@@ -58,12 +58,12 @@ public class DeleteCategoryTests : BaseTestFixture
 
         var deleteCommand = new DeleteCategoryCommand
         {
-            CategoryId = category.Id
+            Id = category.Id
         };
 
         var deletedCategoryId = await SendAsync(deleteCommand);
         var deletedCategory = await FindAsync<Category>(category.Id);
-        var products = GetAll<Product>();
+        var products = GetAll<Domain.Entities.Product>();
 
         deletedCategory.Should().BeNull();
         category.Id.Should().Be(deletedCategoryId);
