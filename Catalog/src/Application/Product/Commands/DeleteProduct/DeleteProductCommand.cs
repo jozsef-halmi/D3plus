@@ -1,5 +1,6 @@
 ﻿using Catalog.Application.Common.Exceptions;
 using Catalog.Application.Common.Interfaces;
+using Catalog.Domain.Events;
 using MediatR;
 
 namespace Catalog.Application.Products.Commands.DeleteProduct;
@@ -25,6 +26,8 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
             throw new NotFoundException();
 
         _context.Products.Remove(entity);
+
+        entity.AddDomainEvent(new ProductDeletedEvent(entity));
 
         await _context.SaveChangesAsync(cancellationToken);
 

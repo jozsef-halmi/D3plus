@@ -1,5 +1,6 @@
 ﻿using Catalog.Application.Common.Exceptions;
 using Catalog.Application.Common.Interfaces;
+using Catalog.Domain.Events;
 using MediatR;
 
 namespace Catalog.Application.Products.Commands.UpdateProduct;
@@ -38,6 +39,8 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         entity.CategoryId = request.CategoryId;
 
         _context.Products.Update(entity);
+
+        entity.AddDomainEvent(new ProductUpdatedEvent(entity));
 
         await _context.SaveChangesAsync(cancellationToken);
 
