@@ -1,4 +1,5 @@
 ﻿using Catalog.Application.Common.Exceptions;
+using Catalog.Application.Common.Extensions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Domain.Events;
 using MediatR;
@@ -31,6 +32,8 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         if (entity == null)
             throw new NotFoundException();
 
+        var oldEntityCopy = entity.Copy();
+
         entity.Name = request.Name;
         entity.Description = request.Description;
         entity.ImageUrl = request.ImageUrl;
@@ -40,7 +43,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 
         _context.Products.Update(entity);
 
-        entity.AddDomainEvent(new ProductUpdatedEvent(entity));
+        entity.AddDomainEvent(new ProductUpdatedEvent(oldEntityCopy,entity));
 
         await _context.SaveChangesAsync(cancellationToken);
 

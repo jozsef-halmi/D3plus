@@ -4,10 +4,13 @@ namespace Catalog.Domain.Events;
 
 public class ProductUpdatedEvent : BaseEvent
 {
-    public ProductUpdatedEvent(Product product)
+    public ProductUpdatedEvent(Product oldProduct, Product newProduct)
     {
-        Product = product;
+        OldProduct = oldProduct;
+        NewProduct = newProduct;
     }
 
-    public Product Product { get; init; }
+    public Product OldProduct { get; init; }
+    public Product NewProduct { get; init; }
+
 }
