@@ -2,5 +2,5 @@
 
 public interface IIntegrationEventService
 {
-    public Task Publish<T>(T message);
+    public Task Publish<T>(T message, CancellationToken cancellationToken);
 }

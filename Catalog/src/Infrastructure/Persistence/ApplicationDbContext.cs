@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using System.Transactions;
 using Catalog.Application.Common.Interfaces;
+using Catalog.Application.Outbox;
 using Catalog.Domain.Entities;
 using Catalog.Infrastructure.Persistence.Interceptors;
 using MediatR;
@@ -26,6 +28,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public DbSet<Product> Products => Set<Product>();
 
+    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -36,6 +40,21 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+    }
+
+    public Task StartTransaction()
+    {
+        return Database.BeginTransactionAsync();
+    }
+
+    public Task Commit()
+    {
+        return Database.CommitTransactionAsync();
+    }
+
+    public Task Rollback()
+    {
+        return Database.RollbackTransactionAsync();
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

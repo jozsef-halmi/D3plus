@@ -1,5 +1,6 @@
 ﻿using Catalog.Infrastructure.Persistence;
 using Catalog.WebApi.Filters;
+using Catalog.WebApi.HostedServices;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,8 @@ public static class ConfigureServices
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
+
+        services.AddHostedService<OutboxHostedService>();
 
         services.AddSwaggerGen();
         return services;

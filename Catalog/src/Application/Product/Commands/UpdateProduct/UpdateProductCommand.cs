@@ -1,8 +1,10 @@
 ﻿using Catalog.Application.Common.Exceptions;
 using Catalog.Application.Common.Extensions;
 using Catalog.Application.Common.Interfaces;
+using Catalog.Application.Outbox;
 using Catalog.Domain.Events;
 using MediatR;
+using Messaging.Contracts;
 
 namespace Catalog.Application.Products.Commands.UpdateProduct;
 
@@ -34,19 +36,45 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 
         var oldEntityCopy = entity.Copy();
 
-        entity.Name = request.Name;
-        entity.Description = request.Description;
-        entity.ImageUrl = request.ImageUrl;
-        entity.Price = request.Price;
-        entity.Amount = request.Amount;
-        entity.CategoryId = request.CategoryId;
+        try
+        {
+            await _context.StartTransaction();
 
-        _context.Products.Update(entity);
+            entity.Name = request.Name;
+            entity.Description = request.Description;
+            entity.ImageUrl = request.ImageUrl;
+            entity.Price = request.Price;
+            entity.Amount = request.Amount;
+            entity.CategoryId = request.CategoryId;
 
-        entity.AddDomainEvent(new ProductUpdatedEvent(oldEntityCopy,entity));
+            _context.Products.Update(entity);
 
-        await _context.SaveChangesAsync(cancellationToken);
+            AddIntegrationEvent(entity.Id, oldEntityCopy.Price, entity.Price);
 
-        return entity.Id;
+            await _context.SaveChangesAsync(cancellationToken);
+            await _context.Commit();
+            return entity.Id;
+        }
+        catch (Exception)
+        {
+            await _context.Rollback();
+            throw;
+        }
+       
+    }
+
+    public void AddIntegrationEvent(int productId, decimal oldPrice, decimal newPrice)
+    {
+        if (oldPrice == newPrice)
+            return;
+
+        var integrationEvent = new ProductPriceChangedIntegrationEvent(productId, newPrice, oldPrice);
+
+        _context.OutboxMessages.Add(new OutboxMessage()
+        {
+            PublishedDate = null,
+            IntegrationEventType = integrationEvent.GetType().FullName,
+            IntegrationEventJson = System.Text.Json.JsonSerializer.Serialize(integrationEvent)
+        });
     }
 }

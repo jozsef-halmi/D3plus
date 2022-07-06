@@ -1,4 +1,5 @@
 ﻿using Catalog.Application.Common.Interfaces;
+using Catalog.Application.Outbox;
 using Catalog.Domain.Events;
 using MediatR;
 using Messaging.Contracts;
@@ -9,18 +10,33 @@ namespace Catalog.Application.Product.EventHandlers;
 public class ProductDeletedEventHandler : INotificationHandler<ProductDeletedEvent>
 {
     private readonly ILogger<ProductDeletedEventHandler> _logger;
-    private readonly IIntegrationEventService _integrationEventService;
+    private readonly IApplicationDbContext _dbContext;
 
-    public ProductDeletedEventHandler(IIntegrationEventService integrationEventService, ILogger<ProductDeletedEventHandler> logger)
+    public ProductDeletedEventHandler(IApplicationDbContext dbContext, ILogger<ProductDeletedEventHandler> logger)
     {
         _logger = logger;
-        _integrationEventService = integrationEventService;
+        _dbContext = dbContext;
     }
 
     public async Task Handle(ProductDeletedEvent notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Domain Event: {DomainEvent}", notification.GetType().Name);
+        try
+        {
+            _logger.LogInformation("Domain Event: {DomainEvent}", notification.GetType().Name);
 
-        await _integrationEventService.Publish(new ProductDeletedIntegrationEvent(notification.Product.Id));
+            var integrationEvent = new ProductDeletedIntegrationEvent(notification.Product.Id);
+
+            _dbContext.OutboxMessages.Add(new OutboxMessage()
+            {
+                PublishedDate = null,
+                IntegrationEventType = integrationEvent.GetType().FullName,
+                IntegrationEventJson = System.Text.Json.JsonSerializer.Serialize(integrationEvent)
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Error while saving outbox message ProductDeletedEvent. {Message}", ex.Message);
+            throw;
+        }
     }
 }

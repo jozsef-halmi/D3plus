@@ -1,5 +1,6 @@
 ﻿using Catalog.Application.Common.Configuration;
 using Catalog.Application.Common.Interfaces;
+using Catalog.Application.Outbox;
 using Catalog.Infrastructure.Persistence;
 using Catalog.Infrastructure.Persistence.Interceptors;
 using Catalog.Infrastructure.Services;
@@ -33,7 +34,8 @@ public static class ConfigureServices
         services.AddScoped<ApplicationDbContextInitialiser>();
 
         services.AddSingleton<IDateTime, DateTimeService>();
-        services.AddSingleton<IIntegrationEventService, IntegrationEventService>();
+        services.AddScoped<IIntegrationEventService, IntegrationEventService>();
+        services.AddScoped<IOutboxService, OutboxService>();
 
         services.AddMessaging(configuration);
 
@@ -50,7 +52,10 @@ public static class ConfigureServices
                 cfg.Host(massTransitConfiguration.Host, massTransitConfiguration.VirtualHost, h => {
                     h.Username(massTransitConfiguration.Username);
                     h.Password(massTransitConfiguration.Password);
+                    h.RequestedConnectionTimeout(5000);
                 });
+
+                cfg.UseMessageRetry(r => r.Immediate(3));
 
                 cfg.ConfigureEndpoints(context);
             });

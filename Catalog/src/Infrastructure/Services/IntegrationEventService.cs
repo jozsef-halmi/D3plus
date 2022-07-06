@@ -15,14 +15,14 @@ public class IntegrationEventService : IIntegrationEventService
         _logger = logger;
     }
 
-    public async Task Publish<T>(T message)
+    public async Task Publish<T>(T message, CancellationToken cancellationToken)
     {
         if (message == null)
             throw new ArgumentException("Message can't be null");
 
         try
         {
-            await _bus.Publish(message);
+            await _bus.Publish(message, cancellationToken);
         }
         catch (Exception)
         {

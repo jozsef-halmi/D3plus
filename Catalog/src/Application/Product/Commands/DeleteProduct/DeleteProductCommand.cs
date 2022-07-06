@@ -1,7 +1,9 @@
 ﻿using Catalog.Application.Common.Exceptions;
 using Catalog.Application.Common.Interfaces;
+using Catalog.Application.Outbox;
 using Catalog.Domain.Events;
 using MediatR;
+using Messaging.Contracts;
 
 namespace Catalog.Application.Products.Commands.DeleteProduct;
 
@@ -25,12 +27,37 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
         if (entity == null)
             throw new NotFoundException();
 
-        _context.Products.Remove(entity);
+        try
+        {
+            await _context.StartTransaction();
 
-        entity.AddDomainEvent(new ProductDeletedEvent(entity));
+            _context.Products.Remove(entity);
 
-        await _context.SaveChangesAsync(cancellationToken);
+            AddIntegrationEvent(entity.Id);
 
-        return entity.Id;
+            await _context.SaveChangesAsync(cancellationToken);
+
+            await _context.Commit();
+
+            return entity.Id;
+        }
+        catch (Exception)
+        {
+            await _context.Rollback();
+            throw;
+        }
+      
+    }
+
+    public void AddIntegrationEvent(int productId)
+    {
+        var integrationEvent = new ProductDeletedIntegrationEvent(productId);
+
+        _context.OutboxMessages.Add(new OutboxMessage()
+        {
+            PublishedDate = null,
+            IntegrationEventType = integrationEvent.GetType().FullName,
+            IntegrationEventJson = System.Text.Json.JsonSerializer.Serialize(integrationEvent)
+        });
     }
 }
