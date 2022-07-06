@@ -34,12 +34,12 @@ class ProductPriceChangedIntegrationEventConsumer :
                 var cartItem = cart.Items.First(i => i.Id == context.Message.ProductId);
                 cartItem.Price = context.Message.NewPrice;
                 _context.Update(cart);
-                _logger.LogInformation("Product price of {ProductId} has been updated from {OldPrice} to {NewPrice}", context.Message.ProductId, context.Message.OldPrice, context.Message.NewPrice);
+                _logger.LogInformation("Product price of {ProductId} in {CartId} has been updated from {OldPrice} to {NewPrice}", context.Message.ProductId, cart.Id, context.Message.OldPrice, context.Message.NewPrice);
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError("Updating the proce of {ProductId} has been failed. Exception: {Exception}", context.Message.ProductId, ex.Message);
+            _logger.LogError("Updating the price of {ProductId} has been failed. Exception: {Exception}", context.Message.ProductId, ex.Message);
             throw;
         }
     }

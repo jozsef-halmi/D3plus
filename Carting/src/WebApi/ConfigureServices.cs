@@ -82,6 +82,7 @@ public static class ConfigureServices
         services.AddMassTransit(x =>
         {
             x.AddConsumer<ProductPriceChangedIntegrationEventConsumer>(typeof(ProductPriceChangedIntegrationEventConsumerDefinition));
+            x.AddConsumer<ProductDeletedIntegrationEventConsumer>(typeof(ProductDeletedIntegrationEventConsumerDefinition));
 
             x.SetKebabCaseEndpointNameFormatter();
 
