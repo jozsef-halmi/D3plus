@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Carting.WebApi.Application.Carts.Commands.Update;
 
-public record UpdateCommand : IRequest<string>
+public record UpdateItemCommand : IRequest<string>
 {
     public string CartId { get; init; }
     public int Id { get; init; }
@@ -17,17 +17,17 @@ public record UpdateCommand : IRequest<string>
     public int Quantity { get; init; }
 }
 
-public class UpdateCommandHandler : IRequestHandler<UpdateCommand, string>
+public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, string>
 {
     private readonly ICartingDbContext _context;
 
-    public UpdateCommandHandler(ICartingDbContext context)
+    public UpdateItemCommandHandler(ICartingDbContext context)
     {
         _context = context;
     }
 
 
-    public Task<string> Handle(UpdateCommand request, CancellationToken cancellationToken)
+    public Task<string> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
     {
         var cart = _context.Get<Cart>(request.CartId);
         if (cart == null)

@@ -2,7 +2,7 @@
 using Carting.WebApi.Domain.Extensions;
 namespace Carting.WebApi.Application.Carts.Commands.Update;
 
-public class UpdateCommandValidator : AbstractValidator<UpdateCommand>
+public class UpdateCommandValidator : AbstractValidator<UpdateItemCommand>
 {
     public UpdateCommandValidator()
     {

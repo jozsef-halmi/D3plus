@@ -24,6 +24,15 @@ public class CartingDbContext : ICartingDbContext
         return result;
     }
 
+    public IEnumerable<T> GetAll<T>(Func<T,bool> pred)
+    {
+        using var db = new LiteDatabase(_persistenceConfiguration.Value.ConnectionString);
+
+        var col = db.GetCollection<T>(typeof(T).Name);
+
+        return col.FindAll().Where(pred).ToList();
+    }
+
     public void Insert<T>(T entity, CancellationToken cancellationToken)
     {
         using var db = new LiteDatabase(_persistenceConfiguration.Value.ConnectionString);
