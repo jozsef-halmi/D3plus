@@ -9,23 +9,18 @@ public class OutboxHostedService : IHostedService, IDisposable
 {
     private readonly ILogger<OutboxHostedService> _logger;
     private Timer? _timer = null;
-    private readonly IOutboxService _outboxService;
     private readonly IServiceProvider _serviceProvider;
 
-    public OutboxHostedService(
-        ILogger<OutboxHostedService> logger,
-        //, IOutboxService outboxService,
-        IServiceProvider serviceProvider
+    public OutboxHostedService(ILogger<OutboxHostedService> logger, IServiceProvider serviceProvider
         )
     {
         _logger = logger;
-        //_outboxService = outboxService;
         _serviceProvider = serviceProvider;
     }
 
     public Task StartAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Outbux Hosted Service running.");
+        _logger.LogInformation("Outbox Hosted Service running.");
 
         _timer = new Timer(async o => await ProcessMessages(o), null, TimeSpan.Zero,
             TimeSpan.FromSeconds(15));
@@ -33,13 +28,6 @@ public class OutboxHostedService : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    //private void DoWork(object? state)
-    //{
-    //    using var scope = _serviceProvider.CreateScope();
-    //    var outboxService = new OutboxService
-    //    CancellationTokenSource cts = new CancellationTokenSource();
-    //    _outboxService.ProcessMessages(cts.Token);
-    //}
 
     public async Task ProcessMessages(object? state)
     {

@@ -2,7 +2,6 @@
 using Catalog.Application.Common.Extensions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Outbox;
-using Catalog.Domain.Events;
 using MediatR;
 using Messaging.Contracts;
 

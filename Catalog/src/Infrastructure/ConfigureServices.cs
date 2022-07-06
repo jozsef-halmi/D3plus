@@ -35,7 +35,6 @@ public static class ConfigureServices
 
         services.AddSingleton<IDateTime, DateTimeService>();
         services.AddScoped<IIntegrationEventService, IntegrationEventService>();
-        services.AddScoped<IOutboxService, OutboxService>();
 
         services.AddMessaging(configuration);
 
