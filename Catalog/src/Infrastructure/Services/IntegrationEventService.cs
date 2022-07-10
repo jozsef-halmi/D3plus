@@ -24,9 +24,9 @@ public class IntegrationEventService : IIntegrationEventService
         {
             await _bus.Publish(message, cancellationToken);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            _logger.LogError("Error sending message {MessageType}", typeof(T).Name);
+            _logger.LogError(ex, "Error sending message {MessageType}", typeof(T).Name);
             throw;
         }
     }
