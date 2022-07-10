@@ -4,6 +4,7 @@ using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Outbox;
 using MediatR;
 using Messaging.Contracts;
+using Newtonsoft.Json;
 
 namespace Catalog.Application.Products.Commands.DeleteProduct;
 
@@ -15,10 +16,15 @@ public record DeleteProductCommand : IRequest<int>
 public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, int>
 {
     private readonly IApplicationDbContext _context;
+    private readonly JsonSerializerSettings _jsonSerializerSettings;
 
     public DeleteProductCommandHandler(IApplicationDbContext context)
     {
         _context = context;
+        _jsonSerializerSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.All
+        };
     }
 
     public async Task<int> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
@@ -56,8 +62,7 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
         _context.OutboxMessages.Add(new OutboxMessage()
         {
             PublishedDate = null,
-            IntegrationEventType = integrationEvent.GetType().FullName,
-            IntegrationEventJson = JsonSerializer.Serialize(integrationEvent)
+            IntegrationEventJson = JsonConvert.SerializeObject(integrationEvent, _jsonSerializerSettings)
         });
     }
 }

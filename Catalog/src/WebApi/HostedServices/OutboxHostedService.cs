@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Catalog.Application.Common.Interfaces;
-using Catalog.Application.Outbox;
 using Messaging.Contracts;
+using Newtonsoft.Json;
 
 namespace Catalog.WebApi.HostedServices;
 
@@ -41,9 +41,7 @@ public class OutboxHostedService : IHostedService, IDisposable
 
             foreach (var message in messagesToBeProcessed)
             {
-                Type integrationEventType = Assembly.GetAssembly(typeof(IntegrationEvent)).GetType(message.IntegrationEventType);
-                
-                var integrationEvent = System.Text.Json.JsonSerializer.Deserialize(message.IntegrationEventJson, integrationEventType);
+                var integrationEvent = JsonConvert.DeserializeObject(message.IntegrationEventJson, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All});
 
                 await integrationEventService.Publish(integrationEvent, cts.Token);
                 message.PublishedDate = DateTime.UtcNow;
