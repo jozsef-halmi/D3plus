@@ -1,5 +1,4 @@
 ﻿using Catalog.Application.Common.Exceptions;
-using Catalog.Application.Common.Extensions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Outbox;
 using MediatR;
@@ -33,7 +32,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         if (entity == null)
             throw new NotFoundException();
 
-        var oldEntityCopy = entity.Copy();
+        var oldPrice = entity.Price;
 
         try
         {
@@ -48,7 +47,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 
             _context.Products.Update(entity);
 
-            AddIntegrationEvent(entity.Id, oldEntityCopy.Price, entity.Price);
+            AddIntegrationEvent(entity.Id, oldPrice, entity.Price);
 
             await _context.SaveChangesAsync(cancellationToken);
             await _context.Commit();

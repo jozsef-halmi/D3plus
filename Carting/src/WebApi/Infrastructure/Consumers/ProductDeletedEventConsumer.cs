@@ -5,7 +5,7 @@ using Carting.WebApi.Domain.Entities;
 using MassTransit;
 using Messaging.Contracts;
 
-class ProductDeletedIntegrationEventConsumer :
+internal sealed class ProductDeletedIntegrationEventConsumer :
     IConsumer<ProductDeletedIntegrationEvent>
 {
     private readonly ICartingDbContext _context;
@@ -36,14 +36,14 @@ class ProductDeletedIntegrationEventConsumer :
         }
         catch (Exception ex)
         {
-            _logger.LogError("Deleting item {ProductId} has been failed. Exception: {Exception}", context.Message.ProductId, ex.Message);
+            _logger.LogError(ex, "Deleting item {ProductId} has been failed.", context.Message.ProductId);
             throw;
         }
     }
 }
 
 
-class ProductDeletedIntegrationEventConsumerDefinition :
+internal sealed class ProductDeletedIntegrationEventConsumerDefinition :
     ConsumerDefinition<ProductDeletedIntegrationEventConsumer>
 {
     public ProductDeletedIntegrationEventConsumerDefinition()

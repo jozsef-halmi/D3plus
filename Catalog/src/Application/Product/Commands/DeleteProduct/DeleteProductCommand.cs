@@ -1,4 +1,5 @@
-﻿using Catalog.Application.Common.Exceptions;
+﻿using System.Text.Json;
+using Catalog.Application.Common.Exceptions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Outbox;
 using MediatR;
@@ -56,7 +57,7 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
         {
             PublishedDate = null,
             IntegrationEventType = integrationEvent.GetType().FullName,
-            IntegrationEventJson = System.Text.Json.JsonSerializer.Serialize(integrationEvent)
+            IntegrationEventJson = JsonSerializer.Serialize(integrationEvent)
         });
     }
 }

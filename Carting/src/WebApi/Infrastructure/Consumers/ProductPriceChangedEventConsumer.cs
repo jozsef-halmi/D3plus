@@ -5,7 +5,7 @@ using Carting.WebApi.Domain.Entities;
 using MassTransit;
 using Messaging.Contracts;
 
-class ProductPriceChangedIntegrationEventConsumer :
+internal sealed class ProductPriceChangedIntegrationEventConsumer :
     IConsumer<ProductPriceChangedIntegrationEvent>
 {
     private readonly ICartingDbContext _context;
@@ -39,15 +39,14 @@ class ProductPriceChangedIntegrationEventConsumer :
         }
         catch (Exception ex)
         {
-            _logger.LogError("Updating the price of {ProductId} has been failed. Exception: {Exception}", context.Message.ProductId, ex.Message);
+            _logger.LogError(ex, "Updating the price of {ProductId} has been failed.", context.Message.ProductId);
             throw;
         }
     }
 }
 
 
-class ProductPriceChangedIntegrationEventConsumerDefinition :
-    ConsumerDefinition<ProductPriceChangedIntegrationEventConsumer>
+internal sealed class ProductPriceChangedIntegrationEventConsumerDefinition : ConsumerDefinition<ProductPriceChangedIntegrationEventConsumer>
 {
     public ProductPriceChangedIntegrationEventConsumerDefinition()
     {
