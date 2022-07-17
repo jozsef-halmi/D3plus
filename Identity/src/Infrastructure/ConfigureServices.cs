@@ -1,5 +1,4 @@
 ﻿using Identity.Application.Common.Interfaces;
-using Identity.Infrastructure.Files;
 using Identity.Infrastructure.Identity;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Persistence.Interceptors;
@@ -43,7 +42,6 @@ public static class ConfigureServices
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
-        services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
         services.AddAuthentication()
             .AddIdentityServerJwt();
