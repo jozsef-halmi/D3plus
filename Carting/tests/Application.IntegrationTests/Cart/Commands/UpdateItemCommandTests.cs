@@ -42,7 +42,7 @@ public class UpdateCommandTests : BaseTestFixture
 
         cart = Add<Carting.WebApi.Domain.Entities.Cart>(cart);
 
-        var command = new UpdateCommand
+        var command = new UpdateItemCommand
         {
             CartId = cart.Id,
             Id = 998,
@@ -96,7 +96,7 @@ public class UpdateCommandTests : BaseTestFixture
 
         cart = Add<Carting.WebApi.Domain.Entities.Cart>(cart);
 
-        var command = new UpdateCommand
+        var command = new UpdateItemCommand
         {
             CartId = cart.Id,
             Id = 998,
@@ -138,7 +138,7 @@ public class UpdateCommandTests : BaseTestFixture
 
         cart = Add<Carting.WebApi.Domain.Entities.Cart>(cart);
 
-        var command = new UpdateCommand
+        var command = new UpdateItemCommand
         {
             CartId = cart.Id,
             Id = 998,
@@ -179,7 +179,7 @@ public class UpdateCommandTests : BaseTestFixture
 
         cart = Add<Carting.WebApi.Domain.Entities.Cart>(cart);
 
-        var command = new UpdateCommand
+        var command = new UpdateItemCommand
         {
             CartId = cart.Id,
             Id = 998,

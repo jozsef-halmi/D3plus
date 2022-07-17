@@ -4,11 +4,13 @@ using Carting.WebApi.Application.Common.Configuration;
 using Carting.WebApi.Application.Common.Interfaces;
 using Carting.WebApi.Filters;
 using Carting.WebApi.Helpers;
+using Carting.WebApi.Infrastructure.Consumers;
 using Carting.WebApi.Infrastructure.Persistence;
 using Carting.WebApi.Infrastructure.Services;
 using Carting.WebApi.Swagger;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -74,6 +76,26 @@ public static class ConfigureServices
     {
         services.AddScoped<ICartingDbContext, CartingDbContext>();
         services.AddTransient<IDateTime, DateTimeService>();
+
+        var massTransitConfiguration = configuration.GetSection(MassTransitConfiguration.MassTransitConfigurationKey).Get<MassTransitConfiguration>();
+
+        services.AddMassTransit(x =>
+        {
+            x.AddConsumer<ProductPriceChangedIntegrationEventConsumer>(typeof(ProductPriceChangedIntegrationEventConsumerDefinition));
+            x.AddConsumer<ProductDeletedIntegrationEventConsumer>(typeof(ProductDeletedIntegrationEventConsumerDefinition));
+
+            x.SetKebabCaseEndpointNameFormatter();
+
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(massTransitConfiguration.Host, massTransitConfiguration.VirtualHost, h => {
+                    h.Username(massTransitConfiguration.Username);
+                    h.Password(massTransitConfiguration.Password);
+                });
+
+                cfg.ConfigureEndpoints(context);
+            });
+        });
 
         return services;
     }
