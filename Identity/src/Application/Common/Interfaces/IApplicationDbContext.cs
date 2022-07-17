@@ -1,5 +1,4 @@
-﻿using Identity.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Application.Common.Interfaces;
 

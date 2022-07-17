@@ -1,5 +1,4 @@
-﻿using Identity.Domain.Entities;
-using Identity.Infrastructure.Identity;
+﻿using Identity.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -54,10 +53,23 @@ public class ApplicationDbContextInitialiser
     {
         // Default roles
         var administratorRole = new IdentityRole("Administrator");
+        var managerRole = new IdentityRole("Manager");
+        var buyerRole = new IdentityRole("Buyer");
+
 
         if (_roleManager.Roles.All(r => r.Name != administratorRole.Name))
         {
             await _roleManager.CreateAsync(administratorRole);
+        }
+
+        if (_roleManager.Roles.All(r => r.Name != managerRole.Name))
+        {
+            await _roleManager.CreateAsync(managerRole);
+        }
+
+        if (_roleManager.Roles.All(r => r.Name != buyerRole.Name))
+        {
+            await _roleManager.CreateAsync(buyerRole);
         }
 
         // Default users
