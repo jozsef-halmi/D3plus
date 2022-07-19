@@ -8,6 +8,7 @@ using Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
 using Catalog.WebApi.Helpers;
 using Catalog.WebApi.Model;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebApi.Controllers;
@@ -22,18 +23,21 @@ public class ProductsController : ApiControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Buyer, Manager")]
     public async Task<ActionResult<HateoasResponse<ProductsWithPaginationVm>>> GetProductsWithPagination([FromQuery] GetProductsWithPaginationQuery query)
     {
         return HateoasHelper.CreateLinksForProducts(HttpContext, _linkGenerator, await _mediator.Send(query), query.CategoryId);
     }
 
     [HttpPost]
+    [Authorize(Roles = "Manager")]
     public async Task<ActionResult<int>> Create(CreateProductCommand command)
     {
         return await _mediator.Send(command);
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Manager")]
     public async Task<ActionResult> Update(int id, UpdateProductCommand command)
     {
         if (id != command.Id)
@@ -47,6 +51,7 @@ public class ProductsController : ApiControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     public async Task<ActionResult> Delete(int id)
     {
         await _mediator.Send(new DeleteProductCommand() {  Id = id });
