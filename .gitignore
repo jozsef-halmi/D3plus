@@ -135,3 +135,4 @@ _NCrunch*
 *project-colors.json
 *dtbcache.v2
 *futdcache.v1
+*.db
