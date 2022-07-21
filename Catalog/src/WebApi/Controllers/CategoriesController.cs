@@ -20,7 +20,6 @@ public class CategoriesController : ApiControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Buyer, Manager")]
     public async Task<ActionResult<HateoasResponse<CategoriesVm>>> GetCategories()
     {
         return HateoasHelper.CreateLinksForCategories(HttpContext, _linkGenerator, await _mediator.Send(new GetCategoriesQuery()));

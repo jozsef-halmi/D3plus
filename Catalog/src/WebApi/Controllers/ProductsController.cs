@@ -23,7 +23,6 @@ public class ProductsController : ApiControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Buyer, Manager")]
     public async Task<ActionResult<HateoasResponse<ProductsWithPaginationVm>>> GetProductsWithPagination([FromQuery] GetProductsWithPaginationQuery query)
     {
         return HateoasHelper.CreateLinksForProducts(HttpContext, _linkGenerator, await _mediator.Send(query), query.CategoryId);
