@@ -1,3 +1,4 @@
+using ApiGateway.Aggregators;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -53,7 +54,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddOcelot();
+builder.Services.AddOcelot()
+    .AddSingletonDefinedAggregator<GetProductAggregator>();
 builder.Configuration.AddJsonFile("ocelot.json")
     .AddEnvironmentVariables();
 

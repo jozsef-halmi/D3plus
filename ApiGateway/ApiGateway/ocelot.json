@@ -11,6 +11,46 @@
       ],
       "UpstreamPathTemplate": "/todos/{id}",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Products?Id={id}",
+      "UpstreamPathTemplate": "/api/Products/{id}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5021
+        }
+      ],
+      "Key": "getproduct"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Products/Properties?Id={id}",
+      "UpstreamPathTemplate": "/api/Products/Properties/{id}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5021
+        }
+      ],
+      "Key": "getproductproperties"
+    }
+  ],
+  "Aggregates": [
+    {
+      "RouteKeys": [
+        "getproduct",
+        "getproductproperties"
+      ],
+      "UpstreamPathTemplate": "/products/{id}",
+      "Aggregator": "GetProductAggregator"
     }
   ],
   "GlobalConfiguration": {
