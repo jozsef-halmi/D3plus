@@ -2,6 +2,7 @@
 using Ocelot.Middleware;
 using Ocelot.Multiplexer;
 using System.Net;
+using System.Text;
 
 namespace ApiGateway.Aggregators
 {
@@ -30,7 +31,8 @@ namespace ApiGateway.Aggregators
             var merge = JsonConvert.SerializeObject(productData);
 
             var headers = responses.SelectMany(x => x.Items.DownstreamResponse().Headers).ToList();
-            return new DownstreamResponse(new StringContent(merge), HttpStatusCode.OK, headers, "OK");
+            
+            return new DownstreamResponse(new StringContent(merge, Encoding.UTF8, "application/json"), HttpStatusCode.OK, headers, "OK");
         }
     }
 }

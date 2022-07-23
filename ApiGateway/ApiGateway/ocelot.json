@@ -1,6 +1,8 @@
 {
   "Routes": [
     {
+      "UpstreamPathTemplate": "/todos/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/todos/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -9,15 +11,14 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/todos/{id}",
-      "UpstreamHttpMethod": [ "Get" ]
+      "Key": "example"
     },
     {
-      "DownstreamPathTemplate": "/api/Products?Id={id}",
-      "UpstreamPathTemplate": "/api/Products/{id}",
+      "UpstreamPathTemplate": "/product-info/{id}",
       "UpstreamHttpMethod": [
         "Get"
       ],
+      "DownstreamPathTemplate": "/api/Products?Id={id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -28,11 +29,11 @@
       "Key": "getproduct"
     },
     {
-      "DownstreamPathTemplate": "/api/Products/Properties?Id={id}",
-      "UpstreamPathTemplate": "/api/Products/Properties/{id}",
+      "UpstreamPathTemplate": "/product-properties/{id}",
       "UpstreamHttpMethod": [
         "Get"
       ],
+      "DownstreamPathTemplate": "/api/Products/Properties?Id={id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -41,6 +42,121 @@
         }
       ],
       "Key": "getproductproperties"
+    },
+    {
+      "UpstreamPathTemplate": "/product-paginated-list?categoryId={categoryId}&pageNumber={pageNumber}&pageSize={pageSize}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/api/Products/WithPagination?CategoryId={categoryId}&PageNumber={pageNumber}&PageSize={pageSize}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5021
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/products",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/api/Products",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5021
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/products/{id}",
+      "UpstreamHttpMethod": [
+        "Put",
+        "Delete"
+      ],
+      "DownstreamPathTemplate": "/api/Products/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5021
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/categories",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/api/Categories",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5021
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/categories/{id}",
+      "UpstreamHttpMethod": [
+        "Put",
+        "Delete"
+      ],
+      "DownstreamPathTemplate": "/api/Categories/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5021
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/carts/{cartId}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/api/v2/Carts?CartId={cartId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/carts/{cartId}/items",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/api/v2/Carts/{cartId}/Items",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/carts/{cartId}/items/{itemId}",
+      "UpstreamHttpMethod": [
+        "Delete"
+      ],
+      "DownstreamPathTemplate": "/api/v2/Carts/{cartId}/Items/{itemId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ]
     }
   ],
   "Aggregates": [
