@@ -28,6 +28,9 @@
           "Port": 5021
         }
       ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      },
       "Key": "getproductproperties"
     },
     {
@@ -42,7 +45,10 @@
           "Host": "localhost",
           "Port": 5021
         }
-      ]
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
     },
     {
       "UpstreamPathTemplate": "/products",

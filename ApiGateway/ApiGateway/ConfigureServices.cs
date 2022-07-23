@@ -1,6 +1,7 @@
 ﻿using ApiGateway.Aggregators;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
+using Ocelot.Cache.CacheManager;
 
 namespace ApiGateway
 {
@@ -14,7 +15,11 @@ namespace ApiGateway
             services.AddSwaggerGen();
 
             services.AddOcelot()
-                .AddSingletonDefinedAggregator<GetProductAggregator>();
+                .AddSingletonDefinedAggregator<GetProductAggregator>()
+                .AddCacheManager(x =>
+                {
+                    x.WithDictionaryHandle();
+                });
 
             services.AddGatewayAuthentication(configuration);
 
