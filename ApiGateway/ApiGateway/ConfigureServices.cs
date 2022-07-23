@@ -12,7 +12,9 @@ namespace ApiGateway
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+
+            //services.AddSwaggerGen();
+            services.AddSwaggerForOcelot(configuration);
 
             services.AddOcelot()
                 .AddSingletonDefinedAggregator<GetProductAggregator>()
