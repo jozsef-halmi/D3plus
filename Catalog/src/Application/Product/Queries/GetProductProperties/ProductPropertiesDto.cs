@@ -4,7 +4,7 @@ using Catalog.Application.Common.Models;
 
 namespace Catalog.Application.Product.Queries.Common;
 
-public class ProductPropertiesDto : HateoasDto, IMapFrom<Domain.Entities.Product>
+public class ProductPropertiesDto : IMapFrom<Domain.Entities.Product>
 {
     public int Id { get; set; }
 
