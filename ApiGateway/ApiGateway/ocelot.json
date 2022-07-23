@@ -1,19 +1,6 @@
 {
   "Routes": [
     {
-      "UpstreamPathTemplate": "/todos/{id}",
-      "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/todos/{id}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "jsonplaceholder.typicode.com",
-          "Port": 443
-        }
-      ],
-      "Key": "example"
-    },
-    {
       "UpstreamPathTemplate": "/product-info/{id}",
       "UpstreamHttpMethod": [
         "Get"
