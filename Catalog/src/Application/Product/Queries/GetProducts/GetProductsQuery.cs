@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Catalog.Application.Products.Queries.GetProducts;
 using Catalog.Application.Common.Interfaces;
+using Catalog.Application.Product.Queries.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
