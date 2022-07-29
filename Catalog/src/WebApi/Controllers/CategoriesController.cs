@@ -26,14 +26,14 @@ public class CategoriesController : ApiControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager", Policy = "CatalogApiScope")]
     public async Task<ActionResult<int>> Create(CreateCategoryCommand command)
     {
         return await _mediator.Send(command);
     }
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager", Policy = "CatalogApiScope")]
     public async Task<ActionResult> Update(int id, UpdateCategoryCommand command)
     {
         if (id != command.Id)
@@ -47,7 +47,7 @@ public class CategoriesController : ApiControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager", Policy = "CatalogApiScope")]
     public async Task<ActionResult> Delete(int id)
     {
         await _mediator.Send(new DeleteCategoryCommand() {  Id = id });

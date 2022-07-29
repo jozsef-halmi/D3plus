@@ -2,9 +2,9 @@
 using AutoMapper.QueryableExtensions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Common.Mappings;
+using Catalog.Application.Product.Queries.Common;
 using Catalog.Application.TodoLists.Queries.GetProducts;
 using MediatR;
-using ProductDto = Catalog.Application.Product.Queries.GetProductsWithPagination.ProductDto;
 namespace Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
 
 public record GetProductsWithPaginationQuery : IRequest<ProductsWithPaginationVm>

@@ -91,16 +91,8 @@ public class CartsController : ApiControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     POST /Carts/some-id/Items/1
+    ///     DELETE /Carts/some-id/Items/1
     ///     {
-    ///        "Name": "Some item name",
-    ///        "CurrencyCode": "EUR",
-    ///        "Price":5.99,
-    ///        "Quantity":2,
-    ///        "WebImage": {
-    ///           "Uri": "http://localhost/some-image-url.png",
-    ///           "AltText": "Missing image"
-    ///         }
     ///     }
     ///
     /// </remarks>

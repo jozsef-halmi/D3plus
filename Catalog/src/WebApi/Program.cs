@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebApiServices(builder.Configuration);
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 
@@ -46,8 +47,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers()
-        .RequireAuthorization("CatalogApiScope");
+    endpoints.MapControllers();
 });
 app.MapControllerRoute(
     name: "default",
