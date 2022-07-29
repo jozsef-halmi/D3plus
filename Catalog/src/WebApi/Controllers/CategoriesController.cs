@@ -5,6 +5,7 @@ using Catalog.Application.TodoLists.Queries.GetCategories;
 using Catalog.WebApi.Helpers;
 using Catalog.WebApi.Model;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebApi.Controllers;
@@ -25,12 +26,14 @@ public class CategoriesController : ApiControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Manager")]
     public async Task<ActionResult<int>> Create(CreateCategoryCommand command)
     {
         return await _mediator.Send(command);
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Manager")]
     public async Task<ActionResult> Update(int id, UpdateCategoryCommand command)
     {
         if (id != command.Id)
@@ -44,6 +47,7 @@ public class CategoriesController : ApiControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     public async Task<ActionResult> Delete(int id)
     {
         await _mediator.Send(new DeleteCategoryCommand() {  Id = id });

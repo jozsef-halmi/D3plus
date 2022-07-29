@@ -131,3 +131,8 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+
+*project-colors.json
+*dtbcache.v2
+*futdcache.v1
+*.db
