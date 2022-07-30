@@ -1,4 +1,4 @@
-﻿using Catalog.Application.Products.Queries.GetProducts;
+﻿using Catalog.Application.Product.Queries.Common;
 
 namespace Catalog.Application.TodoLists.Queries.GetProducts;
 

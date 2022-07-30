@@ -46,8 +46,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers()
-        .RequireAuthorization("CatalogApiScope");
+    endpoints.MapControllers();
 });
 app.MapControllerRoute(
     name: "default",
