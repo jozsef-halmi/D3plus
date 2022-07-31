@@ -1,14 +1,17 @@
-﻿using Catalog.Infrastructure.Persistence;
+﻿using System.Reflection;
+using Catalog.GraphQL.GraphQL;
+using Catalog.Infrastructure.Persistence;
 using FluentValidation.AspNetCore;
 using GraphQL;
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.SystemTextJson;
 using GraphQL.Types;
-using Infrastructure.GraphQL;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Microsoft.Extensions.DependencyInjection;
+
+namespace Catalog.GraphQL;
 
 public static class ConfigureServices
 {
@@ -35,7 +38,7 @@ public static class ConfigureServices
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddSchema<CategoriesSchema>()
             .AddGraphTypes(typeof(CategoriesQuery).Assembly));
-        services.AddSingleton<CategoriesData>();
+        services.AddScoped<CategoriesData>();
 
         services.AddLogging(builder => builder.AddConsole());
         services.AddHttpContextAccessor();

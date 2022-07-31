@@ -55,8 +55,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityClient", "Identity\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.GraphQL", "Catalog\src\Catalog.GraphQL\Catalog.GraphQL.csproj", "{902FA65C-284D-4E82-8BF6-082F7460E544}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.GraphQL", "Catalog\src\Infrastructure.GraphQL\Infrastructure.GraphQL.csproj", "{B305860C-7D98-4A7D-8FC8-B5E186A409E6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,10 +121,6 @@ Global
 		{902FA65C-284D-4E82-8BF6-082F7460E544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{902FA65C-284D-4E82-8BF6-082F7460E544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{902FA65C-284D-4E82-8BF6-082F7460E544}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B305860C-7D98-4A7D-8FC8-B5E186A409E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B305860C-7D98-4A7D-8FC8-B5E186A409E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B305860C-7D98-4A7D-8FC8-B5E186A409E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B305860C-7D98-4A7D-8FC8-B5E186A409E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,7 +149,6 @@ Global
 		{DFC5EA31-F12F-41CC-A0C6-AFC3811B33E8} = {871B13E9-D410-4107-83C9-FC740B61BA6A}
 		{8DA7D9BD-05C2-4724-A2D7-9035B337371F} = {871B13E9-D410-4107-83C9-FC740B61BA6A}
 		{902FA65C-284D-4E82-8BF6-082F7460E544} = {C0325F12-0736-4318-96FE-FB685C24C441}
-		{B305860C-7D98-4A7D-8FC8-B5E186A409E6} = {C0325F12-0736-4318-96FE-FB685C24C441}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}

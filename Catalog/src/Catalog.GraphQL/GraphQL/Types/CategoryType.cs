@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Catalog.GraphQL.GraphQL;
 using GraphQL.Types;
 
-namespace Infrastructure.GraphQL.Types;
+namespace Catalog.GraphQL.GraphQL.Types;
 
 public class CategoryType : ObjectGraphType<Category>
 {
-    public CategoryType(CategoriesData data)
+    public CategoryType()
     {
         Name = "Category";
         Description = "A category of a product";

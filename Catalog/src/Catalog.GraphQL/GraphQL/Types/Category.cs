@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.GraphQL.Types;
+﻿namespace Catalog.GraphQL.GraphQL.Types;
 
 public class Category
 {
