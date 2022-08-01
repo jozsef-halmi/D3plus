@@ -24,7 +24,7 @@ public class CategoriesMutation : ObjectGraphType
         FieldAsync<CategoryType>(
             "createCategory",
             arguments: new QueryArguments(
-                new QueryArgument<NonNullGraphType<CategoryInputType>> { Name = "category" }
+                new QueryArgument<NonNullGraphType<CreateCategoryInputType>> { Name = "category" }
             ),
             resolve: async context => 
             {
@@ -38,7 +38,7 @@ public class CategoriesMutation : ObjectGraphType
         FieldAsync<CategoryType>(
            "updateCategory",
            arguments: new QueryArguments(
-               new QueryArgument<NonNullGraphType<CategoryInputType>> { Name = "category" }
+               new QueryArgument<NonNullGraphType<UpdateCategoryInputType>> { Name = "category" }
            ),
            resolve: async context =>
            {
@@ -47,6 +47,21 @@ public class CategoriesMutation : ObjectGraphType
                var services = scope.ServiceProvider;
                var categoriesData = services.GetRequiredService<CategoriesData>();
                return await categoriesData.UpdateCategory(category);
+           });
+
+
+        FieldAsync<CategoryType>(
+           "deleteCategory",
+           arguments: new QueryArguments(
+               new QueryArgument<NonNullGraphType<DeleteCategoryInputType>> { Name = "category" }
+           ),
+           resolve: async context =>
+           {
+               var category = context.GetArgument<Category>("category");
+               using var scope = serviceProvider.CreateScope();
+               var services = scope.ServiceProvider;
+               var categoriesData = services.GetRequiredService<CategoriesData>();
+               return await categoriesData.DeleteCategory(category);
            });
     }
 }

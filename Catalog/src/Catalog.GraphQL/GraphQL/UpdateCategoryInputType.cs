@@ -3,11 +3,11 @@ using GraphQL.Types;
 
 namespace Catalog.GraphQL.GraphQL;
 
-public class CategoryInputType : InputObjectGraphType<Category>
+public class UpdateCategoryInputType : InputObjectGraphType<Category>
 {
-    public CategoryInputType()
+    public UpdateCategoryInputType()
     {
-        Name = "CategoryInput";
+        Name = "UpdateCategoryInput";
         Field(x => x.Id, nullable: true);
         Field(x => x.Name, nullable: false);
         Field(x => x.ImageUrl, nullable: true);

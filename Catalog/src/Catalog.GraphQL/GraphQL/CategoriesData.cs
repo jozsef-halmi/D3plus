@@ -5,6 +5,7 @@ using AutoMapper;
 using Catalog.Application.Categorys.Queries.GetCategories;
 using Catalog.Application.Categorys.Commands.CreateCategory;
 using Catalog.Application.Categorys.Commands.UpdateCategory;
+using Catalog.Application.Categorys.Commands.DeleteCategory;
 
 namespace Catalog.GraphQL.GraphQL;
 
@@ -54,6 +55,16 @@ public class CategoriesData
             Name = category.Name,
             ImageUrl = category.ImageUrl,
             ParentCategoryId = category.ParentCategoryId
+        });
+
+        return category;
+    }
+
+    public async Task<Category> DeleteCategory(Category category)
+    {
+        var id = await _mediator.Send(new DeleteCategoryCommand()
+        {
+            Id = category.Id
         });
 
         return category;
