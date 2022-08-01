@@ -8,6 +8,7 @@ public class CategoryInputType : InputObjectGraphType<Category>
     public CategoryInputType()
     {
         Name = "CategoryInput";
+        Field(x => x.Id, nullable: true);
         Field(x => x.Name, nullable: false);
         Field(x => x.ImageUrl, nullable: true);
         Field(x => x.ParentCategoryId, nullable: true);

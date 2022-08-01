@@ -34,5 +34,19 @@ public class CategoriesMutation : ObjectGraphType
                 var categoriesData = services.GetRequiredService<CategoriesData>();
                 return await categoriesData.AddCategory(category);
             });
+
+        FieldAsync<CategoryType>(
+           "updateCategory",
+           arguments: new QueryArguments(
+               new QueryArgument<NonNullGraphType<CategoryInputType>> { Name = "category" }
+           ),
+           resolve: async context =>
+           {
+               var category = context.GetArgument<Category>("category");
+               using var scope = serviceProvider.CreateScope();
+               var services = scope.ServiceProvider;
+               var categoriesData = services.GetRequiredService<CategoriesData>();
+               return await categoriesData.UpdateCategory(category);
+           });
     }
 }

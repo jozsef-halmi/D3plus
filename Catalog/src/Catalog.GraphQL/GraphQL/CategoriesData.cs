@@ -4,6 +4,7 @@ using MediatR;
 using AutoMapper;
 using Catalog.Application.Categorys.Queries.GetCategories;
 using Catalog.Application.Categorys.Commands.CreateCategory;
+using Catalog.Application.Categorys.Commands.UpdateCategory;
 
 namespace Catalog.GraphQL.GraphQL;
 
@@ -45,4 +46,16 @@ public class CategoriesData
         return category;
     }
 
+    public async Task<Category> UpdateCategory(Category category)
+    {
+        var id = await _mediator.Send(new UpdateCategoryCommand()
+        {
+            Id = category.Id,
+            Name = category.Name,
+            ImageUrl = category.ImageUrl,
+            ParentCategoryId = category.ParentCategoryId
+        });
+
+        return category;
+    }
 }
