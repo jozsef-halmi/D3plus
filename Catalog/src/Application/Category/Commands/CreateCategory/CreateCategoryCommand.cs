@@ -8,7 +8,6 @@ public record CreateCategoryCommand : IRequest<int>
 {
     public string Name { get; init; }
     public Uri? ImageUrl { get; init; }
-
     public int? ParentCategoryId { get; init; }
 }
 

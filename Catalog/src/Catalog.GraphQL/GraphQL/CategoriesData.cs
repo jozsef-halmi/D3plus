@@ -1,46 +1,48 @@
 ﻿using Catalog.Application.TodoLists.Queries.GetCategories;
 using Catalog.GraphQL.GraphQL.Types;
 using MediatR;
+using AutoMapper;
+using Catalog.Application.Categorys.Queries.GetCategories;
+using Catalog.Application.Categorys.Commands.CreateCategory;
 
 namespace Catalog.GraphQL.GraphQL;
 
 public class CategoriesData
 {
-    private readonly List<Category> _categories = new List<Category>();
     private readonly ISender _mediator;
+    private readonly IMapper _mapper;
 
-    public CategoriesData(ISender mediator)
+    public CategoriesData(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
-        _categories = new List<Category>()
-        {
-            new Category()
-            {
-                Id = 1,
-                Name = "Dummy category"
-            },
-             new Category()
-            {
-                Id = 2,
-                Name = "Dummy category2"
-            }
-        };
-    }
-
-    public Task<Category> GetCategoryByIdAsync(int id)
-    {
-        return Task.FromResult(_categories.FirstOrDefault(h => h.Id == id));
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<Category>> GetCategories()
     {
         var categories = await _mediator.Send(new GetCategoriesQuery());
-        return categories?.Categories?.Select(c => new Category()
+        return categories.Categories.Select(c => new Category()
         {
             Id = c.Id,
-            Name = c.Name
+            ImageUrl = c.ImageUrl,
+            Name = c.Name,
+            ParentCategoryId = c.ParentCategoryId,
+            ParentCategoryName = c.ParentCategoryName
         });
-        //return Task.FromResult(_categories.AsEnumerable());
+    }
+
+
+    public async Task<Category> AddCategory(Category category)
+    {
+        var id = await _mediator.Send(new CreateCategoryCommand()
+        {
+            Name = category.Name,
+            ImageUrl = category.ImageUrl,
+            ParentCategoryId = category.ParentCategoryId
+        });
+
+        category.Id = id;
+        return category;
     }
 
 }

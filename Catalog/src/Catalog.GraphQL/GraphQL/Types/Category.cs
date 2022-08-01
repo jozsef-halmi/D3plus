@@ -1,4 +1,7 @@
-﻿namespace Catalog.GraphQL.GraphQL.Types;
+﻿using AutoMapper;
+using Catalog.Application.Common.Mappings;
+
+namespace Catalog.GraphQL.GraphQL.Types;
 
 public class Category
 {
@@ -10,5 +13,5 @@ public class Category
 
     public int? ParentCategoryId { get; set; }
 
-    public Category? ParentCategory { get; set; }
+    public string? ParentCategoryName { get; set; }
 }

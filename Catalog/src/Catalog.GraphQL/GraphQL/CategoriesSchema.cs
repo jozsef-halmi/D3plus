@@ -13,6 +13,8 @@ public class CategoriesSchema : Schema
         : base(provider)
     {
         Query =  (CategoriesQuery)provider.GetService(typeof(CategoriesQuery)) ?? throw new InvalidOperationException();
+        Mutation = (CategoriesMutation)provider.GetService(typeof(CategoriesMutation)) ?? throw new InvalidOperationException();
+
         //Query = (CategoriesQuery)provider.GetService(typeof(CategoriesQuery)) ?? throw new InvalidOperationException();
         //Mutation = (StarWarsMutation)provider.GetService(typeof(StarWarsMutation)) ?? throw new InvalidOperationException();
 

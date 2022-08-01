@@ -1,6 +1,8 @@
-﻿namespace Catalog.GraphQL.GraphQL.Types;
+﻿using Catalog.Application.Categorys.Queries.GetCategories;
+
+namespace Catalog.GraphQL.GraphQL.Types;
 
 public class CategoryList
 {
-    public IEnumerable<Category> Categories { get; set; }
+    public IEnumerable<CategoryDto> Categories { get; set; }
 }
