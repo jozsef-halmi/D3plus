@@ -5,6 +5,9 @@ using AutoMapper;
 using Catalog.Application.TodoLists.Queries.GetProducts;
 using Catalog.Application.TodoLists.Queries.GetCategory;
 using Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
+using Catalog.Application.Products.Commands.UpdateProduct;
+using Catalog.Application.Products.Commands.DeleteProduct;
+using Catalog.Application.Products.Commands.CreateProduct;
 
 namespace Catalog.GraphQL.GraphQL;
 
@@ -64,39 +67,45 @@ public class ProductsDataLoader
             });
     }
 
-    //public async Task<Category> AddCategory(Category category)
-    //{
-    //    var id = await _mediator.Send(new CreateCategoryCommand()
-    //    {
-    //        Name = category.Name,
-    //        ImageUrl = category.ImageUrl,
-    //        ParentCategoryId = category.ParentCategoryId
-    //    });
+    public async Task<Product> AddProduct(Product product)
+    {
+        var id = await _mediator.Send(new CreateProductCommand()
+        {
+            Name = product.Name,
+            ImageUrl = product.ImageUrl,
+            CategoryId = product.CategoryId,
+            Amount = product.Amount,
+            Description = product.Description,
+            Price = product.Price
+        });
 
-    //    category.Id = id;
-    //    return category;
-    //}
+        product.Id = id;
+        return product;
+    }
 
-    //public async Task<Category> UpdateCategory(Category category)
-    //{
-    //    var id = await _mediator.Send(new UpdateCategoryCommand()
-    //    {
-    //        Id = category.Id,
-    //        Name = category.Name,
-    //        ImageUrl = category.ImageUrl,
-    //        ParentCategoryId = category.ParentCategoryId
-    //    });
+    public async Task<Product> UpdateProduct(Product product)
+    {
+        var id = await _mediator.Send(new UpdateProductCommand()
+        {
+            Id = product.Id,
+            Name = product.Name,
+            ImageUrl = product.ImageUrl,
+            CategoryId = product.CategoryId,
+            Amount = product.Amount,
+            Description = product.Description,
+            Price = product.Price
+        });
 
-    //    return category;
-    //}
+        return product;
+    }
 
-    //public async Task<Category> DeleteCategory(Category category)
-    //{
-    //    var id = await _mediator.Send(new DeleteCategoryCommand()
-    //    {
-    //        Id = category.Id
-    //    });
+    public async Task<Product> DeleteProduct(Product product)
+    {
+        var id = await _mediator.Send(new DeleteProductCommand()
+        {
+            Id = product.Id
+        });
 
-    //    return category;
-    //}
+        return product;
+    }
 }
