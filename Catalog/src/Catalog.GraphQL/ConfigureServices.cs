@@ -32,11 +32,14 @@ public static class ConfigureServices
             options.SuppressModelStateInvalidFilter = true);
 
         services.AddGraphQL(b => b
-            .AddHttpMiddleware<ISchema>()
+            .AddHttpMiddleware<CategoriesSchema>()
+            .AddHttpMiddleware<ProductsSchema>()
             //.AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User })
             .AddSystemTextJson()
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddSchema<CategoriesSchema>()
+            .AddSchema<ProductsSchema>()
+            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddGraphTypes(typeof(CategoriesQuery).Assembly));
         services.AddScoped<CategoriesData>();
 

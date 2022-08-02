@@ -1,4 +1,5 @@
 using Catalog.GraphQL;
+using Catalog.GraphQL.GraphQL;
 using Catalog.Infrastructure.Persistence;
 using GraphQL.Types;
 
@@ -13,7 +14,10 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 //app.UseGraphQLGraphiQL();
-app.UseGraphQL<ISchema>();
+//app.UseGraphQL<ISchema>();
+app.UseGraphQL<CategoriesSchema>("/api/categories");
+app.UseGraphQL<ProductsSchema>("/api/products");
+
 app.UseGraphQLAltair();
 
 // Configure the HTTP request pipeline.
