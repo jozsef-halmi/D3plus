@@ -28,7 +28,7 @@ public static class HateoasHelper
             // Delete
             category.Links.Add(HttpMethod.Delete.ToString().ToLower(),
                 new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(CategoriesController.Delete), values: new { id }),
-                   
+
                     HttpMethod.Delete.ToString()));
 
             // Products
@@ -78,9 +78,9 @@ public static class HateoasHelper
                     HttpMethod.Get.ToString()));
 
         if (vm.Products.HasNextPage)
-            links.Add("next", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber+1, PageSize = vm.Products.PageSize }),
+            links.Add("next", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber + 1, PageSize = vm.Products.PageSize }),
                     HttpMethod.Get.ToString()));
-        
+
         if (vm.Products.HasPreviousPage)
             links.Add("previous", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber - 1, PageSize = vm.Products.PageSize }),
                     HttpMethod.Get.ToString()));

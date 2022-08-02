@@ -1,16 +1,8 @@
+using IdentityClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using IdentityClient.Models;
 using System.Diagnostics;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Newtonsoft.Json.Linq;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using System.Linq;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace IdentityClient.Controllers
 {

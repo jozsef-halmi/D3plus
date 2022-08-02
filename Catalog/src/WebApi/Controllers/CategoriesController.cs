@@ -50,7 +50,7 @@ public class CategoriesController : ApiControllerBase
     [Authorize(Roles = "Manager")]
     public async Task<ActionResult> Delete(int id)
     {
-        await _mediator.Send(new DeleteCategoryCommand() {  Id = id });
+        await _mediator.Send(new DeleteCategoryCommand() { Id = id });
 
         return NoContent();
     }

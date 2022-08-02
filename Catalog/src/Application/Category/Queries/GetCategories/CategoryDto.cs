@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using AutoMapper;
+﻿using AutoMapper;
 using Catalog.Application.Common.Mappings;
 using Catalog.Application.Common.Models;
 using Catalog.Domain.Entities;

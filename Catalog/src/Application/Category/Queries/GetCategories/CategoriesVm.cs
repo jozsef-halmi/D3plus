@@ -1,5 +1,4 @@
 ﻿using Catalog.Application.Categorys.Queries.GetCategories;
-using Catalog.Application.Common.Models;
 
 namespace Catalog.Application.TodoLists.Queries.GetCategories;
 

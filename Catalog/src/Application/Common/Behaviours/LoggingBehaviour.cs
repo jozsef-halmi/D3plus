@@ -1,5 +1,4 @@
-﻿using Catalog.Application.Common.Interfaces;
-using MediatR.Pipeline;
+﻿using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
 namespace Catalog.Application.Common.Behaviours;

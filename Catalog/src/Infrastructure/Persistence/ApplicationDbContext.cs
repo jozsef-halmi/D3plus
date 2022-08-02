@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Transactions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Outbox;
 using Catalog.Domain.Entities;
@@ -17,7 +16,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options,
         IMediator mediator,
-        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) 
+        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
         : base(options)
     {
         _mediator = mediator;

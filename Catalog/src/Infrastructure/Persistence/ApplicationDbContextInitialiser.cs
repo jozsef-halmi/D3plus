@@ -68,7 +68,7 @@ public class ApplicationDbContextInitialiser
                     CategoryId = category.Entity.Id,
                     Name = $"Test product{i}",
                     Description = $"Test description{i}",
-                    Price =  i*2M,
+                    Price = i * 2M,
                     Amount = i
                 });
             }

@@ -1,5 +1,4 @@
-﻿using Catalog.Application.Common.Exceptions;
-using Catalog.Application.TodoLists.Queries.GetProducts;
+﻿using Catalog.Application.TodoLists.Queries.GetProducts;
 using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;

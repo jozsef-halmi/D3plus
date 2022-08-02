@@ -1,11 +1,9 @@
 ﻿using Catalog.Application.Common.Configuration;
 using Catalog.Application.Common.Interfaces;
-using Catalog.Application.Outbox;
 using Catalog.Infrastructure.Persistence;
 using Catalog.Infrastructure.Persistence.Interceptors;
 using Catalog.Infrastructure.Services;
 using MassTransit;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -48,7 +46,8 @@ public static class ConfigureServices
         {
             x.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host(massTransitConfiguration.Host, massTransitConfiguration.VirtualHost, h => {
+                cfg.Host(massTransitConfiguration.Host, massTransitConfiguration.VirtualHost, h =>
+                {
                     h.Username(massTransitConfiguration.Username);
                     h.Password(massTransitConfiguration.Password);
                     h.RequestedConnectionTimeout(5000);

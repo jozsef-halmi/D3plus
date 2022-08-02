@@ -24,7 +24,7 @@ public class CartingDbContext : ICartingDbContext
         return result;
     }
 
-    public IEnumerable<T> GetAll<T>(Func<T,bool> pred)
+    public IEnumerable<T> GetAll<T>(Func<T, bool> pred)
     {
         using var db = new LiteDatabase(_persistenceConfiguration.Value.ConnectionString);
 

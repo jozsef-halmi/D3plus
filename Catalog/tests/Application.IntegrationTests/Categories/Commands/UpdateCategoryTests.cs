@@ -1,9 +1,9 @@
-﻿using Catalog.Application.Common.Exceptions;
+﻿using Catalog.Application.Categorys.Commands.CreateCategory;
 using Catalog.Application.Categorys.Commands.UpdateCategory;
+using Catalog.Application.Common.Exceptions;
 using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
-using Catalog.Application.Categorys.Commands.CreateCategory;
 
 namespace Catalog.Application.IntegrationTests.Categories.Commands;
 
@@ -83,7 +83,7 @@ public class UpdateCategoryTests : BaseTestFixture
         var category1Id = await SendAsync(createCommand1);
         var category2Id = await SendAsync(createCommand2);
 
-        var category1 = await FindAsync<Category>(category1Id);
+        await FindAsync<Category>(category1Id);
 
         var updateCommand = new UpdateCategoryCommand()
         {

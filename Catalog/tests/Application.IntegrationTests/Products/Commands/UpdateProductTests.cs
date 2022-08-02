@@ -3,7 +3,6 @@ using Catalog.Application.Products.Commands.UpdateProduct;
 using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
-using Catalog.Application.Products.Commands.CreateProduct;
 
 namespace Catalog.Application.IntegrationTests.Products.Commands;
 

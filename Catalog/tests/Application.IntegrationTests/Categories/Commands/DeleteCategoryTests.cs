@@ -1,9 +1,8 @@
-﻿using Catalog.Application.Common.Exceptions;
-using Catalog.Application.Categorys.Commands.DeleteCategory;
+﻿using Catalog.Application.Categorys.Commands.DeleteCategory;
+using Catalog.Application.Common.Exceptions;
 using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
-using Catalog.Application.Categorys.Commands.CreateCategory;
 
 namespace Catalog.Application.IntegrationTests.Categories.Commands;
 

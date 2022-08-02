@@ -21,6 +21,6 @@ public class RequestLoggerTests
     {
         var requestLogger = new LoggingBehaviour<CreateCategoryCommand>(_logger.Object);
 
-        await requestLogger.Process(new CreateCategoryCommand { Name = "new category"}, new CancellationToken());
+        await requestLogger.Process(new CreateCategoryCommand { Name = "new category" }, new CancellationToken());
     }
 }

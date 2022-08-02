@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using FluentAssertions;
+﻿using Carting.WebApi.Application.Carts.Commands.AddItemToCart;
 using Carting.WebApi.Application.Common.Exceptions;
-using Carting.WebApi.Application.Carts.Commands.AddItemToCart;
+using FluentAssertions;
+using NUnit.Framework;
 
 namespace Carting.Application.IntegrationTests.Cart.Commands;
 
@@ -132,7 +132,7 @@ public class AddItemToCartCommandTests : BaseTestFixture
         {
             CartId = $"external-id-{Guid.NewGuid()}",
             Id = 1,
-            Name = string.Join("",Enumerable.Repeat("c", 51)),
+            Name = string.Join("", Enumerable.Repeat("c", 51)),
             Price = 5,
             CurrencyCode = "EUR",
             Quantity = 1,

@@ -1,6 +1,4 @@
-﻿using Catalog.Application.Common.Models;
-using Catalog.Application.Product.Queries.GetProductsWithPagination;
-using Catalog.Application.Products.Commands.CreateProduct;
+﻿using Catalog.Application.Products.Commands.CreateProduct;
 using Catalog.Application.Products.Commands.DeleteProduct;
 using Catalog.Application.Products.Commands.UpdateProduct;
 using Catalog.Application.TodoLists.Queries.GetProducts;
@@ -53,7 +51,7 @@ public class ProductsController : ApiControllerBase
     [Authorize(Roles = "Manager")]
     public async Task<ActionResult> Delete(int id)
     {
-        await _mediator.Send(new DeleteProductCommand() {  Id = id });
+        await _mediator.Send(new DeleteProductCommand() { Id = id });
 
         return NoContent();
     }
