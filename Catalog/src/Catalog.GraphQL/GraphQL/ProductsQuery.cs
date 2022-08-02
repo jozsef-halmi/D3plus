@@ -26,7 +26,7 @@ public class ProductsQuery : ObjectGraphType<object>
         FieldAsync<ListGraphType<ProductType>>("products", resolve: async context => {
             using var scope = serviceProvider.CreateScope();
             var services = scope.ServiceProvider;
-            return await services.GetRequiredService<ProductsData>().GetProducts();
+            return await services.GetRequiredService<ProductsDataLoader>().GetProducts();
             });
 
         //FieldAsync<ListGraphType<CategoryType>>("categories", resolve: async context => {

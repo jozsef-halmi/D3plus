@@ -31,7 +31,7 @@ public class CategoriesMutation : ObjectGraphType
                 var category = context.GetArgument<Category>("category");
                 using var scope = serviceProvider.CreateScope();
                 var services = scope.ServiceProvider;
-                var categoriesData = services.GetRequiredService<CategoriesData>();
+                var categoriesData = services.GetRequiredService<CategoriesDataLoader>();
                 return await categoriesData.AddCategory(category);
             });
 
@@ -45,7 +45,7 @@ public class CategoriesMutation : ObjectGraphType
                var category = context.GetArgument<Category>("category");
                using var scope = serviceProvider.CreateScope();
                var services = scope.ServiceProvider;
-               var categoriesData = services.GetRequiredService<CategoriesData>();
+               var categoriesData = services.GetRequiredService<CategoriesDataLoader>();
                return await categoriesData.UpdateCategory(category);
            });
 
@@ -60,7 +60,7 @@ public class CategoriesMutation : ObjectGraphType
                var category = context.GetArgument<Category>("category");
                using var scope = serviceProvider.CreateScope();
                var services = scope.ServiceProvider;
-               var categoriesData = services.GetRequiredService<CategoriesData>();
+               var categoriesData = services.GetRequiredService<CategoriesDataLoader>();
                return await categoriesData.DeleteCategory(category);
            });
     }

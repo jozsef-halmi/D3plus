@@ -9,12 +9,12 @@ using Catalog.Application.Categorys.Commands.DeleteCategory;
 
 namespace Catalog.GraphQL.GraphQL;
 
-public class CategoriesData
+public class CategoriesDataLoader
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
 
-    public CategoriesData(ISender mediator, IMapper mapper)
+    public CategoriesDataLoader(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;

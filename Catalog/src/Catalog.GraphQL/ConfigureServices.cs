@@ -44,8 +44,8 @@ public static class ConfigureServices
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddGraphTypes(typeof(CategoriesQuery).Assembly));
 
-        services.AddScoped<CategoriesData>();
-        services.AddScoped<ProductsData>();
+        services.AddScoped<CategoriesDataLoader>();
+        services.AddScoped<ProductsDataLoader>();
 
         services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
         services.AddSingleton<DataLoaderDocumentListener>();

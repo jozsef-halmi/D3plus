@@ -72,7 +72,7 @@ public class ProductType : ObjectGraphType<Product>
             {
                 using var scope = serviceProvider.CreateScope();
                 var services = scope.ServiceProvider;
-                var productsDataLoader = services.GetRequiredService<ProductsData>();
+                var productsDataLoader = services.GetRequiredService<ProductsDataLoader>();
                 // Get or add a batch loader with the key "GetUsersById"
                 // The loader will call GetCategoriesByIdAsync for each batch of keys
                 //var loader = dataLoaderContextAccessor.Context.GetOrAddBatchLoader<int, Category>("GetCategoriesById", productsDataLoader.GetCategoriesByIdAsync);
@@ -83,7 +83,7 @@ public class ProductType : ObjectGraphType<Product>
                     //grab the service provider from the scope
                     var serviceProvider = scope.ServiceProvider;
                     //grab the data context from the scope
-                    var productsDataLoader = serviceProvider.GetRequiredService<ProductsData>();
+                    var productsDataLoader = serviceProvider.GetRequiredService<ProductsDataLoader>();
                     return await productsDataLoader.GetCategoriesByIdAsync(ids, CancellationToken.None);
                     //var mediator = serviceProvider.GetRequiredService<ISender>();
 

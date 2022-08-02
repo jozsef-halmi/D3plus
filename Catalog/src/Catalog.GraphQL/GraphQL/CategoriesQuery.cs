@@ -32,7 +32,7 @@ public class CategoriesQuery : ObjectGraphType<object>
         FieldAsync<ListGraphType<CategoryType>>("categories", resolve: async context => {
             using var scope = serviceProvider.CreateScope();
             var services = scope.ServiceProvider;
-            return await services.GetRequiredService<CategoriesData>().GetCategories();
+            return await services.GetRequiredService<CategoriesDataLoader>().GetCategories();
             });
 
         //FieldAsync<ListGraphType<CategoryType>>("categories", resolve: async context => {

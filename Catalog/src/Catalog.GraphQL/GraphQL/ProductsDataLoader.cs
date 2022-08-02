@@ -7,13 +7,13 @@ using Catalog.Application.TodoLists.Queries.GetCategory;
 
 namespace Catalog.GraphQL.GraphQL;
 
-public class ProductsData
+public class ProductsDataLoader
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
     private IEnumerable<Category> _categoriesCache;
 
-    public ProductsData(ISender mediator, IMapper mapper)
+    public ProductsDataLoader(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
