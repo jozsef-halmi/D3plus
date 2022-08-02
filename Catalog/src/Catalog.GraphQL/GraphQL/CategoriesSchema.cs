@@ -8,8 +8,8 @@ public class CategoriesSchema : Schema
     public CategoriesSchema(IServiceProvider provider)
         : base(provider)
     {
-        Query = (CategoriesQuery)provider.GetService(typeof(CategoriesQuery)) ?? throw new InvalidOperationException();
-        Mutation = (CategoriesMutation)provider.GetService(typeof(CategoriesMutation)) ?? throw new InvalidOperationException();
+        Query = provider.GetService(typeof(CategoriesQuery)) as CategoriesQuery ?? throw new InvalidOperationException();
+        Mutation = provider.GetService(typeof(CategoriesMutation)) as CategoriesMutation ?? throw new InvalidOperationException();
         FieldMiddleware.Use(new InstrumentFieldsMiddleware());
     }
 }

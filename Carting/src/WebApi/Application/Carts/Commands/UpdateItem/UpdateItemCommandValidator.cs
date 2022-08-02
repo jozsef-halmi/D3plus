@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Carting.WebApi.Domain.Extensions;
 namespace Carting.WebApi.Application.Carts.Commands.Update;
 
 public class UpdateCommandValidator : AbstractValidator<UpdateItemCommand>

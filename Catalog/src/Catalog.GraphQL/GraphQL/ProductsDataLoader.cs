@@ -1,11 +1,11 @@
-﻿using Catalog.Application.TodoLists.Queries.GetCategories;
-using Catalog.GraphQL.GraphQL.Types;
-using MediatR;
+﻿using Catalog.Application.Products.Commands.CreateProduct;
+using Catalog.Application.Products.Commands.DeleteProduct;
+using Catalog.Application.Products.Commands.UpdateProduct;
+using Catalog.Application.TodoLists.Queries.GetCategories;
 using Catalog.Application.TodoLists.Queries.GetCategory;
 using Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
-using Catalog.Application.Products.Commands.UpdateProduct;
-using Catalog.Application.Products.Commands.DeleteProduct;
-using Catalog.Application.Products.Commands.CreateProduct;
+using Catalog.GraphQL.GraphQL.Types;
+using MediatR;
 
 namespace Catalog.GraphQL.GraphQL;
 
@@ -50,7 +50,7 @@ public class ProductsDataLoader
 
     public async Task<IDictionary<int, Category>> GetCategoriesByIdAsync(IEnumerable<int> categoryIds, CancellationToken cancellationToken)
     {
-        var categoriesVm = await _mediator.Send(new GetCategoriesQuery() { });
+        var categoriesVm = await _mediator.Send(new GetCategoriesQuery() { }, cancellationToken);
 
         return categoriesVm.Categories.Where(c => categoryIds.Contains(c.Id))
             .ToDictionary(k => k.Id, v => new Category()

@@ -3,7 +3,6 @@ using Catalog.Application.Products.Commands.DeleteProduct;
 using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
-using Product = Catalog.Domain.Entities.Product;
 
 namespace Catalog.Application.IntegrationTests.Products.Commands;
 

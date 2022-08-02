@@ -34,7 +34,7 @@ public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand,
             _context.Insert(new Cart()
             {
                 Id = request.CartId,
-            });
+            }, cancellationToken);
         }
 
         var cart = _context.Get<Cart>(request.CartId);
@@ -42,7 +42,7 @@ public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand,
         if (cart.Items != null && cart.Items.Any(item => item.Id == request.Id))
             throw new ItemAlreadyAddedToCartException();
 
-        cart.Items.Add(new CartItem()
+        cart.Items?.Add(new CartItem()
         {
             Id = request.Id,
             Name = request.Name,

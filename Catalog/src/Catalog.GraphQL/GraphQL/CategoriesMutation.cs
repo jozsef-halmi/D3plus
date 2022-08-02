@@ -26,7 +26,7 @@ public class CategoriesMutation : ObjectGraphType
             arguments: new QueryArguments(
                 new QueryArgument<NonNullGraphType<CreateCategoryInputType>> { Name = "category" }
             ),
-            resolve: async context => 
+            resolve: async context =>
             {
                 var category = context.GetArgument<Category>("category");
                 using var scope = serviceProvider.CreateScope();

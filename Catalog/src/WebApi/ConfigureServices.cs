@@ -1,10 +1,7 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Catalog.Infrastructure.Persistence;
+﻿using Catalog.Infrastructure.Persistence;
 using Catalog.WebApi.Filters;
 using Catalog.WebApi.HostedServices;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -56,7 +53,7 @@ public static class ConfigureServices
                         Id = "Bearer"
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
         });

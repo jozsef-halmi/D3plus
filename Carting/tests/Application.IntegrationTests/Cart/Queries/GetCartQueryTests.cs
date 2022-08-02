@@ -1,9 +1,8 @@
-﻿using NUnit.Framework;
-using FluentAssertions;
+﻿using Carting.WebApi.Application.Carts.Queries.GetCart;
 using Carting.WebApi.Application.Common.Exceptions;
-using Carting.WebApi.Application.Carts.Commands.AddItemToCart;
 using Carting.WebApi.Domain.Entities;
-using Carting.WebApi.Application.Carts.Queries.GetCart;
+using FluentAssertions;
+using NUnit.Framework;
 
 namespace Carting.Application.IntegrationTests.Cart.Queries;
 

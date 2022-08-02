@@ -1,8 +1,5 @@
-﻿using Catalog.Application.TodoLists.Queries.GetCategories;
-using GraphQL;
-using GraphQL.DataLoader;
+﻿using GraphQL.DataLoader;
 using GraphQL.Types;
-using MediatR;
 
 namespace Catalog.GraphQL.GraphQL.Types;
 
@@ -36,13 +33,13 @@ public class ProductType : ObjectGraphType<Product>
                 {
                     //create the scope inside the data loader(need a reference to any IServiceProvider to use CreateScope)
                     using var scope = context.RequestServices.CreateScope();
-                    
+
                     //grab the service provider from the scope
                     var serviceProvider = scope.ServiceProvider;
-                    
+
                     //grab the data loader from the scope
                     var productsDataLoader = serviceProvider.GetRequiredService<ProductsDataLoader>();
-                    
+
                     return await productsDataLoader.GetCategoriesByIdAsync(ids, CancellationToken.None);
                 });
 

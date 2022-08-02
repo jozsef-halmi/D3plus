@@ -32,7 +32,7 @@ public partial class Testing
         return await mediator.Send(request);
     }
 
-  
+
     public static async Task ResetState()
     {
     }

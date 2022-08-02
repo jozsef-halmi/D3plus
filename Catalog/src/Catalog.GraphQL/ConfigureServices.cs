@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Catalog.GraphQL.GraphQL;
+﻿using Catalog.GraphQL.GraphQL;
 using Catalog.Infrastructure.Persistence;
 using FluentValidation.AspNetCore;
 using GraphQL;
@@ -7,8 +6,6 @@ using GraphQL.DataLoader;
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.SystemTextJson;
-using GraphQL.Types;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 

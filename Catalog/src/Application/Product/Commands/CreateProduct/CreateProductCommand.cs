@@ -1,6 +1,5 @@
 ﻿using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Products.Exceptions;
-using Catalog.Domain.Entities;
 using MediatR;
 
 namespace Catalog.Application.Products.Commands.CreateProduct;
@@ -29,14 +28,15 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         if (!_context.Categories.Any(c => c.Id == request.CategoryId))
             throw new CategoryNotFoundException();
 
-        var entity = new Domain.Entities.Product();
-
-        entity.Name = request.Name;
-        entity.Description = request.Description;
-        entity.ImageUrl = request.ImageUrl;
-        entity.Price = request.Price;
-        entity.Amount = request.Amount;
-        entity.CategoryId = request.CategoryId;
+        var entity = new Domain.Entities.Product
+        {
+            Name = request.Name,
+            Description = request.Description,
+            ImageUrl = request.ImageUrl,
+            Price = request.Price,
+            Amount = request.Amount,
+            CategoryId = request.CategoryId
+        };
 
         _context.Products.Add(entity);
 
