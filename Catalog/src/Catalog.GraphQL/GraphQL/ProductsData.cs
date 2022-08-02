@@ -11,6 +11,7 @@ public class ProductsData
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
+    private IEnumerable<Category> _categoriesCache;
 
     public ProductsData(ISender mediator, IMapper mapper)
     {
@@ -35,9 +36,25 @@ public class ProductsData
     }
 
 
-    public async Task<Category> GetCategory(Product product)
+    public async Task<Category> GetCategory(int categoryId)
     {
-        var categoryDto = await _mediator.Send(new GetCategoryQuery() { Id = product.CategoryId });
+        //if (_categoriesCache == null)
+        //{
+        //    var categoriesVm = await _mediator.Send(new GetCategoriesQuery() { });
+
+        //    _categoriesCache = categoriesVm.Categories.Select(v => new Category() 
+        //    {
+        //            Id = v.Id,
+        //            ImageUrl = v.ImageUrl,
+        //            Name = v.Name,
+        //            ParentCategoryId = v.ParentCategoryId,
+        //            ParentCategoryName = v.ParentCategoryName
+        //        });
+        //}
+
+        //return _categoriesCache.FirstOrDefault(c => c.Id == categoryId);
+
+        var categoryDto = await _mediator.Send(new GetCategoryQuery() { Id = categoryId });
         return new Category()
         {
             Id = categoryDto.Id,
@@ -48,6 +65,20 @@ public class ProductsData
         };
     }
 
+    public async Task<IDictionary<int, Category>> GetCategoriesByIdAsync(IEnumerable<int> categoryIds, CancellationToken cancellationToken)
+    {
+        var categoriesVm = await _mediator.Send(new GetCategoriesQuery() { });
+
+        return categoriesVm.Categories.Where(c => categoryIds.Contains(c.Id))
+            .ToDictionary(k => k.Id, v => new Category()
+            {
+                Id = v.Id,
+                ImageUrl = v.ImageUrl,
+                Name = v.Name,
+                ParentCategoryId = v.ParentCategoryId,
+                ParentCategoryName = v.ParentCategoryName
+            });
+    }
 
     //public async Task<Category> AddCategory(Category category)
     //{

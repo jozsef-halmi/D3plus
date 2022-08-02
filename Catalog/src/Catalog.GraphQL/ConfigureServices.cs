@@ -3,6 +3,7 @@ using Catalog.GraphQL.GraphQL;
 using Catalog.Infrastructure.Persistence;
 using FluentValidation.AspNetCore;
 using GraphQL;
+using GraphQL.DataLoader;
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.SystemTextJson;
@@ -39,11 +40,17 @@ public static class ConfigureServices
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddSchema<CategoriesSchema>()
             .AddSchema<ProductsSchema>()
+            .AddDataLoader()
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddGraphTypes(typeof(CategoriesQuery).Assembly));
 
         services.AddScoped<CategoriesData>();
         services.AddScoped<ProductsData>();
+
+        services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
+        services.AddSingleton<DataLoaderDocumentListener>();
+
+        services.AddSingleton<ProductsSchema>();
 
         services.AddLogging(builder => builder.AddConsole());
         services.AddHttpContextAccessor();
