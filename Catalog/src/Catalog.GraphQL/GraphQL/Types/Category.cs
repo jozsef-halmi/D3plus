@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Catalog.Application.Common.Mappings;
-
-namespace Catalog.GraphQL.GraphQL.Types;
+﻿namespace Catalog.GraphQL.GraphQL.Types;
 
 public class Category
 {

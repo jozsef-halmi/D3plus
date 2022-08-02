@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Catalog.GraphQL.GraphQL;
-using GraphQL.Types;
-using Catalog.Application.Categorys.Queries.GetCategories;
+﻿using GraphQL.Types;
 
 namespace Catalog.GraphQL.GraphQL.Types;
 

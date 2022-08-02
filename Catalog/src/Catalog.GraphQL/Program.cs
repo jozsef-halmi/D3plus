@@ -1,6 +1,7 @@
 using Catalog.GraphQL;
 using Catalog.GraphQL.GraphQL;
 using Catalog.Infrastructure.Persistence;
+using GraphQL.Server.Ui.Playground;
 using GraphQL.Types;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,13 +13,11 @@ builder.Services.AddWebApiServices(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//app.UseGraphQLGraphiQL();
-//app.UseGraphQL<ISchema>();
 app.UseGraphQL<CategoriesSchema>("/api/categories");
 app.UseGraphQL<ProductsSchema>("/api/products");
 
-app.UseGraphQLAltair();
+app.UseGraphQLPlayground(new PlaygroundOptions { GraphQLEndPoint = "/api/categories" }, "/ui/categories");
+app.UseGraphQLPlayground(new PlaygroundOptions { GraphQLEndPoint = "/api/products" }, "/ui/products");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

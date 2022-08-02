@@ -6,7 +6,7 @@
     "iisExpress": {
       "applicationUrl": "http://localhost:62849",
       "sslPort": 0,
-      "launchUrl": "ui/altair"
+      "launchUrl": "ui/categories"
     }
   },
   "profiles": {
@@ -14,7 +14,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "ui/altair",
+      "launchUrl": "ui/categories",
       "applicationUrl": "http://localhost:5179",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

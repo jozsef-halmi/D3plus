@@ -41,7 +41,9 @@ public static class ConfigureServices
             .AddSchema<ProductsSchema>()
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddGraphTypes(typeof(CategoriesQuery).Assembly));
+
         services.AddScoped<CategoriesData>();
+        services.AddScoped<ProductsData>();
 
         services.AddLogging(builder => builder.AddConsole());
         services.AddHttpContextAccessor();
