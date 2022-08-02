@@ -2,7 +2,6 @@ using Catalog.GraphQL;
 using Catalog.GraphQL.GraphQL;
 using Catalog.Infrastructure.Persistence;
 using GraphQL.Server.Ui.Playground;
-using GraphQL.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 

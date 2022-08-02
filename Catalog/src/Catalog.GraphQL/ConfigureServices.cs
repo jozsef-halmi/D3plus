@@ -35,7 +35,6 @@ public static class ConfigureServices
         services.AddGraphQL(b => b
             .AddHttpMiddleware<CategoriesSchema>()
             .AddHttpMiddleware<ProductsSchema>()
-            //.AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User })
             .AddSystemTextJson()
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddSchema<CategoriesSchema>()
