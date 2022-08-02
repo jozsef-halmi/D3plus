@@ -9,10 +9,10 @@ public class ProductsMutation : ObjectGraphType
     /// <example>
     /// This is an example JSON request for a mutation
     /// {
-    ///   "query": "mutation ($product:ProductInput!){ createProduct(product: $product) { id name } }",
+    ///   "query": "mutation ($product:ProductInput!){ createProduct(product: $product) { id name amount price } }",
     ///   "variables": {
     ///     "product": {
-    ///       "name": "Paper"
+    ///       "name": "Samsung test", "price" : 1, "amount": 2, "categoryId": 1
     ///     }
     ///   }
     /// }
@@ -26,7 +26,7 @@ public class ProductsMutation : ObjectGraphType
             arguments: new QueryArguments(
                 new QueryArgument<NonNullGraphType<CreateProductInputType>> { Name = "product" }
             ),
-            resolve: async context => 
+            resolve: async context =>
             {
                 var product = context.GetArgument<Product>("product");
                 using var scope = serviceProvider.CreateScope();
@@ -48,7 +48,6 @@ public class ProductsMutation : ObjectGraphType
                var productsData = services.GetRequiredService<ProductsDataLoader>();
                return await productsData.UpdateProduct(product);
            });
-
 
         FieldAsync<ProductType>(
            "deleteProduct",

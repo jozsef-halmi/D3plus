@@ -1,8 +1,6 @@
 ﻿using Catalog.Application.TodoLists.Queries.GetCategories;
 using Catalog.GraphQL.GraphQL.Types;
 using MediatR;
-using AutoMapper;
-using Catalog.Application.TodoLists.Queries.GetProducts;
 using Catalog.Application.TodoLists.Queries.GetCategory;
 using Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
 using Catalog.Application.Products.Commands.UpdateProduct;
@@ -14,12 +12,10 @@ namespace Catalog.GraphQL.GraphQL;
 public class ProductsDataLoader
 {
     private readonly ISender _mediator;
-    private readonly IMapper _mapper;
 
-    public ProductsDataLoader(ISender mediator, IMapper mapper)
+    public ProductsDataLoader(ISender mediator)
     {
         _mediator = mediator;
-        _mapper = mapper;
     }
 
     public async Task<IEnumerable<Product>> GetProducts(int categoryId, int pageNumber, int pageSize)
@@ -85,7 +81,7 @@ public class ProductsDataLoader
 
     public async Task<Product> UpdateProduct(Product product)
     {
-        var id = await _mediator.Send(new UpdateProductCommand()
+        await _mediator.Send(new UpdateProductCommand()
         {
             Id = product.Id,
             Name = product.Name,
@@ -101,7 +97,7 @@ public class ProductsDataLoader
 
     public async Task<Product> DeleteProduct(Product product)
     {
-        var id = await _mediator.Send(new DeleteProductCommand()
+        await _mediator.Send(new DeleteProductCommand()
         {
             Id = product.Id
         });

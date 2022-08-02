@@ -49,7 +49,6 @@ public class CategoriesMutation : ObjectGraphType
                return await categoriesData.UpdateCategory(category);
            });
 
-
         FieldAsync<CategoryType>(
            "deleteCategory",
            arguments: new QueryArguments(

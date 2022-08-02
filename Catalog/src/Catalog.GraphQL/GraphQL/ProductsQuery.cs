@@ -17,13 +17,14 @@ public class ProductsQuery : ObjectGraphType<object>
                     new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "pageSize", Description = "the size of the page" }
                 ),
 
-            resolve: async context => {
-            using var scope = serviceProvider.CreateScope();
-            var services = scope.ServiceProvider;
-            return await services.GetRequiredService<ProductsDataLoader>().GetProducts(
-                context.GetArgument<int>("categoryId"), 
-                context.GetArgument<int>("pageNumber"), 
-                context.GetArgument<int>("pageSize"));
+            resolve: async context =>
+            {
+                using var scope = serviceProvider.CreateScope();
+                var services = scope.ServiceProvider;
+                return await services.GetRequiredService<ProductsDataLoader>().GetProducts(
+                    context.GetArgument<int>("categoryId"),
+                    context.GetArgument<int>("pageNumber"),
+                    context.GetArgument<int>("pageSize"));
             });
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Catalog.Application.TodoLists.Queries.GetCategories;
 using Catalog.GraphQL.GraphQL.Types;
 using MediatR;
-using AutoMapper;
-using Catalog.Application.Categorys.Queries.GetCategories;
 using Catalog.Application.Categorys.Commands.CreateCategory;
 using Catalog.Application.Categorys.Commands.UpdateCategory;
 using Catalog.Application.Categorys.Commands.DeleteCategory;
@@ -12,12 +10,10 @@ namespace Catalog.GraphQL.GraphQL;
 public class CategoriesDataLoader
 {
     private readonly ISender _mediator;
-    private readonly IMapper _mapper;
 
-    public CategoriesDataLoader(ISender mediator, IMapper mapper)
+    public CategoriesDataLoader(ISender mediator)
     {
         _mediator = mediator;
-        _mapper = mapper;
     }
 
     public async Task<IEnumerable<Category>> GetCategories()
