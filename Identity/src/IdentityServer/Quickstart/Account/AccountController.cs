@@ -237,6 +237,7 @@ namespace IdentityServerHost.Quickstart.UI
                 }
             }
 
+
             return new LoginViewModel
             {
                 AllowRememberLogin = AccountOptions.AllowRememberLogin,
