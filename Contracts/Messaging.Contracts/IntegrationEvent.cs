@@ -22,4 +22,10 @@ public class IntegrationEvent
 
     [JsonInclude]
     public DateTime CreationDate { get; private init; }
+
+    [JsonInclude]
+    public string TraceRootId { get; set; }
+
+    [JsonInclude]
+    public string TraceParentId { get; set; }
 }

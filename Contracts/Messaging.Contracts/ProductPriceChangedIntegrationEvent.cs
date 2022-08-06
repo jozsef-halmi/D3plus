@@ -8,10 +8,12 @@ public class ProductPriceChangedIntegrationEvent : IntegrationEvent
 
     public decimal OldPrice { get; private init; }
 
-    public ProductPriceChangedIntegrationEvent(int productId, decimal newPrice, decimal oldPrice)
+    public ProductPriceChangedIntegrationEvent(int productId, decimal newPrice, decimal oldPrice, string traceRootId, string traceParentId) 
     {
         ProductId = productId;
         NewPrice = newPrice;
         OldPrice = oldPrice;
+        TraceParentId = traceParentId;
+        TraceRootId = traceRootId;
     }
 }

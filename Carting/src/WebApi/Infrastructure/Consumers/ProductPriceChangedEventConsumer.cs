@@ -1,24 +1,43 @@
 ﻿namespace Carting.WebApi.Infrastructure.Consumers;
 
+using System.Diagnostics;
 using Carting.WebApi.Application.Common.Interfaces;
 using Carting.WebApi.Domain.Entities;
 using MassTransit;
 using Messaging.Contracts;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.ApplicationInsights.Extensibility;
 
 internal sealed class ProductPriceChangedIntegrationEventConsumer :
     IConsumer<ProductPriceChangedIntegrationEvent>
 {
     private readonly ICartingDbContext _context;
     private readonly ILogger<ProductPriceChangedIntegrationEventConsumer> _logger;
+    private readonly TelemetryConfiguration _telemetryConfiguration;
+    private static readonly DiagnosticListener DiagnosticListener = new DiagnosticListener(RabbitMQDiagnosticSourceName);
 
-    public ProductPriceChangedIntegrationEventConsumer(ICartingDbContext context, ILogger<ProductPriceChangedIntegrationEventConsumer> logger)
+
+    public const string RabbitMQDiagnosticSourceName = "Microsoft.Azure.ServiceBus";
+    public ProductPriceChangedIntegrationEventConsumer(ICartingDbContext context, ILogger<ProductPriceChangedIntegrationEventConsumer> logger, IConfiguration configuration)
     {
         _context = context;
         _logger = logger;
+        _telemetryConfiguration = TelemetryConfiguration.CreateDefault();
+        _telemetryConfiguration.ConnectionString = configuration["ApplicationInsights:ConnectionString"];
     }
 
     public async Task Consume(ConsumeContext<ProductPriceChangedIntegrationEvent> context)
     {
+        var name = "Consume "+context.Message.GetType().Name;
+        RequestTelemetry requestTelemetry = new RequestTelemetry { Name = name };
+        var telemetryClient = new TelemetryClient(_telemetryConfiguration);
+
+        requestTelemetry.Context.Operation.Id = context.Message.TraceRootId;
+        requestTelemetry.Context.Operation.ParentId = context.Message.TraceParentId;
+
+        using var operation = telemetryClient.StartOperation(requestTelemetry);
+
         try
         {
             if (context.Message.OldPrice == context.Message.NewPrice)
@@ -39,8 +58,13 @@ internal sealed class ProductPriceChangedIntegrationEventConsumer :
         }
         catch (Exception ex)
         {
+            telemetryClient.TrackException(ex);
             _logger.LogError(ex, "Updating the price of {ProductId} has been failed.", context.Message.ProductId);
             throw;
+        }
+        finally
+        {
+            telemetryClient.StopOperation(operation);
         }
     }
 }
