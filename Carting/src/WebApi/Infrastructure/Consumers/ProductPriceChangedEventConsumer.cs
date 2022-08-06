@@ -15,10 +15,7 @@ internal sealed class ProductPriceChangedIntegrationEventConsumer :
     private readonly ICartingDbContext _context;
     private readonly ILogger<ProductPriceChangedIntegrationEventConsumer> _logger;
     private readonly TelemetryConfiguration _telemetryConfiguration;
-    private static readonly DiagnosticListener DiagnosticListener = new DiagnosticListener(RabbitMQDiagnosticSourceName);
 
-
-    public const string RabbitMQDiagnosticSourceName = "Microsoft.Azure.ServiceBus";
     public ProductPriceChangedIntegrationEventConsumer(ICartingDbContext context, ILogger<ProductPriceChangedIntegrationEventConsumer> logger, IConfiguration configuration)
     {
         _context = context;
