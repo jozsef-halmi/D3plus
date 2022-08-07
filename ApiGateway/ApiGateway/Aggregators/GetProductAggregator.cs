@@ -13,9 +13,8 @@ namespace ApiGateway.Aggregators
             var getProductResponse = await responses[0].Items.DownstreamResponse().Content.ReadAsStringAsync();
             var getProductPropertiesResponse = await responses[1].Items.DownstreamResponse().Content.ReadAsStringAsync();
 
-
-            // Basic merge
-            //var merge = $"{{ \"Product\": {getProductResponse}, \"ProductProperties\":{getProductPropertiesResponse}}}";
+            if (string.IsNullOrEmpty(getProductResponse) || string.IsNullOrEmpty(getProductPropertiesResponse))
+                throw new Exception("Downstream error");
 
             // More complex merge
             dynamic jsonProductData = JsonConvert.DeserializeObject<dynamic>(getProductResponse);

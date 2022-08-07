@@ -65,16 +65,7 @@ public class CartsController : ApiControllerBase
     [HttpPost]
     public async Task<ActionResult> AddItemToCart(string cartId, AddItemToCartDto command)
     {
-        var addItemToCartCommand = new AddItemToCartCommand()
-        {
-            CartId = cartId,
-            Id = command.Id,
-            CurrencyCode = command.CurrencyCode,
-            Name = command.Name,
-            Price = command.Price,
-            Quantity = command.Quantity,
-            WebImage = command.WebImage
-        };
+        var addItemToCartCommand = new AddItemToCartCommand(cartId, command.Id, command.Name, command.WebImage, command.CurrencyCode, command.Price, command.Quantity);
 
         await Mediator.Send(addItemToCartCommand);
 

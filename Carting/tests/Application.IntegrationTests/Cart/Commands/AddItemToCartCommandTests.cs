@@ -12,16 +12,8 @@ public class AddItemToCartCommandTests : BaseTestFixture
     [Test]
     public async Task ShouldCreateCart()
     {
-        var command = new AddItemToCartCommand
-        {
-            CartId = $"external-id-{Guid.NewGuid()}",
-            Id = 1,
-            Name = "ExampleProduct",
-            Price = 5,
-            CurrencyCode = "EUR",
-            Quantity = 1,
-            WebImage = null
-        };
+        var command = new AddItemToCartCommand($"external-id-{Guid.NewGuid()}", 
+            1, "ExampleProduct", null, "EUR", 5, 1);
 
         var id = await SendAsync(command);
 
@@ -43,17 +35,9 @@ public class AddItemToCartCommandTests : BaseTestFixture
     [Test]
     public async Task InvalidPriceShouldThrowError()
     {
-        var command = new AddItemToCartCommand
-        {
-            CartId = $"external-id-{Guid.NewGuid()}",
-            Id = 1,
-            Name = "ExampleProduct",
-            Price = -1,
-            CurrencyCode = "EUR",
-            Quantity = 1,
-            WebImage = null
-        };
-
+        var command = new AddItemToCartCommand($"external-id-{Guid.NewGuid()}",
+         1, "ExampleProduct", null, "EUR", -1, 1);
+   
         Func<Task> act = async () => await SendAsync(command);
         await act.Should().ThrowAsync<ValidationException>();
     }
@@ -62,27 +46,11 @@ public class AddItemToCartCommandTests : BaseTestFixture
     public async Task ShouldAddItemToExistingCart()
     {
         var cartId = $"external-id-{Guid.NewGuid()}";
-        var command1 = new AddItemToCartCommand
-        {
-            CartId = cartId,
-            Id = 1,
-            Name = "ExampleProduct",
-            Price = 5,
-            CurrencyCode = "EUR",
-            Quantity = 1,
-            WebImage = null
-        };
+        var command1 = new AddItemToCartCommand(cartId,
+         1, "ExampleProduct", null, "EUR", 5, 1);
 
-        var command2 = new AddItemToCartCommand
-        {
-            CartId = cartId,
-            Id = 2,
-            Name = "ExampleProduct2",
-            Price = 6,
-            CurrencyCode = "EUR",
-            Quantity = 2,
-            WebImage = null
-        };
+        var command2 = new AddItemToCartCommand(cartId,
+         2, "ExampleProduct2", null, "EUR", 6, 2);
 
         var cartId1 = await SendAsync(command1);
         var cartId2 = await SendAsync(command2);
@@ -97,27 +65,11 @@ public class AddItemToCartCommandTests : BaseTestFixture
     public async Task DuplicateCartItemShouldThrowError()
     {
         var cartId = $"external-id-{Guid.NewGuid()}";
-        var command1 = new AddItemToCartCommand
-        {
-            CartId = cartId,
-            Id = 2,
-            Name = "ExampleProduct",
-            Price = 5,
-            CurrencyCode = "EUR",
-            Quantity = 1,
-            WebImage = null
-        };
+        var command1 = new AddItemToCartCommand(cartId,
+         2, "ExampleProduct", null, "EUR", 5, 1);
 
-        var command2 = new AddItemToCartCommand
-        {
-            CartId = cartId,
-            Id = 2,
-            Name = "ExampleProduct2",
-            Price = 6,
-            CurrencyCode = "EUR",
-            Quantity = 2,
-            WebImage = null
-        };
+        var command2 = new AddItemToCartCommand(cartId,
+         2, "ExampleProduct2", null, "EUR", 5, 2);
 
         var id1 = await SendAsync(command1);
 
@@ -128,16 +80,8 @@ public class AddItemToCartCommandTests : BaseTestFixture
     [Test]
     public async Task TooLongNameShouldThrowError()
     {
-        var command = new AddItemToCartCommand
-        {
-            CartId = $"external-id-{Guid.NewGuid()}",
-            Id = 1,
-            Name = string.Join("", Enumerable.Repeat("c", 51)),
-            Price = 5,
-            CurrencyCode = "EUR",
-            Quantity = 1,
-            WebImage = null
-        };
+        var command = new AddItemToCartCommand($"external-id-{Guid.NewGuid()}",
+         1, string.Join("", Enumerable.Repeat("c", 51)), null, "EUR", 5, 1);
 
         Func<Task> act = async () => await SendAsync(command);
         await act.Should().ThrowAsync<ValidationException>();

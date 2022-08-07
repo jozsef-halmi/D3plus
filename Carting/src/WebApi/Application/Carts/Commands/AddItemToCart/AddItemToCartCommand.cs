@@ -8,13 +8,24 @@ namespace Carting.WebApi.Application.Carts.Commands.AddItemToCart;
 
 public record AddItemToCartCommand : IRequest<string>
 {
-    public string CartId { get; init; }
-    public int Id { get; init; }
-    public string Name { get; init; }
-    public WebImage? WebImage { get; init; }
-    public string CurrencyCode { get; init; }
-    public decimal Price { get; init; }
-    public int Quantity { get; init; }
+    public AddItemToCartCommand(string cartId, int id, string name, WebImage? webImage, string currencyCode, decimal price, int quantity)
+    {
+        CartId = cartId ?? throw new ArgumentNullException(nameof(cartId));
+        Id = id;
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        WebImage = webImage;
+        CurrencyCode = currencyCode ?? throw new ArgumentNullException(nameof(currencyCode));
+        Price = price;
+        Quantity = quantity;
+    }
+
+    public string CartId { get; }
+    public int Id { get; }
+    public string Name { get; }
+    public WebImage? WebImage { get; }
+    public string CurrencyCode { get; }
+    public decimal Price { get; }
+    public int Quantity { get; }
 }
 
 public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand, string>
@@ -29,7 +40,7 @@ public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand,
 
     public Task<string> Handle(AddItemToCartCommand request, CancellationToken cancellationToken)
     {
-        if (_context.Get<Cart>(request.CartId) == null)
+        if (_context.Get<Cart>(request?.CartId) == null)
         {
             _context.Insert(new Cart()
             {

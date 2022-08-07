@@ -16,8 +16,6 @@ if (app.Environment.IsDevelopment())
     {
         opt.PathToSwaggerGenerator = "/swagger/docs";
     });
-    //app.UseSwagger();
-    //app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

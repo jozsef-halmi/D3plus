@@ -13,7 +13,6 @@ namespace ApiGateway
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
 
-            //services.AddSwaggerGen();
             services.AddSwaggerForOcelot(configuration);
 
             services.AddOcelot()
