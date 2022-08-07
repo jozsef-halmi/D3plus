@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ApiGateway.Exceptions;
+using Newtonsoft.Json;
 using Ocelot.Middleware;
 using Ocelot.Multiplexer;
 using System.Net;
@@ -14,7 +15,7 @@ namespace ApiGateway.Aggregators
             var getProductPropertiesResponse = await responses[1].Items.DownstreamResponse().Content.ReadAsStringAsync();
 
             if (string.IsNullOrEmpty(getProductResponse) || string.IsNullOrEmpty(getProductPropertiesResponse))
-                throw new Exception("Downstream error");
+                throw new DownstreamErrorException("Downstream error");
 
             // More complex merge
             dynamic jsonProductData = JsonConvert.DeserializeObject<dynamic>(getProductResponse);
