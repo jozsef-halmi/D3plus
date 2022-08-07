@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Catalog.Application.Common.Exceptions;
+﻿using Catalog.Application.Common.Exceptions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Product.Queries.Common;
 using MediatR;
@@ -13,12 +12,10 @@ public record GetProductPropertiesQuery : IRequest<ProductPropertiesDto>
 public class GetProductPropertiesQueryHandler : IRequestHandler<GetProductPropertiesQuery, ProductPropertiesDto>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
 
-    public GetProductPropertiesQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetProductPropertiesQueryHandler(IApplicationDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public Task<ProductPropertiesDto> Handle(GetProductPropertiesQuery request, CancellationToken cancellationToken)

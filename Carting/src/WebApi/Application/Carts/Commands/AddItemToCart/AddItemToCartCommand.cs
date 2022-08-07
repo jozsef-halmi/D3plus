@@ -45,7 +45,7 @@ public class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartCommand,
             _context.Insert(new Cart()
             {
                 Id = request.CartId,
-            }, cancellationToken);
+            });
         }
 
         var cart = _context.Get<Cart>(request.CartId);

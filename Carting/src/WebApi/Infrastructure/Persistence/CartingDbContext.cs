@@ -33,7 +33,7 @@ public class CartingDbContext : ICartingDbContext
         return col.FindAll().Where(pred).ToList();
     }
 
-    public void Insert<T>(T entity, CancellationToken cancellationToken)
+    public void Insert<T>(T entity)
     {
         using var db = new LiteDatabase(_persistenceConfiguration.Value.ConnectionString);
 

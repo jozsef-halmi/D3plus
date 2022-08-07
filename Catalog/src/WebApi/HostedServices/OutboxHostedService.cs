@@ -16,7 +16,7 @@ public class OutboxHostedService : IHostedService, IDisposable
         _serviceProvider = serviceProvider;
     }
 
-    public Task StartAsync(CancellationToken stoppingToken)
+    public Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Outbox Hosted Service running.");
 
@@ -52,7 +52,7 @@ public class OutboxHostedService : IHostedService, IDisposable
         }
     }
 
-    public Task StopAsync(CancellationToken stoppingToken)
+    public Task StopAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Outbox Hosted Service is stopping.");
 
