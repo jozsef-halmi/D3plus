@@ -2,7 +2,7 @@
 using AutoMapper;
 using Catalog.Application.Categorys.Queries.GetCategories;
 using Catalog.Application.Common.Mappings;
-using Catalog.Application.Products.Queries.GetProducts;
+using Catalog.Application.Product.Queries.Common;
 using Catalog.Domain.Entities;
 using NUnit.Framework;
 

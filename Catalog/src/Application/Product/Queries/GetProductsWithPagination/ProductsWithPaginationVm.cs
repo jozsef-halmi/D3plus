@@ -1,5 +1,5 @@
 ﻿using Catalog.Application.Common.Models;
-using Catalog.Application.Product.Queries.GetProductsWithPagination;
+using Catalog.Application.Product.Queries.Common;
 
 namespace Catalog.Application.TodoLists.Queries.GetProducts;
 
