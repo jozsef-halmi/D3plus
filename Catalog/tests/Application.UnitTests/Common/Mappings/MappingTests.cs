@@ -2,7 +2,7 @@
 using AutoMapper;
 using Catalog.Application.Categorys.Queries.GetCategories;
 using Catalog.Application.Common.Mappings;
-using Catalog.Application.Products.Queries.GetProducts;
+using Catalog.Application.Product.Queries.Common;
 using Catalog.Domain.Entities;
 using NUnit.Framework;
 
@@ -15,7 +15,7 @@ public class MappingTests
 
     public MappingTests()
     {
-        _configuration = new MapperConfiguration(config => 
+        _configuration = new MapperConfiguration(config =>
             config.AddProfile<MappingProfile>());
 
         _mapper = _configuration.CreateMapper();
@@ -37,7 +37,7 @@ public class MappingTests
         _mapper.Map(instance, source, destination);
     }
 
-    private object GetInstanceOf(Type type)
+    private static object GetInstanceOf(Type type)
     {
         if (type.GetConstructor(Type.EmptyTypes) != null)
             return Activator.CreateInstance(type)!;

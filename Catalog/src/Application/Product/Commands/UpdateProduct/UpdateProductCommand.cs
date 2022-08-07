@@ -67,7 +67,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
             await _context.Rollback();
             throw;
         }
-       
+
     }
 
     public void AddIntegrationEvent(int productId, decimal oldPrice, decimal newPrice)

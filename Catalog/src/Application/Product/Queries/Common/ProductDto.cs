@@ -2,7 +2,7 @@
 using Catalog.Application.Common.Mappings;
 using Catalog.Application.Common.Models;
 
-namespace Catalog.Application.Product.Queries.GetProductsWithPagination;
+namespace Catalog.Application.Product.Queries.Common;
 
 public class ProductDto : HateoasDto, IMapFrom<Domain.Entities.Product>
 {

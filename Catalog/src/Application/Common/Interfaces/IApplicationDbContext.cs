@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using Catalog.Application.Outbox;
+﻿using Catalog.Application.Outbox;
 using Catalog.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

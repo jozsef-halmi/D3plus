@@ -7,8 +7,8 @@ public class ProductsSchema : Schema
 {
     public ProductsSchema(IServiceProvider provider) : base(provider)
     {
-        Query = (ProductsQuery)provider.GetService(typeof(ProductsQuery)) ?? throw new InvalidOperationException();
-        Mutation = (ProductsMutation)provider.GetService(typeof(ProductsMutation)) ?? throw new InvalidOperationException();
+        Query = provider.GetService(typeof(ProductsQuery)) as ProductsQuery ?? throw new InvalidOperationException();
+        Mutation = provider.GetService(typeof(ProductsMutation)) as ProductsMutation ?? throw new InvalidOperationException();
         FieldMiddleware.Use(new InstrumentFieldsMiddleware());
     }
 }

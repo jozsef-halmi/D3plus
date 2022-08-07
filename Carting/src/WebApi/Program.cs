@@ -1,5 +1,3 @@
-using Carting.WebApi.Application.Common.Configuration;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

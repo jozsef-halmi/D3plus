@@ -6,7 +6,7 @@ namespace Catalog.Application.Categorys.Commands.CreateCategory;
 
 public record CreateCategoryCommand : IRequest<int>
 {
-    public string Name { get; init; }
+    public string? Name { get; init; }
     public Uri? ImageUrl { get; init; }
     public int? ParentCategoryId { get; init; }
 }
@@ -22,11 +22,12 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
 
     public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Category();
-
-        entity.Name = request.Name;
-        entity.ImageUrl = request.ImageUrl;
-        entity.ParentCategoryId = request.ParentCategoryId;
+        var entity = new Category
+        {
+            Name = request.Name,
+            ImageUrl = request.ImageUrl,
+            ParentCategoryId = request.ParentCategoryId
+        };
 
         _context.Categories.Add(entity);
 

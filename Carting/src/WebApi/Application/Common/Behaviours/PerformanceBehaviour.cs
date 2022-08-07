@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Carting.WebApi.Application.Common.Behaviours;
 

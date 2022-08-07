@@ -1,9 +1,9 @@
-﻿using Catalog.Application.TodoLists.Queries.GetCategories;
+﻿using Catalog.Application.Categorys.Commands.CreateCategory;
+using Catalog.Application.Categorys.Commands.DeleteCategory;
+using Catalog.Application.Categorys.Commands.UpdateCategory;
+using Catalog.Application.TodoLists.Queries.GetCategories;
 using Catalog.GraphQL.GraphQL.Types;
 using MediatR;
-using Catalog.Application.Categorys.Commands.CreateCategory;
-using Catalog.Application.Categorys.Commands.UpdateCategory;
-using Catalog.Application.Categorys.Commands.DeleteCategory;
 
 namespace Catalog.GraphQL.GraphQL;
 
@@ -45,7 +45,7 @@ public class CategoriesDataLoader
 
     public async Task<Category> UpdateCategory(Category category)
     {
-        var id = await _mediator.Send(new UpdateCategoryCommand()
+        await _mediator.Send(new UpdateCategoryCommand()
         {
             Id = category.Id,
             Name = category.Name,
@@ -58,7 +58,7 @@ public class CategoriesDataLoader
 
     public async Task<Category> DeleteCategory(Category category)
     {
-        var id = await _mediator.Send(new DeleteCategoryCommand()
+        await _mediator.Send(new DeleteCategoryCommand()
         {
             Id = category.Id
         });

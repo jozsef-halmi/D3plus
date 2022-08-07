@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using Catalog.Application.Common.Interfaces;
-using Messaging.Contracts;
+﻿using Catalog.Application.Common.Interfaces;
 using Newtonsoft.Json;
 
 namespace Catalog.WebApi.HostedServices;
@@ -33,7 +31,7 @@ public class OutboxHostedService : IHostedService, IDisposable
     {
         try
         {
-            CancellationTokenSource cts = new CancellationTokenSource();
+            CancellationTokenSource cts = new();
             using var scope = _serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
             var integrationEventService = scope.ServiceProvider.GetRequiredService<IIntegrationEventService>();
@@ -41,7 +39,7 @@ public class OutboxHostedService : IHostedService, IDisposable
 
             foreach (var message in messagesToBeProcessed)
             {
-                var integrationEvent = JsonConvert.DeserializeObject(message.IntegrationEventJson, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All});
+                var integrationEvent = JsonConvert.DeserializeObject(message.IntegrationEventJson, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
 
                 await integrationEventService.Publish(integrationEvent, cts.Token);
                 message.PublishedDate = DateTime.UtcNow;

@@ -1,4 +1,5 @@
 ﻿using Catalog.Application.Common.Models;
+using Catalog.Application.Product.Queries.Common;
 using Catalog.Application.TodoLists.Queries.GetCategories;
 using Catalog.Application.TodoLists.Queries.GetProducts;
 using Catalog.Application.TodoLists.Queries.GetProductsWithPagination;
@@ -28,7 +29,7 @@ public static class HateoasHelper
             // Delete
             category.Links.Add(HttpMethod.Delete.ToString().ToLower(),
                 new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(CategoriesController.Delete), values: new { id }),
-                   
+
                     HttpMethod.Delete.ToString()));
 
             // Products
@@ -78,9 +79,9 @@ public static class HateoasHelper
                     HttpMethod.Get.ToString()));
 
         if (vm.Products.HasNextPage)
-            links.Add("next", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber+1, PageSize = vm.Products.PageSize }),
+            links.Add("next", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber + 1, PageSize = vm.Products.PageSize }),
                     HttpMethod.Get.ToString()));
-        
+
         if (vm.Products.HasPreviousPage)
             links.Add("previous", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProductsWithPagination), "products", values: new GetProductsWithPaginationQuery { CategoryId = categoryId, PageNumber = vm.Products.PageNumber - 1, PageSize = vm.Products.PageSize }),
                     HttpMethod.Get.ToString()));
@@ -92,6 +93,37 @@ public static class HateoasHelper
         return new HateoasResponse<ProductsWithPaginationVm>()
         {
             Embedded = vm,
+            Links = links
+        };
+    }
+
+    public static HateoasResponse<ProductDto> CreateLinksForProduct(HttpContext context, LinkGenerator linkGenerator, ProductDto product)
+    {
+        var id = product.Id;
+
+        // Create
+        product.Links.Add(HttpMethod.Post.ToString().ToLower(),
+            new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.Create)),
+                HttpMethod.Post.ToString()));
+
+        // Update
+        product.Links.Add(HttpMethod.Put.ToString().ToLower(),
+            new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.Update), values: new { id }),
+                HttpMethod.Put.ToString()));
+
+        // Delete
+        product.Links.Add(HttpMethod.Delete.ToString().ToLower(),
+            new Application.Common.Models.LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.Delete), values: new { id }),
+                HttpMethod.Delete.ToString()));
+
+        var links = new Dictionary<string, LinkDto>();
+        links.Add("self", new LinkDto(linkGenerator.GetPathByAction(context, nameof(ProductsController.GetProduct), values: new { id }),
+                    HttpMethod.Get.ToString()));
+
+
+        return new HateoasResponse<ProductDto>()
+        {
+            Embedded = product,
             Links = links
         };
     }

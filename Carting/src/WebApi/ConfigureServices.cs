@@ -39,7 +39,8 @@ public static class ConfigureServices
             options.Conventions.Add(new GroupingByNamespaceConvention());
         });
 
-        services.AddApiVersioning(config => {
+        services.AddApiVersioning(config =>
+        {
             config.DefaultApiVersion = new ApiVersion(1, 0);
             config.ReportApiVersions = true;
             config.AssumeDefaultVersionWhenUnspecified = true;
@@ -88,7 +89,8 @@ public static class ConfigureServices
 
             x.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host(massTransitConfiguration.Host, massTransitConfiguration.VirtualHost, h => {
+                cfg.Host(massTransitConfiguration.Host, massTransitConfiguration.VirtualHost, h =>
+                {
                     h.Username(massTransitConfiguration.Username);
                     h.Password(massTransitConfiguration.Password);
                 });

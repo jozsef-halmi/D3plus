@@ -1,5 +1,5 @@
-﻿using Catalog.Application.Common.Exceptions;
-using Catalog.Application.Categorys.Commands.CreateCategory;
+﻿using Catalog.Application.Categorys.Commands.CreateCategory;
+using Catalog.Application.Common.Exceptions;
 using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;

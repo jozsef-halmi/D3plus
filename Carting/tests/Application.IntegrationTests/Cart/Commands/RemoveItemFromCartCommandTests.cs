@@ -1,5 +1,4 @@
-﻿using Carting.WebApi.Application.Carts.Commands.AddItemToCart;
-using Carting.WebApi.Application.Carts.Commands.RemoveItemFromCartCommand;
+﻿using Carting.WebApi.Application.Carts.Commands.RemoveItemFromCartCommand;
 using Carting.WebApi.Application.Carts.Queries.GetCart;
 using Carting.WebApi.Application.Common.Exceptions;
 using Carting.WebApi.Domain.Enums;
@@ -18,7 +17,7 @@ public class RemoveItemFromCartCommandTests : BaseTestFixture
         // Arrange
         var cartId = $"external-id-{Guid.NewGuid()}";
         var cartItemId = 11;
-    
+
         Add(new Carting.WebApi.Domain.Entities.Cart()
         {
             Id = cartId,
@@ -96,7 +95,7 @@ public class RemoveItemFromCartCommandTests : BaseTestFixture
         var removeItemFromCartCommand = new RemoveItemFromCartCommand()
         {
             CartId = cartId,
-            Id = cartItemId+1,
+            Id = cartItemId + 1,
         };
 
         // Act and assert
