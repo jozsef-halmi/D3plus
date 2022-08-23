@@ -1,6 +1,9 @@
 ﻿using System.Reflection;
 using Catalog.Application.Common.Interfaces;
 using Messaging.Contracts;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.ApplicationInsights.Extensibility;
 using Newtonsoft.Json;
 
 namespace Catalog.WebApi.HostedServices;
@@ -10,12 +13,16 @@ public class OutboxHostedService : IHostedService, IDisposable
     private readonly ILogger<OutboxHostedService> _logger;
     private Timer? _timer = null;
     private readonly IServiceProvider _serviceProvider;
-
-    public OutboxHostedService(ILogger<OutboxHostedService> logger, IServiceProvider serviceProvider
+    private readonly TelemetryConfiguration _telemetryConfiguration;
+    private readonly IConfiguration _configuration;
+    public OutboxHostedService(ILogger<OutboxHostedService> logger, IServiceProvider serviceProvider, IConfiguration configuration
         )
     {
+        _configuration = configuration;
         _logger = logger;
         _serviceProvider = serviceProvider;
+        _telemetryConfiguration = TelemetryConfiguration.CreateDefault();
+        _telemetryConfiguration.ConnectionString = configuration["ApplicationInsights:ConnectionString"];
     }
 
     public Task StartAsync(CancellationToken stoppingToken)
@@ -31,26 +38,42 @@ public class OutboxHostedService : IHostedService, IDisposable
 
     public async Task ProcessMessages(object? state)
     {
-        try
-        {
-            CancellationTokenSource cts = new CancellationTokenSource();
-            using var scope = _serviceProvider.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
-            var integrationEventService = scope.ServiceProvider.GetRequiredService<IIntegrationEventService>();
-            var messagesToBeProcessed = dbContext.OutboxMessages.Where(m => m.PublishedDate == null).ToList();
+        var telemetryClient = new TelemetryClient(_telemetryConfiguration);
 
-            foreach (var message in messagesToBeProcessed)
+        using (var operation = telemetryClient.StartOperation<DependencyTelemetry>("OutboxService"))
+        {
+            operation.Telemetry.Type = "Background";
+            try
             {
-                var integrationEvent = JsonConvert.DeserializeObject(message.IntegrationEventJson, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All});
+                CancellationTokenSource cts = new CancellationTokenSource();
+                using var scope = _serviceProvider.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+                var integrationEventService = scope.ServiceProvider.GetRequiredService<IIntegrationEventService>();
+                var messagesToBeProcessed = dbContext.OutboxMessages.Where(m => m.PublishedDate == null).ToList();
 
-                await integrationEventService.Publish(integrationEvent, cts.Token);
-                message.PublishedDate = DateTime.UtcNow;
-                await dbContext.SaveChangesAsync(cts.Token);
+                foreach (var message in messagesToBeProcessed)
+                {
+                    var integrationEvent = JsonConvert.DeserializeObject(message.IntegrationEventJson, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+
+                    await integrationEventService.Publish(integrationEvent, cts.Token);
+                    message.PublishedDate = DateTime.UtcNow;
+                    await dbContext.SaveChangesAsync(cts.Token);
+                }
+
+                operation.Telemetry.Success = true;
+                telemetryClient.TrackTrace($"Scheduled process trace");
+
             }
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("Error while processing messages {Message}", ex.Message);
+            catch (Exception ex)
+            {
+                _logger.LogError("Error while processing messages {Message}", ex.Message);
+                operation.Telemetry.Success = false;
+                telemetryClient.TrackException(ex);
+            }
+            finally
+            {
+                telemetryClient.StopOperation(operation);
+            }
         }
     }
 

@@ -7,6 +7,7 @@ builder.Services.AddConfig(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebApiServices();
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 

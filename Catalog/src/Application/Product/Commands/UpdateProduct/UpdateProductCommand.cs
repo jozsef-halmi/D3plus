@@ -1,8 +1,11 @@
-﻿using Catalog.Application.Common.Exceptions;
+﻿using System.Diagnostics;
+using Catalog.Application.Common.Exceptions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Outbox;
 using MediatR;
 using Messaging.Contracts;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Newtonsoft.Json;
 
 namespace Catalog.Application.Products.Commands.UpdateProduct;
@@ -23,6 +26,9 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
     private readonly IApplicationDbContext _context;
     private readonly JsonSerializerSettings _jsonSerializerSettings;
 
+    private readonly TelemetryConfiguration _telemetryConfiguration;
+    private readonly TelemetryClient _telemetryClient;
+
     public UpdateProductCommandHandler(IApplicationDbContext context)
     {
         _context = context;
@@ -30,6 +36,9 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         {
             TypeNameHandling = TypeNameHandling.All
         };
+
+        _telemetryConfiguration = TelemetryConfiguration.CreateDefault();
+        _telemetryClient = new TelemetryClient(_telemetryConfiguration);
     }
 
     public async Task<int> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
@@ -75,12 +84,15 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         if (oldPrice == newPrice)
             return;
 
-        var integrationEvent = new ProductPriceChangedIntegrationEvent(productId, newPrice, oldPrice);
-
+        var integrationEvent = new ProductPriceChangedIntegrationEvent(productId, newPrice, oldPrice,
+            Activity.Current.Context.SpanId.ToString(),
+            Activity.Current.ParentSpanId.ToString()
+            );
+        
         _context.OutboxMessages.Add(new OutboxMessage()
         {
             PublishedDate = null,
-            IntegrationEventJson = JsonConvert.SerializeObject(integrationEvent, _jsonSerializerSettings)
+            IntegrationEventJson = JsonConvert.SerializeObject(integrationEvent, _jsonSerializerSettings),
         });
     }
 }

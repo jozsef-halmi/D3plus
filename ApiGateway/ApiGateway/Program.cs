@@ -6,6 +6,7 @@ builder.Configuration.AddJsonFile("ocelot.json")
               .AddEnvironmentVariables();
 
 builder.Services.AddServices(builder.Configuration);
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 
